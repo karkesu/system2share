@@ -1,0 +1,57 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>CS 279</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+
+    	<!-- The templates which we'll use to render everything -->
+    	<template id="user-info-form">
+    		<div class="relative">
+          <h2>Welcome</h2>
+    			<input id="name" type="text" placeholder="Initials" />
+    			<!-- <input id="email" type="email" placeholder="Email" /> -->
+          <button class="next" onclick="handleUserInfoSubmit()">Submit</button>
+    		</div>
+    	</template>
+    	<template id="prompt">
+        <div class="relative">
+          <h2 id="prompt-title"></h2>
+          <img id="prompt-image"></img>
+      		<div id="prompt-text"></div>
+      		<button class="next" onclick="advanceExperiment()">Next</button>
+        </div>
+      </template>
+    	<template id="trial">
+    		<h2 id="trial-text"></h2>
+        <img id="trial-image"></img>
+        <button id="optionA" onclick="">Tril done.</button>
+    	</template>
+      <template id="trial-complete">
+        <div class="relative">
+          <h2 id="trial-text"></h2>
+          <div>
+            <img id="trial-image"></img>
+          </div>
+          <!-- <div id="trial-result"></div> -->
+          <button class="next" onclick="advanceExperiment()">Next</button>
+        </div>
+      </template>
+    	<template id="end">
+    		<div>Thanks!</div>
+    	</template>
+
+    	<!-- The actual content area in which the templates will be rendered -->
+    	<div id="content">
+      </div>
+
+      <script src="js/main.js"></script>
+
+    </body>
+</html>
