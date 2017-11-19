@@ -15,7 +15,7 @@ Then cd into your repository folder. To get all the right packages, run:
 
 	pip install -r requirements.txt
 
-Then run the local Flask server. First you need to tell Flask what file to look at. Then here I also tell flask to run in developer mode so as to restart the server with code changes. Last line tells it to run. 
+Then run the local Flask server. First you need to tell Flask what file to look at. Then here I also tell Flask to run in developer mode so as to restart the server with code changes. Last line tells it to run. 
 
 	export FLASK_APP=server.py
 	export FLASK_DEBUG=1
