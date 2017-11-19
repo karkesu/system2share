@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+	<div class="article"> 
+		{% for paragraph in article %}
+			<p>{{ paragraph }}</p>
+		{% endfor %}
+	</div>
+	<div class="post-article-toolbar">
+		<button onclick="showPostForm()">Make Post</button>
+	</div>
+	<div id="post-form">
+		Hello
+		<button id="close-button" onclick="hidePostForm()">Back To Article</button>
+	</div>
+{% endblock %}
