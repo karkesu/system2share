@@ -11,50 +11,50 @@ app = Flask(__name__)
 
 @app.route('/')
 def welcome():
-	# userAgreement()
-	# createHIT()
-	return render_template("intro.html")
+    # userAgreement()
+    # createHIT()
+    return render_template("intro.html")
 
 @app.route('/logResults')
 def logResults():
-	# do something with results here
-	return 'LOG'
+    # do something with results here
+    return 'LOG'
 
 @app.route('/getTask/<articleID>/<annotationID>', methods=['GET','POST'])
 def getHIT(articleID, annotationID):
-	# if request.args.get('assignmentId') == "ASSIGNMENT_ID_NOT_AVAILABLE":
-	# 	pass # worker hasn't accepted task yet
-	# else:
-	# 	pass
+    # if request.args.get('assignmentId') == "ASSIGNMENT_ID_NOT_AVAILABLE":
+    #     pass # worker hasn't accepted task yet
+    # else:
+    #     pass
 
     # TO DO
     # define article topic, annotation type, article.
-	data = {
-		"amazon_host": amazon_host,
-		"hitID": request.args.get('hitId'),
-		"workerID": request.args.get('workerId'),
-		"assignmentID": request.args.get('assignmentId'),
-		"turkSubmitTo": request.args.get('turkSubmitTo'),
-		"workerID": request.args.get('workerId'),
-		# "article_topic": article_topic,
-		"article": getArticle(articleID),
+    data = {
+        "amazon_host": amazon_host,
+        "hitID": request.args.get('hitId'),
+        "workerID": request.args.get('workerId'),
+        "assignmentID": request.args.get('assignmentId'),
+        "turkSubmitTo": request.args.get('turkSubmitTo'),
+        "workerID": request.args.get('workerId'),
+        # "article_topic": article_topic,
+        "article": getArticle(articleID),
         "annotation": annotationID
-	}
+    }
     # log_task(data)
-	response = make_response(render_template("task.html", data = data))
+    response = make_response(render_template("task.html", data = data))
 
     # #This is particularly nasty gotcha.
     # #Without this header, your iFrame will not render in Amazon
     # response.headers['x-frame-options'] = 'this_can_be_anything'
 
-	return response # article=article)
+    return response # article=article)
 
 def getArticle(articleID):
 
-	f = open('static/articles/test.txt', 'r')
-	data = f.readlines()
-	f.close()
-	return data
+    f = open('static/articles/test.txt', 'r')
+    data = f.readlines()
+    f.close()
+    return data
 
 # # Log before complete?
 # def log_task(data):
