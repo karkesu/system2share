@@ -8,8 +8,14 @@
 	<div class="post-article-toolbar">
 		<button onclick="showPostForm()">Make Post</button>
 	</div>
+	<!-- Annotation Types are used to determine what form fields to use -->
 	<div id="post-form">
 		Hello
+		{% if annotationType == 1 %}
+			First AnnotationType
+		{% elif annotationType == 2 %}
+			Second AnnotationType
+		{% endif %}
 		<button id="close-button" onclick="hidePostForm()">Back To Article</button>
 	</div>
 {% endblock %}

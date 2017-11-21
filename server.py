@@ -13,15 +13,28 @@ def logResults():
 
 @app.route('/getTask')
 def getHIT():
+
 	assignmentID = request.args.get('assignmentId')
 	hitID = request.args.get('hitId')
 	turkSubmitTo = request.args.get('turkSubmitTo')
 	workerID = request.args.get('workerId')
-	article = getArticle()
+
+	# if task is being previewed
+	if assignmentID == 'ASSIGNMENT_ID_NOT_AVAILABLE':
+		article = 'This is a test article'
+		annotationType = 1
+
+	# actual task
+	else:
+		article = getArticle()
+		annotationType = 1
+
 	return render_template('task.html', 
-							article=article)
+							article=article,
+							annotationType=annotationType)
 
 def getArticle():
+
 	f = open('static/articles/test.txt', 'r')
 	data = f.readlines()
 	f.close()
