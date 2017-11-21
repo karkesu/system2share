@@ -1,21 +1,69 @@
 {% extends "layout.html" %}
 {% block body %}
-	<div class="article"> 
-		{% for paragraph in article %}
+
+	<div class="article">
+		{% for paragraph in data.article %}
 			<p>{{ paragraph }}</p>
 		{% endfor %}
+		<button type="button" id="goToForm" onclick="showShareForm()">See task</input>
 	</div>
-	<div class="post-article-toolbar">
-		<button onclick="showPostForm()">Make Post</button>
-	</div>
-	<!-- Annotation Types are used to determine what form fields to use -->
-	<div id="post-form">
-		Hello
-		{% if annotationType == 1 %}
+
+
+	<div id="screen"></div>
+	<div id="shareForm">
+		LALALALALALALLALA
+		<!-- Annotation Types are used to determine what form fields to use -->
+    <button id="goToArticle" class="align-center" onclick="hideShareForm()">Back To Article</button>
+    <br>
+		<form id ="mturkForm" method="POST">
+        <input type="textarea" id="annotation" name="annotation"/>
+        <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
+				<input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
+	      <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
+	      <button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
+	  </form>
+
+		<!-- Hello
+		{% if data.annotationType == 1 %}
 			First AnnotationType
-		{% elif annotationType == 2 %}
+		{% elif data.annotationType == 2 %}
 			Second AnnotationType
-		{% endif %}
-		<button id="close-button" onclick="hidePostForm()">Back To Article</button>
+		{% elif data.annotationType == 3 %}
+			Third AnnotationType
+		{% endif %} -->
+
 	</div>
+	<script>
+    function logData(log) {
+			var logJSON = JSON.stringify(log);
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "/submit");
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.send(logJSON);
+		}
+
+		function submitTask() {
+			var form = document.getElementById('mturkForm');
+      // hitID =data['hitId']
+      // workerID =data['workerId']
+      // assignmentID =data['assignmentId']
+      // turkSubmitTo =data['turkSubmitTo']
+      // workerID =data['workerId']
+
+      // alert(form);
+      var formData = new FormData(form)
+      logData = {};
+      formData.forEach(function(value, key){
+        logData[key] = value;
+      })
+      var logJSON = JSON.stringify(logData);
+			alert(logJSON);
+      console.log(logJSON);
+
+			// form.action ="{{ data.amazon_host }}";
+			// form.submit();
+			console.log("SUBMITTED");
+		}
+	</script>
+
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+
+	<div class="consentForm">
+		<p>You have to agree to this</p>
+		<a href="{{ url_for('getHIT') }}">Agree</a>
+		<!-- <a href="{{ url_for('getHIT',taskID='testID') }}">Agree</a> -->
+
+		<!-- <button type="button" style="display:block;" id="goToForm" onclick="showShareForm()">Agree</input> -->
+	</div>
+  <!-- <script language='Javascript'>
+		turkSetAssignmentID();
+	</script>-->
+{% endblock %}
