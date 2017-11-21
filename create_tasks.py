@@ -1,7 +1,6 @@
 import boto
 from boto.mturk.connection import MTurkConnection
 from boto.mturk.question import ExternalQuestion
-from dateutil.parser import *
 import sys
 
 

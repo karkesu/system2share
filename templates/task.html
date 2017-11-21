@@ -34,7 +34,7 @@
 
 	</div>
 	<script>
-    function logData(log) {
+		function logData(log) {
 			var logJSON = JSON.stringify(log);
 			var xhttp = new XMLHttpRequest();
 			xhttp.open("POST", "/submit");
@@ -43,27 +43,17 @@
 		}
 
 		function submitTask() {
-			var form = document.getElementById('mturkForm');
-      // hitID =data['hitId']
-      // workerID =data['workerId']
-      // assignmentID =data['assignmentId']
-      // turkSubmitTo =data['turkSubmitTo']
-      // workerID =data['workerId']
-
-      // alert(form);
-      var formData = new FormData(form)
-      logData = {};
-      formData.forEach(function(value, key){
-        logData[key] = value;
-      })
-      var logJSON = JSON.stringify(logData);
-			alert(logJSON);
-      console.log(logJSON);
-
-			// form.action ="{{ data.amazon_host }}";
-			// form.submit();
-			console.log("SUBMITTED");
-		}
+		    var form = document.getElementById('mturkForm');
+	        var formData = new FormData(form)
+	        // logData = {};
+	        // formData.forEach(function(value, key){
+	        // 	logData[key] = value;
+	        // })
+	        // var logJSON = JSON.stringify(logData);
+  
+	        form.action ="{{ data.amazon_host }}";
+	        form.submit();
+	  }
 	</script>
 
 {% endblock %}
