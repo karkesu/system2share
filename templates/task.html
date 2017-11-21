@@ -16,11 +16,12 @@
     <button id="goToArticle" class="align-center" onclick="hideShareForm()">Back To Article</button>
     <br>
 		<form id ="mturkForm" method="POST">
-        <input type="textarea" id="annotation" name="annotation"/>
-        <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
-				<input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
-	      <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
-	      <button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
+			<input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
+        	<!-- <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/> -->
+			<!-- <input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>	   -->
+			<!-- <input type="textarea" id="annotation" name="annotation"/> -->
+			<input type="hidden" name="foo" value="bar"/>
+	      	<button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
 	  </form>
 
 		<!-- Hello
