@@ -43,22 +43,6 @@
 		}
 
 		function submitTask() {
-<<<<<<< HEAD
-			var form = document.getElementById('mturkForm');
-      var formData = new FormData(form)
-      logData = {};
-      formData.forEach(function(value, key){
-        logData[key] = value;
-      })
-      var logJSON = JSON.stringify(logData);
-			alert(logJSON);
-      console.log(logJSON);
-
-			// form.action ="{{ data.amazon_host }}";
-			// form.submit();
-			console.log("SUBMITTED");
-		}
-=======
 		    var form = document.getElementById('mturkForm');
 	        var formData = new FormData(form)
 	        // logData = {};
@@ -70,7 +54,6 @@
 	        form.action ="{{ data.amazon_host }}";
 	        form.submit();
 	  }
->>>>>>> 83a87cca0e8491ffab45ef75c77c8ad6556b775d
 	</script>
 
 {% endblock %}
