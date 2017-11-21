@@ -38,7 +38,7 @@ def getHIT():
 		"workerID": request.args.get('workerId'),
 		# "article_topic": article_topic,
 		# "annotation_type": annotation,
-		"article": getArticle(articleID)
+		"article": getArticle(articleID),
         "annotation": annotationID
 	}
     # log_task(data)
