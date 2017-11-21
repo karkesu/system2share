@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, url_for, make_response
 import sys
-from create_tasks import * #createHIT
-# from setup import experimentSetup
 
 #This allows us to specify whether we are pushing to the sandbox or live site.
 DEV_ENVIROMENT_BOOLEAN = True
@@ -22,7 +20,7 @@ def logResults():
 	# do something with results here
 	return 'LOG'
 
-@app.route('/getTask/<articleID>/<annotationID>', methods=['GET','POST']) #('/getTask/<taskID>', methods=['GET','POST'])
+@app.route('/getTask/<articleID>/<annotationID>', methods=['GET','POST'])
 def getHIT():
 	# if request.args.get('assignmentId') == "ASSIGNMENT_ID_NOT_AVAILABLE":
 	# 	pass # worker hasn't accepted task yet

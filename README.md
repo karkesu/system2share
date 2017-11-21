@@ -1,3 +1,5 @@
+## Setup
+
 To make sure we can run python3 and not have to deal with package stupidity, it's best to work with a virtual environment. I create a virtual environment in a sibling folder with my repository.
 
 The following instructions will install a virtual environment in a folder called venv.
@@ -20,6 +22,27 @@ Then run the local Flask server. First you need to tell Flask what file to look 
 	export FLASK_APP=server.py
 	export FLASK_DEBUG=1
 	flask run
+
+## File layout
+
+The root folder has all the server code (as the .py files), the server config (.wsgi) and the package requirements (requirements.txt). 
+
+The templates and static files are in their respective folders. 
+
+All the static files are in the static folder
+
+	\static
+		\css
+		\js
+		\articles
+	\templates
+	server.py
+	279aks.wsgi
+	requirements.txt
+
+## Article Text File Format
+
+For each article, the text is limited to the first ~350 words, or the first sentence ending past 350 words. The first line is the headline. A subheading is added with an em dash (–) to the same line. The second line is contains 'by AUTHOR, PUBLICATION, DATE'. Each subsequent line is a paragraph.
 
 
 
