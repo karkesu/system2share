@@ -7,25 +7,6 @@ function stopTimer() {
 	timeSpentReading += currentTimerReading;
 }
 
-// function logData(log) {
-// 	var logJSON = JSON.stringify(log);
-// 	var xhttp = new XMLHttpRequest();
-// 	xhttp.open("POST", "/submit");
-// 	xhttp.setRequestHeader("Content-type", "application/json");
-// 	xhttp.send(logJSON);
-// }
-//
-// function completeTask() {
-// 	var form = document.getElementById('shareForm');
-// 	console.log(form);
-// 	var logJSON = JSON.stringify(form);
-// 	console.log(logJSON);
-//
-// 	form.action ="{{ data.amazon_host }}";
-// 	form.submit();
-// 	console.log("SUBMITTED");
-// }
-
 function showShareForm() {
 	startTimer();
 	console.log("=======SHOW");
@@ -44,4 +25,3 @@ var timeSpentReading = 0;
 
 var log = new Object();
 log.date = new Date();
-// log.experiment = experiment;
