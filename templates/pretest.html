@@ -5,14 +5,6 @@
 			<p>{{ paragraph }}</p>
 		{% endfor %}
 	</div>
-	<div class="post-article-toolbar">
-		<button onclick="showPostForm()">Make Post</button>
-	</div>
-	<div id="post-form">
-		Hello
-		<button id="close-button" onclick="hidePostForm()">Back To Article</button>
-	</div>
-{% endblock %}
 
 	<div id="instructions">
 		<p>INSTRUCTIONS</p>
@@ -20,6 +12,31 @@
 			<a href="#" id="startExperiment">Start Experiment</a>
 		</div>
 	</div>
+
+	<div class="post-article-toolbar">
+		<button onclick="showPostForm()">Make Post</button>
+	</div>
+
+	<div id="trial1" class="trialDiv">
+		<p><img src="" id="trialImage1"></p>
+		<form>
+		  <input type="radio" name="interestInArticle" value="1" checked=False> 1. Not interested at all <br>
+		  <input type="radio" name="interestInArticle" value="2" checked=False> 2. <br>
+		  <input type="radio" name="interestInArticle" value="3" checked=False> 3. Neutral <br>
+			<input type="radio" name="interestInArticle" value="4" checked=False> 4. <br>
+		  <input type="radio" name="interestInArticle" value="5" checked=False> 5. Very interested <br>
+			<input type="button" class="finishTrial" value="0" id="reactionTime1">
+			<input type="hidden" name="question1RT" value="0" id="reactionTime1">
+		</form>
+	</div>
+
+	<div id="post-form">
+		Hello
+		<button id="close-button" onclick="hidePostForm()">Back To Article</button>
+	</div>
+{% endblock %}
+
+
 
 
 
@@ -30,19 +47,6 @@
 		<input type="hidden" name="question2RT" value="0" id="reactionTime2">
 	</div>
 
-	<div id="trial3" class='trialDiv'>
-		<p><img src="http://timbrady.org/turk/images/tissues.jpg" width="100" id="trialImage3"></p>
-		<p><input type="radio" class="responseButton" name="question3" value="-1"> smaller</p>
-		<p><input type="radio" class="responseButton" name="question3" value="1"> bigger</p>
-		<input type="hidden" name="question3RT" value="0" id="reactionTime3">
-	</div>
-
-	<div id="trial4" class='trialDiv'>
-		<p><img src="http://timbrady.org/turk/images/microwave.jpg" width="100" id="trialImage4"></p>
-		<p><input type="radio" class="responseButton" name="question4" value="-1"> smaller</p>
-		<p><input type="radio" class="responseButton" name="question4" value="1"> bigger</p>
-		<input type="hidden" name="question4RT" value="0" id="reactionTime4">
-	</div>
 
 	<script>
 	$("#testDiv").click(function() {

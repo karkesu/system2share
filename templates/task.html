@@ -1,125 +1,69 @@
 {% extends "layout.html" %}
 {% block body %}
+
 	<div class="article">
-		{% for paragraph in article %}
+		{% for paragraph in data.article %}
 			<p>{{ paragraph }}</p>
 		{% endfor %}
-	</div>
-	<div class="post-article-toolbar">
-		<button onclick="showPostForm()">Make Post</button>
-	</div>
-	<div id="post-form">
-		Hello
-		<button id="close-button" onclick="hidePostForm()">Back To Article</button>
-	</div>
-{% endblock %}
-
-	<!-- <div id="instructions">
-		<p>INSTRUCTIONS</p>
-		<div id="startExperimentButton">
-			<a href="#" id="startExperiment">Start Experiment</a>
-		</div>
+		<button type="button" id="goToForm" onclick="showShareForm()">See task</input>
 	</div>
 
-	<div id="trial1" class="trialDiv">
-		<p><img src="" id="trialImage1"></p>
-		<form>
-		  <input type="radio" name="interestInArticle" value="1" checked=False> 1. Not interested at all <br>
-		  <input type="radio" name="interestInArticle" value="2" checked=False> 2. <br>
-		  <input type="radio" name="interestInArticle" value="3" checked=False> 3. Neutral <br>
-			<input type="radio" name="interestInArticle" value="4" checked=False> 4. <br>
-		  <input type="radio" name="interestInArticle" value="5" checked=False> 5. Very interested <br>
-			<input type="button" class="finishTrial" value="0" id="reactionTime1">
-			<input type="hidden" name="question1RT" value="0" id="reactionTime1">
-		</form>
-	</div>
 
-	<div id="trial2" class='trialDiv'>
-		<p><img src="http://timbrady.org/turk/images/car.jpg" width="100" id="trialImage2"></p>
-		<p><input type="radio" class="responseButton" name="question2" value="-1"> smaller</p>
-		<p><input type="radio" class="responseButton" name="question2" value="1"> bigger</p>
-		<input type="hidden" name="question2RT" value="0" id="reactionTime2">
-	</div>
+	<div id="screen"></div>
+	<div id="shareForm">
+		LALALALALALALLALA
+		<!-- Annotation Types are used to determine what form fields to use -->
+    <button id="goToArticle" class="align-center" onclick="hideShareForm()">Back To Article</button>
+    <br>
+		<form id ="mturkForm" method="POST">
+        <input type="textarea" id="annotation" name="annotation"/>
+        <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
+				<input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
+	      <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
+	      <button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
+	  </form>
 
-	<div id="trial3" class='trialDiv'>
-		<p><img src="http://timbrady.org/turk/images/tissues.jpg" width="100" id="trialImage3"></p>
-		<p><input type="radio" class="responseButton" name="question3" value="-1"> smaller</p>
-		<p><input type="radio" class="responseButton" name="question3" value="1"> bigger</p>
-		<input type="hidden" name="question3RT" value="0" id="reactionTime3">
-	</div>
+		<!-- Hello
+		{% if data.annotationType == 1 %}
+			First AnnotationType
+		{% elif data.annotationType == 2 %}
+			Second AnnotationType
+		{% elif data.annotationType == 3 %}
+			Third AnnotationType
+		{% endif %} -->
 
-	<div id="trial4" class='trialDiv'>
-		<p><img src="http://timbrady.org/turk/images/microwave.jpg" width="100" id="trialImage4"></p>
-		<p><input type="radio" class="responseButton" name="question4" value="-1"> smaller</p>
-		<p><input type="radio" class="responseButton" name="question4" value="1"> bigger</p>
-		<input type="hidden" name="question4RT" value="0" id="reactionTime4">
 	</div>
-
 	<script>
-	$("#testDiv").click(function() {
-		$("#testDiv").html("<b>Hi</b>");
-	});
-	var trialOrder = shuffle([4,3,2,1]);
-	var curTrial = 0;
-	var nTrials = 4;
-	var startTrialTime;
-	function trialIsOver() {
-		var curTime = new Date();
-		var rt = curTime - startTrialTime;
-		$('#reactionTime' + trialOrder[curTrial]).val(rt);
-		console.log(rt);
-
-		$("input[type='radio'][name='question4']:checked").val()
-
-		$('#trial' + trialOrder[curTrial]).hide();
-		curTrial++;
-		if (curTrial >= nTrials) {
-			$('#submitButton').show();
-		} else {
-			showTrial(trialOrder[curTrial]);
-			startTrialTime = new Date();
+    function logData(log) {
+			var logJSON = JSON.stringify(log);
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "/submit");
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.send(logJSON);
 		}
-	}
 
-	function showTrial(whichImage) {
-		setTimeout(function() {
-			$('#trial' + whichImage).show();
-			setTimeout(function() {
-				$('#trialImage' + whichImage).hide();
-			}, 200);
+		function submitTask() {
+			var form = document.getElementById('mturkForm');
+      // hitID =data['hitId']
+      // workerID =data['workerId']
+      // assignmentID =data['assignmentId']
+      // turkSubmitTo =data['turkSubmitTo']
+      // workerID =data['workerId']
 
-			$(document).bind("keydown.steve", function(event) {
-				if (event.which == 83) {
-					console.log("pressed small");
-					$(document).unbind("keydown.steve");
-					trialIsOver();
-				}
-				if (event.which == 66) {
-					console.log("pressed big");
-					$(document).unbind("keydown.steve");
-					trialIsOver();
-				}
-			});
-		}, 500);
-	}
+      // alert(form);
+      var formData = new FormData(form)
+      logData = {};
+      formData.forEach(function(value, key){
+        logData[key] = value;
+      })
+      var logJSON = JSON.stringify(logData);
+			alert(logJSON);
+      console.log(logJSON);
 
-	$("#trial4").bind("mousemove", function(e){
-		console.log(e.offsetX);
-	});
+			// form.action ="{{ data.amazon_host }}";
+			// form.submit();
+			console.log("SUBMITTED");
+		}
+	</script>
 
-	function showFirstTrial() {
-		showTrial(trialOrder[0]);
-		startTrialTime = new Date();
-		$('#instructions').hide();
-	}
-
-	/* Fisher-Yates shuffle */
-	function shuffle(o){
-		for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-		return o;
-	}
-
-	/* Wait for clicks */
-	$('#startExperiment').click(showFirstTrial);
-	$('.finishTrial').click(trialIsOver);
-	</script> -->
+{% endblock %}
