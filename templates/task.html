@@ -17,10 +17,9 @@
     <br>
 		<form id ="mturkForm" method="POST">
 			<input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
-        	<!-- <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/> -->
-			<!-- <input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>	   -->
-			<!-- <input type="textarea" id="annotation" name="annotation"/> -->
-			<input type="hidden" name="foo" value="bar"/>
+        	<input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
+			<input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>	  
+			<input type="textarea" id="annotation" name="annotation"/>
 	      	<button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
 	  </form>
 
