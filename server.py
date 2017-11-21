@@ -33,6 +33,7 @@ def getHIT():
 	return
 
 def getArticle():
+
 	f = open('static/articles/test.txt', 'r')
 	data = f.readlines()
 	f.close()
