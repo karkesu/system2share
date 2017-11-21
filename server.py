@@ -11,7 +11,7 @@ def logResults():
 	# do something with results here
 	return 'LOG'
 
-@app.route('/getTask')
+@app.route('/getTask/')
 def getHIT():
 
 	assignmentID = request.args.get('assignmentId')
