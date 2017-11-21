@@ -1,59 +1,59 @@
 {% extends "layout.html" %}
 {% block body %}
 
-	<div class="article">
-		{% for paragraph in data.article %}
-			<p>{{ paragraph }}</p>
-		{% endfor %}
-		<button type="button" id="goToForm" onclick="showShareForm()">See task</input>
-	</div>
+  <div class="article">
+    {% for paragraph in data.article %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
+    <button type="button" id="goToForm" onclick="showShareForm()">See task</input>
+  </div>
 
 
-	<div id="screen"></div>
-	<div id="shareForm">
-		LALALALALALALLALA
-		<!-- Annotation Types are used to determine what form fields to use -->
+  <div id="screen"></div>
+  <div id="shareForm">
+    LALALALALALALLALA
+    <!-- Annotation Types are used to determine what form fields to use -->
     <button id="goToArticle" class="align-center" onclick="hideShareForm()">Back To Article</button>
     <br>
-		<form id ="mturkForm" method="POST">
-				<input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
-				<input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
-				<input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
-				<input type="textarea" id="annotation" name="annotation"/>
-        <button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
-	  </form>
+    <form id ="mturkForm" method="POST">
+      <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
+      <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
+      <input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
+      <input type="textarea" id="annotation" name="annotation"/>
+      <button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
+    </form>
 
-		<!-- Hello
-		{% if data.annotationType == 1 %}
-			First AnnotationType
-		{% elif data.annotationType == 2 %}
-			Second AnnotationType
-		{% elif data.annotationType == 3 %}
-			Third AnnotationType
-		{% endif %} -->
+    <!-- Hello
+    {% if data.annotationType == 1 %}
+      First AnnotationType
+    {% elif data.annotationType == 2 %}
+      Second AnnotationType
+    {% elif data.annotationType == 3 %}
+      Third AnnotationType
+    {% endif %} -->
 
-	</div>
-	<script>
-		function logData(log) {
-			var logJSON = JSON.stringify(log);
-			var xhttp = new XMLHttpRequest();
-			xhttp.open("POST", "/submit");
-			xhttp.setRequestHeader("Content-type", "application/json");
-			xhttp.send(logJSON);
-		}
+  </div>
+  <script>
+    function logData(log) {
+      var logJSON = JSON.stringify(log);
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", "/submit");
+      xhttp.setRequestHeader("Content-type", "application/json");
+      xhttp.send(logJSON);
+    }
 
-		function submitTask() {
-		    var form = document.getElementById('mturkForm');
-	        var formData = new FormData(form)
-	        // logData = {};
-	        // formData.forEach(function(value, key){
-	        // 	logData[key] = value;
-	        // })
-	        // var logJSON = JSON.stringify(logData);
+    function submitTask() {
+        var form = document.getElementById('mturkForm');
+          var formData = new FormData(form)
+          // logData = {};
+          // formData.forEach(function(value, key){
+          //   logData[key] = value;
+          // })
+          // var logJSON = JSON.stringify(logData);
 
-	        form.action ="{{ data.amazon_host }}";
-	        form.submit();
-	  }
-	</script>
+          form.action ="{{ data.amazon_host }}";
+          form.submit();
+    }
+  </script>
 
 {% endblock %}
