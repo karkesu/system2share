@@ -7,7 +7,30 @@ body {
 
 div {
 	margin: auto;
-	padding: 40px;
+	padding-top: 40px;
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+div:last-child {
+	padding-bottom: 40px;
+}
+
+// Typography
+
+p {
+	font-size: 12px;
+	line-height: 16px;
+}
+
+h2 {
+	font-size: 16px;
+	line-height: 22px;
+}
+
+h3 {
+	font-size: 14px;
+	line-height: 20px;
 }
 
 .article {
