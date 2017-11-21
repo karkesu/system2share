@@ -16,11 +16,11 @@
     <button id="goToArticle" class="align-center" onclick="hideShareForm()">Back To Article</button>
     <br>
 		<form id ="mturkForm" method="POST">
-        <input type="textarea" id="annotation" name="annotation"/>
-        <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
+				<input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
+				<input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
 				<input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
-	      <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
-	      <button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
+				<input type="textarea" id="annotation" name="annotation"/>
+        <button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
 	  </form>
 
 		<!-- Hello
@@ -43,22 +43,6 @@
 		}
 
 		function submitTask() {
-<<<<<<< HEAD
-			var form = document.getElementById('mturkForm');
-      var formData = new FormData(form)
-      logData = {};
-      formData.forEach(function(value, key){
-        logData[key] = value;
-      })
-      var logJSON = JSON.stringify(logData);
-			alert(logJSON);
-      console.log(logJSON);
-
-			// form.action ="{{ data.amazon_host }}";
-			// form.submit();
-			console.log("SUBMITTED");
-		}
-=======
 		    var form = document.getElementById('mturkForm');
 	        var formData = new FormData(form)
 	        // logData = {};
@@ -66,11 +50,10 @@
 	        // 	logData[key] = value;
 	        // })
 	        // var logJSON = JSON.stringify(logData);
-  
+
 	        form.action ="{{ data.amazon_host }}";
 	        form.submit();
 	  }
->>>>>>> 83a87cca0e8491ffab45ef75c77c8ad6556b775d
 	</script>
 
 {% endblock %}
