@@ -1,16 +1,19 @@
 import boto
 from boto.mturk.connection import MTurkConnection
 from boto.mturk.question import ExternalQuestion
-from dateutil.parser import *
 import sys
+import os
 
 
 def createHIT():
     # By default, HITs are created in the free-to-use Sandbox
     create_hits_in_live = False
 #UPDATE THIS
-    aws_access_key_id = 'AKIAJVHT5POJ4BDEGBNQ'
-    aws_secret_access_key = '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'
+    aws_access_key_id = os.environ['access_key']
+    aws_secret_access_key = os.environ['secret_access_key']
+    print("access keys ---------------------------")
+    print(aws_access_key_id)
+    print(aws_secret_access_key)
     environments = {
       "live": {
           "endpoint": "mechanicalturk.sandbox.amazonaws.com",
@@ -49,6 +52,7 @@ def createHIT():
     available_balance = mtc.get_account_balance()
 
     print("-------------------------------------------------------")
+    print(response[0])
     print("Your HIT has been created. You can see it at this link:")
     print(">>>>>> https://workersandbox.mturk.com/mturk/preview?groupId={}".format(hit_type_id))
     print("Your HIT ID is: {}".format(hit_id))
@@ -59,3 +63,5 @@ def createHIT():
     print("-------------------------------------------------------")
 
     return
+
+createHIT()
