@@ -1,10 +1,14 @@
 from flask import Flask
 from flask import render_template
+import sys
+import boto3
+from create_tasks import createHIT
 
 app = Flask(__name__)
 
 @app.route('/')
 def helloWorld():
+    createHIT()
     return 'Hello, World!'
 
 @app.route('/logResults/')
@@ -15,7 +19,7 @@ def logResults():
 @app.route('/getTask/')
 def getHIT():
 	article = getArticle()
-	return render_template('task.html', 
+	return render_template('task.html',
 							article=article)
 
 
