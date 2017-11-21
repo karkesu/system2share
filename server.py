@@ -21,7 +21,7 @@ def logResults():
 	return 'LOG'
 
 @app.route('/getTask/<articleID>/<annotationID>', methods=['GET','POST'])
-def getHIT():
+def getHIT(articleID, annotationID):
 	# if request.args.get('assignmentId') == "ASSIGNMENT_ID_NOT_AVAILABLE":
 	# 	pass # worker hasn't accepted task yet
 	# else:
