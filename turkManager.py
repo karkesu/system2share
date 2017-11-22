@@ -31,7 +31,7 @@ mtc = MTurkConnection(
 
 def createHIT(articleCategory, articleID):
 
-    url = 'https://zeerak.net/279akz/getTask/'
+    url = 'https://www.zeerak.net/279akz/getTask/'
     url += articleCategory
     url += '/'
     url += articleID
@@ -48,8 +48,8 @@ def createHIT(articleCategory, articleID):
         description='How would you share this on social media? Just one task!',
         duration=1200,
         question=external_question,
-        reward=0.15,
-        qualifications=qualifications,
+        reward=0.10,
+        # qualifications=qualifications,
         max_assignments=20,
         # response_groups='', # batches??
         )
