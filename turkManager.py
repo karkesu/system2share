@@ -50,6 +50,7 @@ def createHIT(articleCategory, articleID):
         question=external_question,
         reward=0.05,
         qualifications=qualifications,
+        max_assignments=25,
         # response_groups='', # batches??
         )
 
@@ -70,8 +71,8 @@ def createHIT(articleCategory, articleID):
     return
 
 def createManyHITs():
-    for i in range(1,2):
-        createHIT('education-system', str(i))
+    for i in range(1,4):
+        createHIT('tech-hq', str(i))
 
 def getAllHITIDs():
     ids = []
