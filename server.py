@@ -54,7 +54,7 @@ def getHIT(articleID, articleCategory):
 
 def getArticle(articleCategory, articleID):
 
-    f = open('static/articles/' + articleCategory + '/' + articleID + '.txt', 'r')
+    f = open('static/articles/' + articleCategory + '/' + articleID + '.txt', 'r', encoding='utf-8')
     data = f.readlines()
     f.close()
     return data
