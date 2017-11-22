@@ -25,15 +25,29 @@ def getHIT(articleID, articleCategory):
     articleByLine = article[1]
     articleText = article[2:]
 
-    annotations = {
-        "0":"Say something about this...",
-        "1": "What's your opinion on this issue?",
-        "2": "How does this issue affect you or someone you know? Sharing a personal story helps others understand the real impacts of this issue.",
-        "3": "How could others help you understand this issue better? Do you have any specific questions?",
-        "4": "What should we do about this issue? Who should care and why?"
-        }
+    annotations = [
+        #0
+        {"annotation": "",
+        "placeholder": "Say something about this..."},
+        #1
+        {"annotation": "Which quote would you share to give people more context?",
+        "placeholder": ""},
+        #2
+        {"annotation": "What's your opinion on this issue?",
+        "placeholder": ""},
+        #3
+        {"annotation": "How does this issue affect you or someone you know?",
+        "placeholder": "Sharing a personal story helps others understand the real impacts of this issue."},
+        #4
+        {"annotation": "How could others help you understand this issue better?",
+        "placeholder": "Do you have any specific questions?"},
+        #5
+        {"annotation": "What should we do about this issue? Who should care and why?",
+        "placeholder": ""},
+        ]
 
-    annotationID = str(random.randint(0,4))    
+
+    annotationID = random.randint(0,5)
 
     data = {
         'amazon_host': amazon_host,
@@ -46,7 +60,8 @@ def getHIT(articleID, articleCategory):
         'articleByLine': articleByLine,
         'articleText': articleText,
         'annotationID': annotationID,
-        'annotation': annotations[annotationID]
+        'annotation': annotations[annotationID]["annotation"],
+        'placeholder': annotations[annotationID]["placeholder"]
     }
 
     response = make_response(render_template('task.html', data = data))

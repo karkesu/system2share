@@ -1,6 +1,7 @@
 import boto
 from boto.mturk.connection import MTurkConnection
 from boto.mturk.question import ExternalQuestion
+from boto.mturk.qualification import Qualifications, PercentAssignmentsApprovedRequirement, NumberHitsApprovedRequirement, LocaleRequirement
 import sys
 import os
 
@@ -40,6 +41,11 @@ def createHIT(articleCategory, articleID):
     url += articleID
     external_question = ExternalQuestion(url, 500)
 
+    qualifications = Qualifications()
+    # qualifications.add(PercentAssignmentsApprovedRequirement(comparator="GreaterThan", integer_value="80"))
+    # qualifications.add(NumberHitsApprovedRequirement(comparator="GreaterThan", integer_value="50"))
+    qualifications.add(LocaleRequirement("EqualTo","US"))
+
     response = mtc.create_hit(
         title='Share an article',
         keywords='read, react, share',
@@ -47,6 +53,7 @@ def createHIT(articleCategory, articleID):
         duration=120,
         question=external_question,
         reward=0.05,
+        qualifications=qualifications,
         # response_groups='', # batches??
         )
 
