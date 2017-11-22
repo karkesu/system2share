@@ -30,25 +30,23 @@ def getHIT(articleID, articleCategory):
         {"annotation": "",
         "placeholder": "Say something about this..."},
         #1
-        {"annotation": "Which quote would you share to give people more context?",
+        {"annotation": "Share a quote to give people more context.",
         "placeholder": ""},
         #2
-        {"annotation": "What's your opinion on this issue?",
+        {"annotation": "Summarize the article.",
         "placeholder": ""},
         #3
         {"annotation": "How does this issue affect you or someone you know?",
         "placeholder": "Sharing a personal story helps others understand the real impacts of this issue."},
         #4
-        {"annotation": "How could others help you understand this issue better?",
+        {"annotation": "Argue for or against the main viewpoints of this article. Is there anything missing that you would like to learn more about?",
         "placeholder": "Do you have any specific questions?"},
         #5
         {"annotation": "What should we do about this issue? Who should care and why?",
         "placeholder": ""},
         ]
 
-
     annotationID = random.randint(0,5)
-
     data = {
         'amazon_host': amazon_host,
         'hitID': request.args.get('hitId'),
