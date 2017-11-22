@@ -1,6 +1,6 @@
 function startWritingTimer() {
-	currentTime = new Date().getTime()
-	readingTimer += currentTime - currentTimerStart;
+	currentTime = new Date().getTime();
+	readingTime += currentTime - currentTimerStart;
 	currentTimerStart = currentTime;
 }
 
@@ -20,10 +20,11 @@ function hideShareForm() {
 	document.getElementById('screen').style.display = 'none';
 }
 
-function addHidden(form, key, value) {
+function addHidden(form, name, value) {
     var input = document.createElement('input');
     input.type = 'hidden';
-    input.name = key;
+    input.name = name;
+    input.id = name;
     input.value = value;
     form.appendChild(input);
 }
@@ -37,10 +38,6 @@ function submitTask() {
 	form.submit();
 }
 
-var currentTimerStart = 0;
-var writingTimer = 0;
-var readingTimer = 0;
-
-// window.onload = function () {
-// 	currentTimerStart = new Date().getTime();
-// }
+var currentTimerStart = new Date().getTime();
+var writingTime = 0;
+var readingTime = 0;
