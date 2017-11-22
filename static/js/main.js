@@ -18,7 +18,8 @@ function hideShareForm() {
 }
 
 function submitTask(url) {
-	console.log("hello")
+	var form = document.forms['mturkForm'];
+	form['timeSpentReading'] = timeSpentReading;
 	form.submit();
     // var formData = new FormData(form)
     // var xhr = new XMLHttpRequest();

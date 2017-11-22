@@ -17,12 +17,12 @@
   <div id="shareForm" method="POST">
     <button id="goToArticle" onclick="hideShareForm()">← Back To Article</button>
     <p>If you were to share this news story on social media, what would you say about it?</p>
-    <form id ="mturkForm" action="{{ data.amazon_host }}" method="POST">
+    <form name="mturkForm" id="mturkForm" action="{{ data.amazon_host }}" method="POST">
       <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
       <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
       <input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
       <input type="hidden" id="annotationId" value="{{ data.annotationID }}" name="annotationId"/>
-      <input type="hidden" value="" name="readingTimer"/>
+      <input type="hidden" name="timeSpentReading" value=""/>
       <textarea id="annotation" name="annotation" placeholder="{{ data.annotation }}" rows="5"></textarea>
       <button id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
     </form>
