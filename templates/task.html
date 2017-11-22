@@ -3,6 +3,7 @@
 
 <div id="container">
   <div id="article">
+    <p class="instructions">Read the following Article, then 'share' it</p>
     <h2>{{ data.articleTitle }}</h2>
     <h3>{{ data.articleByLine }}</h3>
     {% for paragraph in data.articleText %}
@@ -10,19 +11,23 @@
     {% endfor %}
   </div>
   <div id="post-article-toolbar">
-    <button type="button" class="align-center" id="goToForm" onclick="showShareForm()">See task</button>
+    <button type="button" class="align-center" id="goToForm" onclick="showShareForm()">Share article</button>
   </div>
 </div>
 <div id="screen">
   <div id="shareForm">
     <button id="goToArticle" onclick="hideShareForm()">← Back To Article</button>
-    <p>If you were to share this news story on social media, what would you say about it?</p>
+    <p class="instructions bg-pink">Act like you're about to share this article on social media.</p>
+    <br>
+    <p><b>{{ data.prompts[data.promptID]["prompt"] }}</b></p>
     <form name="mturkForm" id="mturkForm" action="{{ data.amazon_host }}" method="POST">
       <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
       <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
       <input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
-      <input type="hidden" id="annotationId" value="{{ data.annotationID }}" name="annotationId"/>
-      <textarea id="annotation" name="annotation" placeholder="{{ data.annotation }}" rows="5"></textarea>
+      <input type="hidden" id="articleCategory" value="{{ data.articleCategory }}" name="articleCategory"/>
+      <input type="hidden" id="articleId" value="{{ data.articleID }}" name="articleId"/>
+      <input type="hidden" id="promptId" value="{{ data.promptID }}" name="promptId"/>
+      <textarea id="annotation" name="annotation" placeholder="{{ data.prompts[data.promptID]['placeholder'] }}" rows="5"></textarea>
       <button id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
     </form>
   </div>
