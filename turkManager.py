@@ -22,13 +22,12 @@ environments = {
   },
 }
 
-mturk_environment = environments["sandbox"] if IS_DEV_ENVIRONMENT else environments["live"]
+mturk_environment = environments['sandbox'] if IS_DEV_ENVIRONMENT else environments['live']
 
 mtc = MTurkConnection(
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     host=mturk_environment['endpoint'])
-
 
 def createHIT(articleCategory, articleID):
 
@@ -76,6 +75,26 @@ createHIT('tech-hq', '1')
 #     for i in range(1,4):
 #         createHIT('tech-hq', str(i))
 
-def deleteAllHITs():
+def getAllHITIDs():
+    ids = []
     for hit in list(mtc.get_all_hits()):
-        mtc.disable_hit(hit.HITId)
+        ids.append(hit.HITId)
+    return ids
+
+def deleteAllHITs():
+    for hit in getAllHITIDs():
+        mtc.disable_hit(hit)
+
+def getAllAssignments(hitID):
+    assignments = []
+    page = 1
+    while len(mtc.get_assignments(hitID, page_number=str(page))) > 0:
+        assignments.extend(mtc.get_assignments(hit, page_number=str(page)))
+        page += 1
+    return assignments
+
+def getAllResponses():
+    responses = []
+    for hit in getAllHITIDs():
+        responses.append(getAllAssignments(hit))
+    return responses
