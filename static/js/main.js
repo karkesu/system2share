@@ -1,5 +1,5 @@
 function startWritingTimer() {
-	currentTime = new Date().getTime()
+	currentTime = new Date().getTime();
 	readingTime += currentTime - currentTimerStart;
 	currentTimerStart = currentTime;
 }
@@ -38,6 +38,6 @@ function submitTask() {
 	form.submit();
 }
 
-var currentTimerStart = 0;
+var currentTimerStart = new Date().getTime();
 var writingTime = 0;
 var readingTime = 0;
