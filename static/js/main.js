@@ -25,7 +25,7 @@ function addHidden(form, name, value) {
     input.type = 'hidden';
     input.name = name;
     input.id = name;
-    input.innerHTML = value;
+    input.value = value;
     form.appendChild(input);
 }
 
@@ -33,9 +33,8 @@ function submitTask() {
 	currentTimer = new Date().getTime();
 	writingTimer += currentTime - currentTimerStart;
 	var form = document.getElementById('mturkForm');
-	addHidden(form, 'zeerakHere', 'you are an idiot');
-	addHidden(form, 'readingTime', readingTime.toString());
-	addHidden(form, 'writingTime', writingTime.toString());
+	addHidden(form, 'readingTime', readingTimer.toString());
+	addHidden(form, 'writingTime', writingTimer.toString());
 	form.submit();
 }
 
