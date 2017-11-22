@@ -28,7 +28,7 @@ function addHidden(form, key, value) {
     form.appendChild(input);
 }
 
-function submitTask(url) {
+function submitTask() {
 	currentTime = new Date().getTime()
 	writingTime += currentTime - currentTimerStart;
 	var form = document.forms['mturkForm'];
@@ -38,8 +38,8 @@ function submitTask(url) {
 }
 
 var currentTimerStart = 0;
-var writingTime = 0;
-var readingTime = 0;
+var writingTimer = 0;
+var readingTimer = 0;
 
 window.onload = function () {
 	currentTimerStart = new Date().getTime();
