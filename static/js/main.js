@@ -41,6 +41,6 @@ var currentTimerStart = 0;
 var writingTimer = 0;
 var readingTimer = 0;
 
-window.onload = function () {
-	currentTimerStart = new Date().getTime();
-}
+// window.onload = function () {
+// 	currentTimerStart = new Date().getTime();
+// }
