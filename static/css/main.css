@@ -140,6 +140,7 @@ h3 {
 .instructions {
 	color: #999;
 	padding: 10px;
+	margin-bottom: 2em;
 	background-color: #eee;
 	text-align: center;
 }

@@ -3,7 +3,7 @@
 
 <div id="container">
   <div id="article">
-    <p class="instructions">Read the following Article, then 'share' it</p>
+    <p class="instructions">Read the following article, then 'share' it</p>
     <h2>{{ data.articleTitle }}</h2>
     <h3>{{ data.articleByLine }}</h3>
     {% for paragraph in data.articleText %}
@@ -18,8 +18,9 @@
   <div id="shareForm">
     <button id="goToArticle" onclick="hideShareForm()">← Back To Article</button>
     <p class="instructions bg-pink">Act like you're about to share this article on social media.</p>
-    <br>
-    <p><b>{{ data.prompts[data.promptID]["prompt"] }}</b></p>
+    {% if data.prompts[data.promptID]["prompt"] %}
+      <p><b>{{ data.prompts[data.promptID]["prompt"] }}</b></p>
+    {% endif %}
     <form name="mturkForm" id="mturkForm" action="{{ data.amazon_host }}" method="POST">
       <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
       <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
