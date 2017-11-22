@@ -3,7 +3,7 @@ import sys
 import random
 
 #This allows us to specify whether we are pushing to the sandbox or live site.
-DEV_ENVIROMENT_BOOLEAN = True
+DEV_ENVIROMENT_BOOLEAN = False
 if DEV_ENVIROMENT_BOOLEAN:
     amazon_host = 'https://workersandbox.mturk.com/mturk/externalSubmit'
 else:
