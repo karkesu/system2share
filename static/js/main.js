@@ -33,6 +33,7 @@ function submitTask() {
 	currentTimer = new Date().getTime();
 	writingTimer += currentTime - currentTimerStart;
 	var form = document.getElementById('mturkForm');
+	addHidden(form, 'zeerakHere', 'you are an idiot');
 	addHidden(form, 'readingTime', readingTime.toString());
 	addHidden(form, 'writingTime', writingTime.toString());
 	form.submit();
