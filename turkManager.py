@@ -5,7 +5,7 @@ from boto.mturk.qualification import Qualifications, PercentAssignmentsApprovedR
 import sys
 import os
 
-IS_DEV_ENVIRONMENT = True;
+IS_DEV_ENVIRONMENT = False;
 AWS_ACCESS_KEY_ID = os.environ['ACCESS_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['SECRET_ACCESS_KEY']
 
@@ -48,7 +48,7 @@ def createHIT(articleCategory, articleID):
         description='How would you share this on social media? Just one task!',
         duration=1200,
         question=external_question,
-        reward=0.10,
+        reward=0.15,
         qualifications=qualifications,
         max_assignments=20,
         # response_groups='', # batches??
@@ -70,10 +70,10 @@ def createHIT(articleCategory, articleID):
 
     return
 
-createHIT('tech-hq', '1')
-# def createManyHITs():
-#     for i in range(1,4):
-#         createHIT('tech-hq', str(i))
+# createHIT('tech-hq', '1')
+def createManyHITs():
+    for i in range(1,4):
+        createHIT('tech-hq', str(i))
 
 def getAllHITIDs():
     ids = []
