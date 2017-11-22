@@ -25,7 +25,7 @@ function addHidden(form, name, value) {
     input.type = 'hidden';
     input.name = name;
     input.id = name;
-    input.value = value;
+    input.innerHTML = value;
     form.appendChild(input);
 }
 
