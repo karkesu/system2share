@@ -19,6 +19,11 @@ def getHIT(articleID, annotationID):
     if request.args.get('assignmentId') == 'ASSIGNMENT_ID_NOT_AVAILABLE':
         return make_response(render_template('consent.html'))
 
+    article = getArticle(articleID)
+    articleTitle = article[0]
+    articleByLine = article[1]
+    articleText = article[2:]
+
     data = {
         'amazon_host': amazon_host,
         'hitID': request.args.get('hitId'),
@@ -26,8 +31,9 @@ def getHIT(articleID, annotationID):
         'assignmentID': request.args.get('assignmentId'),
         'turkSubmitTo': request.args.get('turkSubmitTo'),
         'workerID': request.args.get('workerId'),
-        # 'article_topic': article_topic,
-        'article': getArticle(articleID),
+        'articleTitle': articleTitle,
+        'articleByLine': articleByLine,
+        'articleText': articleText,
         'annotation': annotationID
     }
 
@@ -36,7 +42,7 @@ def getHIT(articleID, annotationID):
 
 def getArticle(articleID):
 
-    f = open('static/articles/test.txt', 'r')
+    f = open('static/articles/tech-hq/1.txt', 'r')
     data = f.readlines()
     f.close()
     return data
