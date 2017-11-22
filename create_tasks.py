@@ -67,8 +67,8 @@ def createHIT(articleCategory, articleID):
     print("-------------------------------------------------------")
 
     return
-for i in range(1,4):
-    createHIT('tech-hq', str(i))
+for i in range(1,2):
+    createHIT('education-system', str(i))
     # for a in range(10):
     #     createHIT('tech-hq', str(i))
 # createHIT('tech-hq', articleID)
