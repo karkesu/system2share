@@ -1,80 +1,83 @@
 body {
 	margin: 0;
 	padding: 0;
-	font-family: Times, serif;
+	font-family: Arial, Helvetica, sans-serif;
 	text-align: left;
 }
 
 div {
 	margin: auto;
-	padding: 40px;
+	padding-top: 40px;
+	padding-left: 40px;
+	padding-right: 40px;
 }
 
-.article {
+div:last-child {
+	padding-bottom: 40px;
+}
+
+#container, #screen {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+#container {
+	overflow: scroll;
 	display: block;
-	width: 500px;
 }
 
-.post-article-toolbar {
-	text-align: center;
-}
-
-#shareForm {
-	position: absolute;
-	width: 80%;
-	height: 80%;
-	display: none;
-	z-index: 3;
-	top: 5%;
-	left: 6%;
-	background-color: white;
-	/*background-color: rgba(0,0,0,0.2);*/
-	text-align: center;
-}
 #screen {
 	position: fixed;
 	display: none;
 	top: 0px;
 	left: 0px;
-	height: 100%;
-	width: 100%;
-	background-color: rgba(0,0,0,0.8);
+	background-color: #ffdfce;
 	z-index: 2;
 }
 
-#goToArticle {
-	background-color: #bbb;
-	position: relative;
-	top: 40px;
-	margin: 0 auto;
-}
-#goToForm {
-	background-color: #bbb;
-	position: relative;
-	margin: 0 auto;
+/* article display */
+
+#article {
+	font-family: Georgia, serif;
+	max-width: 600px;
 }
 
+#post-article-toolbar {
+	margin: auto 20px;
+	text-align: center;
+}
+
+<<<<<<< HEAD
 #annotation {
 	background-color: #fff284;
 	padding: 20px;
 }
 
+=======
+/* basic form elements */
+>>>>>>> 0fbed65414963be9e175eda660793d08bdec6c75
 
+/* buttons */
 
 button {
 	position: relative;
 	text-align: center;
 	font-size: 16px;
-	border-radius: 3px;
+	border-radius: 4px;
 	color: white;
-	background-color: #555;
+	background-color: #2c73c8;
 	border: none;
-	width: 100px;
-	height: 50px;
+	min-width: 120px;
+	height: 48px;
 }
 
 button:hover {
 	cursor: pointer;
+	background-color: #307edc;
+	transition: background 0.2s;
+	-webkit-transition: background 0.2s;
 }
 
 button:focus {
@@ -84,12 +87,53 @@ button:focus {
 input {
 	padding: 12px 8px;
 	font-size: 16px;
-	width: 400px;
+	width: 100%;
 	margin: 16px auto;
 	border-radius: 2px;
 	border: 1px solid #bbb;
 	display: block;
 }
+
+/* share form */
+
+#shareForm {
+	display: block;
+	max-width: 600px;
+	padding: 40px;
+	margin: auto;
+}
+
+#goToArticle {
+	background: none;
+	border-radius: none;
+	border: none;
+	display: block;
+	color: #2c73c8
+}
+
+/* typography */
+
+p {
+	font-size: 16px;
+	line-height: 20px;
+	color: #222;
+}
+
+h2 {
+	font-size: 18px;
+	line-height: 22px;
+	color: #222;
+	font-weight: bold;
+}
+
+h3 {
+	font-size: 16px;
+	line-height: 20px;
+	color: #666;
+	font-weight: 400;
+}
+
+/* utils */
 
 .align-center {
 	margin: 0 auto;

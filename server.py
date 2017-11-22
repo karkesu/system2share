@@ -4,29 +4,19 @@ import sys
 #This allows us to specify whether we are pushing to the sandbox or live site.
 DEV_ENVIROMENT_BOOLEAN = True
 if DEV_ENVIROMENT_BOOLEAN:
-    amazon_host = "https://workersandbox.mturk.com/mturk/externalSubmit"
+    amazon_host = 'https://workersandbox.mturk.com/mturk/externalSubmit'
 else:
-    amazon_host = "https://www.mturk.com/mturk/externalSubmit"
+    amazon_host = 'https://www.mturk.com/mturk/externalSubmit'
 app = Flask(__name__)
 
 @app.route('/')
 def welcome():
-    # userAgreement()
-    # createHIT()
-    return render_template("intro.html")
-
-@app.route('/logResults')
-def logResults():
-    # do something with results here
-    return 'LOG'
+    return 'Hello!'
 
 @app.route('/getTask/<articleID>/<annotationID>', methods=['GET','POST'])
 def getHIT(articleID, annotationID):
-    # if request.args.get('assignmentId') == "ASSIGNMENT_ID_NOT_AVAILABLE":
-    #     pass # worker hasn't accepted task yet
-    # else:
-    #     pass
 
+<<<<<<< HEAD
     # TO DO
     # define article topic, annotation type, article.
     annotation = {
@@ -48,29 +38,35 @@ def getHIT(articleID, annotationID):
         #"article_topic": article_topic,
         "article": getArticle(articleID),
         "annotation": annotationID
+=======
+    if request.args.get('assignmentId') == 'ASSIGNMENT_ID_NOT_AVAILABLE':
+        return make_response(render_template('consent.html'))
+
+    article = getArticle(articleID)
+    articleTitle = article[0]
+    articleByLine = article[1]
+    articleText = article[2:]
+
+    data = {
+        'amazon_host': amazon_host,
+        'hitID': request.args.get('hitId'),
+        'workerID': request.args.get('workerId'),
+        'assignmentID': request.args.get('assignmentId'),
+        'turkSubmitTo': request.args.get('turkSubmitTo'),
+        'workerID': request.args.get('workerId'),
+        'articleTitle': articleTitle,
+        'articleByLine': articleByLine,
+        'articleText': articleText,
+        'annotation': annotationID
+>>>>>>> 0fbed65414963be9e175eda660793d08bdec6c75
     }
-    # log_task(data)
-    response = make_response(render_template("task.html", data = data))
 
-    # #This is particularly nasty gotcha.
-    # #Without this header, your iFrame will not render in Amazon
-    # response.headers['x-frame-options'] = 'this_can_be_anything'
-
-    return response # article=article)
+    response = make_response(render_template('task.html', data = data))
+    return response
 
 def getArticle(articleID):
 
-    f = open('static/articles/test.txt', 'r')
+    f = open('static/articles/tech-hq/1.txt', 'r')
     data = f.readlines()
     f.close()
     return data
-
-# # Log before complete?
-# def log_task(data):
-#     hitID =data['hitId']
-#     workerID =data['workerId']
-#     assignmentID =data['assignmentId']
-#     turkSubmitTo =data['turkSubmitTo']
-#     workerID =data['workerId']
-#     # TBContd
-#     return
