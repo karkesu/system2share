@@ -14,16 +14,17 @@ app = Flask(__name__)
 def welcome():
     return 'Hello!'
 
-@app.route('/getTask/<articleID>/<annotationID>', methods=['GET','POST'])
-def getHIT(articleID, annotationID):
+@app.route('/getTask/<articleCategory>/<articleID>', methods=['GET','POST'])
+def getHIT(articleID, articleCategory):
 
     if request.args.get('assignmentId') == 'ASSIGNMENT_ID_NOT_AVAILABLE':
         return make_response(render_template('consent.html'))
 
-    article = getArticle(articleID)
+    article = getArticle(articleCategory, articleID)
     articleTitle = article[0]
     articleByLine = article[1]
     articleText = article[2:]
+
     annotations = {
         "0":"Say something about this...",
         "1": "What's your opinion on this issue?",
@@ -31,7 +32,8 @@ def getHIT(articleID, annotationID):
         "3": "How could others help you understand this issue better? Do you have any specific questions?",
         "4": "What should we do about this issue? Who should care and why?"
         }
-    annotationID = random.randint(0,4)
+
+    annotationID = str(random.randint(0,4))    
 
     data = {
         'amazon_host': amazon_host,
@@ -50,9 +52,9 @@ def getHIT(articleID, annotationID):
     response = make_response(render_template('task.html', data = data))
     return response
 
-def getArticle(articleID):
+def getArticle(articleCategory, articleID):
 
-    f = open('static/articles/tech-hq/1.txt', 'r')
+    f = open('static/articles/' + articleCategory + '/' + articleID + '.txt', 'r')
     data = f.readlines()
     f.close()
     return data
