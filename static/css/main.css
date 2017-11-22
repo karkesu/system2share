@@ -37,6 +37,11 @@ div:last-child {
 	z-index: 2;
 }
 
+/* consent form */
+#consent {
+	max-width: 600px;
+}
+
 /* article display */
 
 #article {
@@ -49,15 +54,7 @@ div:last-child {
 	text-align: center;
 }
 
-<<<<<<< HEAD
-#annotation {
-	background-color: #fff284;
-	padding: 20px;
-}
-
-=======
 /* basic form elements */
->>>>>>> 0fbed65414963be9e175eda660793d08bdec6c75
 
 /* buttons */
 
@@ -117,6 +114,13 @@ p {
 	font-size: 16px;
 	line-height: 20px;
 	color: #222;
+}
+
+h1 {
+	font-size: 20px;
+	line-height: 24px;
+	color: #222;
+	font-weight: bold;
 }
 
 h2 {
