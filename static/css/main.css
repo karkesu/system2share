@@ -138,13 +138,16 @@ h3 {
 }
 
 .instructions {
-	color: #999;
+	color: #888;
 	padding: 10px;
 	background-color: #eee;
 	text-align: center;
 }
 .bg-pink {
 	background-color: #ffc6a8;
+}
+textarea#annotation {
+	width: 97%; /*to investigate*/
 }
 
 /* utils */
