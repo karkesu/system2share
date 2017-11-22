@@ -22,11 +22,7 @@ environments = {
   },
 }
 
-<<<<<<< HEAD
 mturk_environment = environments['sandbox'] if IS_DEV_ENVIRONMENT else environments['live']
-=======
-mturk_environment = environments["sandbox"] if IS_DEV_ENVIRONMENT else environments["live"]
->>>>>>> 30589af855cc7efe42d66b4925795bdaa99bea9e
 
 mtc = MTurkConnection(
     aws_access_key_id=AWS_ACCESS_KEY_ID,
