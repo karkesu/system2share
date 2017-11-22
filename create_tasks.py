@@ -5,7 +5,7 @@ import sys
 import os
 
 
-def createHIT():
+def createHIT(articleCategory, articleID):
     # By default, HITs are created in the free-to-use Sandbox
     create_hits_in_live = False
 #UPDATE THIS
@@ -34,7 +34,11 @@ def createHIT():
         aws_secret_access_key=aws_secret_access_key,
         host=mturk_environment['endpoint'])
 
-    external_question = ExternalQuestion('https://zeerak.net/279akz/getTask/1/1', 500)
+    url = 'https://zeerak.net/279akz/getTask/'
+    url += articleCategory
+    url += '/'
+    url += articleID
+    external_question = ExternalQuestion(url, 500)
 
     response = mtc.create_hit(
         title='Share an article',
