@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotations>
+  <annotation>
+    <id>0</id>
+    <tag>Control</tag>
+    <description>Just like Facebook</description>
+    <prompt1></prompt1>
+    <choices></choices>
+    <prompt2></prompt2>
+    <placeholder>Say something about this...</placeholder>
+  </annotation>
+  <annotation>
+    <id>1</id>
+    <tag>Agreement</tag>
+    <description>Asks how strongly opinionated the user is</description>
+    <prompt1>How do you feel about the issue discussed?</prompt1>
+    <choices>
+      <option>I agree strongly with one side</option>
+      <option>I see both sides</option>
+      <option>I don't know</option>
+    </choices>
+    <prompt2></prompt2>
+    <placeholder>Say something about this...</placeholder>
+  </annotation>
+  <annotation>
+    <id>2</id>
+    <tag>Agreement2</tag>
+    <description>Asks how strongly opinionated the user is</description>
+    <prompt1>How do you feel about the issue discussed?</prompt1>
+    <choices>
+      <option>I agree strongly with one side</option>
+      <option>I see both sides</option>
+      <option>I don't know</option>
+    </choices>
+    <prompt2>Please explain your views</prompt2>
+    <placeholder>Why do you feel this way?</placeholder>
+  </annotation>
+  <annotation>
+    <id>3</id>
+    <tag>Factual</tag>
+    <description>Asks user to summarize facts</description>
+    <prompt1>How do you feel about the issue discussed?</prompt1>
+    <choices>
+      <option>I agree strongly with one side</option>
+      <option>I see both sides</option>
+      <option>I don't know</option>
+    </choices>
+    <prompt2>Summarize this article for others</prompt2>
+    <placeholder>Summarize this article</placeholder>
+  </annotation>
+  <annotation>
+    <id>4</id>
+    <tag>Anecdotal</tag>
+    <description>Asks user to share personal stories</description>
+    <prompt1>How do you feel about the issue discussed?</prompt1>
+    <choices>
+      <option>I agree strongly with one side</option>
+      <option>I see both sides</option>
+      <option>I don't know</option>
+    </choices>
+    <prompt2>Share a personal story related to this topic</prompt2>
+    <placeholder>Help other people understand this issue from your perspective</placeholder>
+  </annotation>
+</annotations>
+
+What's your opinion on this issue?
+How does this issue affect you or someone you know? Sharing a personal story helps others understand the real impacts of this issue.
+How could others help you understand this issue better? Do you have any specific questions?
+What should we do about this issue? Who should care and why?
