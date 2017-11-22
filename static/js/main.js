@@ -31,7 +31,7 @@ function addHidden(form, key, value) {
 function submitTask() {
 	currentTime = new Date().getTime()
 	writingTime += currentTime - currentTimerStart;
-	var form = document.forms['mturkForm'];
+	var form = document.getElementById('mturkForm');
 	addHidden(form, 'readingTime', readingTime.toString());
 	addHidden(form, 'writingTime', writingTime.toString());
 	form.submit();
