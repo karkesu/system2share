@@ -15,21 +15,15 @@
 </div>
 <div id="screen">
   <div id="shareForm">
-<<<<<<< HEAD
-    <div id="annotation">Annotation</div>
-    <!-- Annotation Types are used to determine what form fields to use -->
-    <button id="goToArticle" class="align-center" onclick="hideShareForm()">Back To Article</button>
-    <br>
-=======
     <button id="goToArticle" onclick="hideShareForm()">← Back To Article</button>
     <p>Annotation Text</p>
     <!-- Add annotation fields -->
->>>>>>> 0fbed65414963be9e175eda660793d08bdec6c75
     <form id ="mturkForm" method="POST">
       <input type="hidden" id="assignmentId" value="{{ data.assignmentID }}" name="assignmentId"/>
       <input type="hidden" id="hitId" value="{{ data.hitID }}" name="hitId"/>
       <input type="hidden" id="workerId" value="{{ data.workerID }}" name="workerId"/>
-      <input type="textarea" id="annotation" name="annotation"></input>
+      <input type="hidden" id="annotationId" value="{{ data.annotationID }}" name="annotationId"/>
+      <input type="textarea" id="annotation" name="annotation" placeholder="{{ data.annotation }}"></input>
       <button type="submit" id="submitButton" value="Submit" onclick="submitTask()">Submit</button>
     </form>
   </div>
