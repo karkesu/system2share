@@ -1,6 +1,6 @@
 function startWritingTimer() {
 	currentTime = new Date().getTime()
-	readingTimer += currentTime - currentTimerStart;
+	readingTime += currentTime - currentTimerStart;
 	currentTimerStart = currentTime;
 }
 
@@ -30,14 +30,14 @@ function addHidden(form, name, value) {
 }
 
 function submitTask() {
-	currentTimer = new Date().getTime();
-	writingTimer += currentTime - currentTimerStart;
+	currentTime = new Date().getTime();
+	writingTime += currentTime - currentTimerStart;
 	var form = document.getElementById('mturkForm');
-	addHidden(form, 'readingTime', readingTimer.toString());
-	addHidden(form, 'writingTime', writingTimer.toString());
+	addHidden(form, 'readingTime', readingTime.toString());
+	addHidden(form, 'writingTime', writingTime.toString());
 	form.submit();
 }
 
 var currentTimerStart = 0;
-var writingTimer = 0;
-var readingTimer = 0;
+var writingTime = 0;
+var readingTime = 0;
