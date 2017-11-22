@@ -17,9 +17,18 @@ function hideShareForm() {
 	document.getElementById('screen').style.display = 'none';
 }
 
+function addHidden(form, key, value) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = value;
+    form.appendChild(input);
+}
+
 function submitTask(url) {
 	var form = document.forms['mturkForm'];
-	form['timeSpentReading'] = 'hello';
+	addHidden(form, 'testing', 'a');
+	addHidden(form, 'testing', 'b');
 	form.submit();
     // var formData = new FormData(form)
     // var xhr = new XMLHttpRequest();
@@ -35,3 +44,7 @@ function submitTask(url) {
 
 var currentTimerStart = -1;
 var timeSpentReading = 0;
+
+window.onload = function () {
+	// add stuff here
+}
