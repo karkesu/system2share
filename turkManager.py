@@ -5,7 +5,7 @@ from boto.mturk.qualification import Qualifications, PercentAssignmentsApprovedR
 import sys
 import os
 
-IS_DEV_ENVIRONMENT = False;
+IS_DEV_ENVIRONMENT = True;
 AWS_ACCESS_KEY_ID = os.environ['ACCESS_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['SECRET_ACCESS_KEY']
 
@@ -22,7 +22,11 @@ environments = {
   },
 }
 
+<<<<<<< HEAD
 mturk_environment = environments['sandbox'] if IS_DEV_ENVIRONMENT else environments['live']
+=======
+mturk_environment = environments["sandbox"] if IS_DEV_ENVIRONMENT else environments["live"]
+>>>>>>> 30589af855cc7efe42d66b4925795bdaa99bea9e
 
 mtc = MTurkConnection(
     aws_access_key_id=AWS_ACCESS_KEY_ID,
@@ -35,7 +39,7 @@ def createHIT(articleCategory, articleID):
     url += articleCategory
     url += '/'
     url += articleID
-    external_question = ExternalQuestion(url, 500)
+    external_question = ExternalQuestion(url, 800)
 
     qualifications = Qualifications()
     qualifications.add(LocaleRequirement("EqualTo","US"))
@@ -43,14 +47,14 @@ def createHIT(articleCategory, articleID):
     # qualifications.add(NumberHitsApprovedRequirement(comparator="GreaterThan", integer_value="50"))
 
     response = mtc.create_hit(
-        title='Share an article',
-        keywords='read, react, share',
-        description='Read a short article. How would you share this on Facebook?',
-        duration=120,
+        title='Read a short article and learn something new!',
+        keywords='read, react, share, news',
+        description='How would you share this on social media? Just one task!',
+        duration=1200,
         question=external_question,
-        reward=0.05,
+        reward=0.10,
         qualifications=qualifications,
-        max_assignments=25,
+        max_assignments=20,
         # response_groups='', # batches??
         )
 
@@ -70,9 +74,10 @@ def createHIT(articleCategory, articleID):
 
     return
 
-def createManyHITs():
-    for i in range(1,4):
-        createHIT('tech-hq', str(i))
+createHIT('tech-hq', '1')
+# def createManyHITs():
+#     for i in range(1,4):
+#         createHIT('tech-hq', str(i))
 
 def getAllHITIDs():
     ids = []

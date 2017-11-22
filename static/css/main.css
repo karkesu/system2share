@@ -137,6 +137,16 @@ h3 {
 	font-weight: 400;
 }
 
+.instructions {
+	color: #999;
+	padding: 10px;
+	background-color: #eee;
+	text-align: center;
+}
+.bg-pink {
+	background-color: #ffc6a8;
+}
+
 /* utils */
 
 .align-center {
