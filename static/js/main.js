@@ -20,10 +20,11 @@ function hideShareForm() {
 	document.getElementById('screen').style.display = 'none';
 }
 
-function addHidden(form, key, value) {
+function addHidden(form, name, value) {
     var input = document.createElement('input');
     input.type = 'hidden';
-    input.name = key;
+    input.name = name;
+    input.id = name;
     input.value = value;
     form.appendChild(input);
 }
