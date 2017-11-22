@@ -17,19 +17,20 @@ function hideShareForm() {
 	document.getElementById('screen').style.display = 'none';
 }
 
-function submitTask() {
-    var formData = new FormData(form)
-    var xhr = new XMLHttpRequest();
-    var formData = new FormData(form);
-    xhr.open("POST", "{{ data.amazon_host }}");
-    xhr.send(formData);
+function submitTask(url) {
+	console.log("hello")
+	form.submit();
+    // var formData = new FormData(form)
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("POST", "{{ data.amazon_host }}");
+    // xhr.send(formData);
 }
 
-var form = document.getElementById('mturkForm');
-form.addEventListener("submit", function (event) {
-    event.preventDefault();
-    submitTask();
-  });
+// var form = document.getElementById('mturkForm');
+// form.addEventListener("submit", function (event) {
+//      event.preventDefault();
+//      submitTask();
+//    });
 
 var currentTimerStart = -1;
 var timeSpentReading = 0;
