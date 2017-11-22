@@ -1,19 +1,22 @@
-function startTimer() {
-	currentTimerStart = new Date().getTime()
+function startWritingTimer() {
+	currentTime = new Date().getTime()
+	readingTimer += currentTime - currentTimerStart;
+	currentTimerStart = currentTime;
 }
 
-function stopTimer() {
-	currentTimerReading = new Date().getTime() - currentTimerStart;
-	timeSpentReading += currentTimerReading;
+function stopWritingTimer() {
+	currentTime = new Date().getTime()
+	writingTime += currentTime - currentTimerStart;
+	currentTimerStart = currentTime;
 }
 
 function showShareForm() {
-	startTimer();
+	startWritingTimer();
 	document.getElementById('screen').style.display = 'block';
 }
 
 function hideShareForm() {
-	stopTimer();
+	stopWritingTimer();
 	document.getElementById('screen').style.display = 'none';
 }
 
@@ -26,25 +29,18 @@ function addHidden(form, key, value) {
 }
 
 function submitTask(url) {
+	currentTime = new Date().getTime()
+	writingTime += currentTime - currentTimerStart;
 	var form = document.forms['mturkForm'];
-	addHidden(form, 'testing', 'a');
-	addHidden(form, 'testing', 'b');
+	addHidden(form, 'readingTime', readingTime.toString());
+	addHidden(form, 'writingTime', writingTime.toString());
 	form.submit();
-    // var formData = new FormData(form)
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("POST", "{{ data.amazon_host }}");
-    // xhr.send(formData);
 }
 
-// var form = document.getElementById('mturkForm');
-// form.addEventListener("submit", function (event) {
-//      event.preventDefault();
-//      submitTask();
-//    });
-
-var currentTimerStart = -1;
-var timeSpentReading = 0;
+var currentTimerStart = 0;
+var writingTime = 0;
+var readingTime = 0;
 
 window.onload = function () {
-	// add stuff here
+	currentTimerStart = new Date().getTime();
 }
