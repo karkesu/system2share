@@ -54,6 +54,11 @@ div {
 	margin: 0 auto;
 }
 
+#annotation {
+	background-color: #fff284;
+	padding: 20px;
+}
+
 
 
 button {
