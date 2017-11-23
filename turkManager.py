@@ -5,7 +5,7 @@ from boto.mturk.qualification import Qualifications, PercentAssignmentsApprovedR
 import sys
 import os
 
-IS_DEV_ENVIRONMENT = True;
+IS_DEV_ENVIRONMENT = False
 AWS_ACCESS_KEY_ID = os.environ['ACCESS_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['SECRET_ACCESS_KEY']
 
@@ -31,7 +31,7 @@ mtc = MTurkConnection(
 
 def createHIT(articleCategory, articleID):
 
-    url = 'https://zeerak.net/279akz/getTask/'
+    url = 'https://www.zeerak.net/279akz/getTask/'
     url += articleCategory
     url += '/'
     url += articleID
@@ -70,10 +70,10 @@ def createHIT(articleCategory, articleID):
 
     return
 
-createHIT('tech-hq', '1')
-# def createManyHITs():
-#     for i in range(1,4):
-#         createHIT('tech-hq', str(i))
+# createHIT('tech-hq', '1')
+def createManyHITs():
+    for i in range(1,4):
+        createHIT('tech-hq', str(i))
 
 def getAllHITIDs():
     ids = []
@@ -83,18 +83,74 @@ def getAllHITIDs():
 
 def deleteAllHITs():
     for hit in getAllHITIDs():
-        mtc.disable_hit(hit)
+        mtc.dispose_hit(hit)
 
-def getAllAssignments(hitID):
+def expireAllHITs():
+    for hit in getAllHITIDs():
+        mtc.expire_hit(hit)
+
+def getAssignmentsForHIT(hitID):
     assignments = []
     page = 1
     while len(mtc.get_assignments(hitID, page_number=str(page))) > 0:
-        assignments.extend(mtc.get_assignments(hit, page_number=str(page)))
+        assignments.extend(mtc.get_assignments(hitID, page_number=str(page)))
         page += 1
     return assignments
 
-def getAllResponses():
+def getAllAssignments():
     responses = []
     for hit in getAllHITIDs():
-        responses.append(getAllAssignments(hit))
+        responses.append(getAssignmentsForHIT(hit))
     return responses
+
+def allAssignmentsToTSV():
+    result = ''
+
+    result += 'HITId' + '\t'
+    result += 'AssignmentId' + '\t'
+    result += 'WorkerId' + '\t'
+    result += 'AcceptTime' + '\t'
+    result += 'SubmitTime' + '\t'
+    result += 'articleCategory' + '\t'
+    result += 'articleId' + '\t'
+    result += 'promptId' + '\t'
+    result += 'annotation' + '\t'
+    result += 'readingTime' + '\t'
+    result += 'writingTime' + '\t'
+    result += 'totalTime' + '\t'
+    result += 'annotationLength' + '\t'
+
+    result = result[:-1]
+    result += '\n'
+
+    for hit in getAllAssignments():
+        for assignment in hit:
+
+            result += assignment.HITId + '\t'
+            result += assignment.AssignmentId + '\t'
+            result += assignment.WorkerId + '\t'
+            result += assignment.AcceptTime + '\t'
+            result += assignment.SubmitTime + '\t'
+
+            articleCategory = assignment.answers[0][1].fields[0]
+            articleId = assignment.answers[0][2].fields[0]
+            promptId = assignment.answers[0][3].fields[0]
+            annotation = assignment.answers[0][4].fields[0]
+            readingTime = assignment.answers[0][5].fields[0]
+            writingTime = assignment.answers[0][6].fields[0]
+            totalTime = str(int(readingTime) + int(writingTime))
+            annotationLength = str(len(annotation))
+
+            result += articleCategory + '\t'
+            result += articleId + '\t'
+            result += promptId + '\t'
+            result += annotation + '\t'
+            result += readingTime + '\t'
+            result += writingTime + '\t'
+            result += totalTime + '\t'
+            result += annotationLength + '\t'
+
+            result = result[:-1]
+            result += '\n'
+
+    return result
