@@ -49,8 +49,8 @@ def createHIT(articleCategory, articleID):
         duration=1200,
         question=external_question,
         reward=0.10,
-        # qualifications=qualifications,
         max_assignments=20,
+        # qualifications=qualifications,
         # response_groups='', # batches??
         )
 
@@ -154,4 +154,3 @@ def allAssignmentsToTSV():
             result += '\n'
 
     return result
-
