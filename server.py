@@ -1,18 +1,43 @@
 from flask import Flask, render_template, request, url_for, make_response
-import sys
-import random
+from flask_sqlalchemy import SQLAlchemy
+from config import *
+import sys, os, random
 
-#This allows us to specify whether we are pushing to the sandbox or live site.
-DEV_ENVIROMENT_BOOLEAN = False
-if DEV_ENVIROMENT_BOOLEAN:
+# Config
+
+env = os.environ['APP_ENV']
+app = Flask(__name__)
+
+if env == 'dev':
+    app.config.from_object('config.Dev')
     amazon_host = 'https://workersandbox.mturk.com/mturk/externalSubmit'
 else:
+    app.config.from_object('config.Production')
     amazon_host = 'https://www.mturk.com/mturk/externalSubmit'
-app = Flask(__name__)
+
+db = SQLAlchemy(app)
+
+# Database Models
+
+class Experiment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    exp = db.Column(db.Integer, nullable=False)
+    context = db.Column(db.Integer, nullable=False)
+    iterations = db.Column(db.Integer, nullable=False)
+
+# Views
+
+# this route is a way to test the database. Just reloading should increment this
 
 @app.route('/')
 def welcome():
-    return 'Hello!'
+    exp = Experiment.query.filter_by(exp=1, context=0).first()
+    if exp == None:
+        exp=Experiment(exp=1, context=0, iterations=0)
+        db.session.add(exp)
+    exp.iterations = exp.iterations + 1
+    db.session.commit()
+    return str(exp.iterations)
 
 @app.route('/getTask/<articleCategory>/<articleID>', methods=['GET','POST'])
 def getHIT(articleID, articleCategory):

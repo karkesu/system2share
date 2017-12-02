@@ -103,6 +103,14 @@ def getAllAssignments():
         responses.append(getAssignmentsForHIT(hit))
     return responses
 
+def approveAssignment(assignmentID):
+    mtc.approve_assignment(assignmentID)
+
+def approveAllAssignments():
+    for hit in getAllAssignments():
+        for assignment in hit:
+            approveAssignment(assignment.AssignmentId)
+
 def allAssignmentsToTSV():
     result = ''
 

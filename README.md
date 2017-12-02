@@ -17,15 +17,26 @@ Then cd into your repository folder. To get all the right packages, run:
 
 	pip install -r requirements.txt
 
-Then run the local Flask server. First you need to tell Flask what file to look at. Then here I also tell Flask to run in developer mode so as to restart the server with code changes. Last line tells it to run. 
+To run locally you need to set up a few small things. First set up the database:
 
+	python manage.py initDB
+
+Similarly to delete the database you would run:
+
+	python manage.py dropDB
+
+Then set up variables that tell our app whether it's in a dev environment, tells Flask to automatically reload on a change, and also where our app is. Then tell flask to run:
+
+	export APP_ENV=dev
+	export FLASK_DEBUG-1
 	export FLASK_APP=server.py
-	export FLASK_DEBUG=1
 	flask run
 
 ## File layout
 
 The root folder has all the server code (as the .py files), the server config (.wsgi) and the package requirements (requirements.txt). 
+
+The server code is in three parts. The main server code remains in the server.py file. It has all the views, and all the setup. manage.py just has a bunch of utility commands that you might need such as setting up the database. And config.py is the file that contains configuration for the app that is used in server.py.
 
 The templates and static files are in their respective folders. 
 
@@ -37,7 +48,9 @@ All the static files are in the static folder
 		\articles
 	\templates
 	server.py
-	279aks.wsgi
+	manage.py
+	config.py
+	279akz.wsgi
 	requirements.txt
 
 ## Article Text File Format
