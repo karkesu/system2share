@@ -40,7 +40,8 @@ def welcome():
 
 @app.route('/test/')
 def test():
-    targetLink = '/getTask/tech-hq/1?' + request.query_string.decode('utf-8')
+    print(request.url_root)
+    targetLink = request.url_root + 'getTask/tech-hq/1?' + request.query_string.decode('utf-8')
     response = make_response(render_template('test.html', targetLink=targetLink))
     return response
 
