@@ -28,7 +28,6 @@ class Experiment(db.Model):
 # Views
 
 # this route is a way to test the database. Just reloading should increment this
-
 @app.route('/')
 def welcome():
     exp = Experiment.query.filter_by(exp=1, context=0).first()
