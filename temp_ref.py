@@ -19,7 +19,7 @@ else:
 db = SQLAlchemy(app)
 
 params_to_save = ""
-param_names = ['task','newsfeed','newsfeed_order','promptId','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText','assignmentId','hitId','workerId','amazon_newsfeed_order','amazon_newsfeed_annotation_a1','amazon_newsfeed_annotation_a2','amazon_articleId','amazon_time_reading','amazon_time_writing','amazon_annotation','apple_newsfeed_annotation_a1','apple_newsfeed_annotation_a2','apple_articleId','apple_time_reading','apple_time_writing','apple_annotation','uber_newsfeed_annotation_a1','uber_newsfeed_annotation_a2','uber_articleId','uber_time_reading','uber_time_writing','uber_annotation']
+param_names = ['assignmentId','hitId','workerId','task','newsfeed','newsfeed_order','promptId','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText','amazon_newsfeed_annotation_a1','amazon_newsfeed_annotation_a2','amazon_annotation_content_a1','amazon_annotation_content_a2','amazon_articleId','amazon_promptId','amazon_time_reading','amazon_time_writing','amazon_annotation','amazon_likert_summary_evaluation','amazon_likert_prior_knowledge','amazon_likert_learning','apple_newsfeed_annotation_a1','apple_newsfeed_annotation_a2','apple_annotation_content_a1','apple_annotation_content_a2','apple_articleId','apple_promptId','apple_time_reading','apple_time_writing','apple_annotation','apple_likert_summary_evaluation','apple_likert_prior_knowledge','apple_likert_learning','uber_newsfeed_annotation_a1','uber_newsfeed_annotation_a2','uber_annotation_content_a1','uber_annotation_content_a2','uber_articleId','uber_promptId','uber_time_reading','uber_time_writing','uber_annotation','uber_likert_summary_evaluation','uber_likert_prior_knowledge','uber_likert_learning']
 redundant_params = ['prompt','placeholder','newsfeed','curr_articleTitle','curr_articleByLine','curr_articleText']
 poss_assignments = {
     'newsfeed_order': ['12','21'],
@@ -37,33 +37,49 @@ class Experiment(db.Model):
     newsfeed = db.Column(db.Boolean, nullable=False)
     newsfeed_order = db.Column(db.String(2), nullable=True)
     promptId = db.Column(db.Integer, nullable=False)
-    # assignmentId = db.Column(db.String(50), nullable=False)
-    # hitId = db.Column(db.String(50), nullable=False)
-    # workerId = db.Column(db.String(50), nullable=False)
-    amazon_newsfeed_order = db.Column(db.String(10), nullable=True)
+    assignmentId = db.Column(db.String(50), nullable=False)
+    hitId = db.Column(db.String(50), nullable=False)
+    workerId = db.Column(db.String(50), nullable=False)
+    # amazon_newsfeed_order = db.Column(db.String(2), nullable=True)
+    # amazon_promptId = db.Column(db.Integer, nullable=False)
     amazon_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
     amazon_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
-    amazon_articleId = db.Column(db.Integer, nullable=True)
-    # amazon_promptId = db.Column(db.Integer, nullable=False)
-    # amazon_time_reading = db.Column(db.String(20), nullable=False)
-    # amazon_time_writing = db.Column(db.String(20), nullable=False)
-    amazon_annotation = db.Column(db.String(1000), nullable=True)
-    ## apple_newsfeed_order = db.Column(db.String(20), nullable=True)
-    ## apple_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
-    ## apple_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
+    amazon_annotation_content_a1 = db.Column(db.String(500), nullable=True)
+    amazon_annotation_content_a2 = db.Column(db.String(500), nullable=True)
+    amazon_articleId = db.Column(db.Integer, nullable=False)
+    amazon_time_reading = db.Column(db.Integer, nullable=True)
+    amazon_time_writing = db.Column(db.Integer, nullable=True)
+    amazon_annotation = db.Column(db.String(800), nullable=True)
+    amazon_likert_summary_evaluation = db.Column(db.Integer, nullable=True)
+    amazon_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
+    amazon_likert_learning = db.Column(db.Integer, nullable=True)
+    # apple_newsfeed_order = db.Column(db.String(2), nullable=True)
+    # apple_promptId = db.Column(db.Integer, nullable=False)
+    apple_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
+    apple_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
+    apple_annotation_content_a1 = db.Column(db.String(500), nullable=True)
+    apple_annotation_content_a2 = db.Column(db.String(500), nullable=True)
     apple_articleId = db.Column(db.Integer, nullable=False)
-    ## apple_promptId = db.Column(db.Integer, nullable=False)
-    ## apple_time_reading = db.Column(db.String(20), nullable=False)
-    ## apple_time_writing = db.Column(db.String(20), nullable=False)
-    ## apple_annotation = db.Column(db.String(1000), nullable=True)
-    ## uber_newsfeed_order = db.Column(db.String(20), nullable=True)
-    ## uber_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
-    ## uber_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
-    ## uber_articleId = db.Column(db.Integer, nullable=False)
-    ## uber_promptId = db.Column(db.Integer, nullable=False)
-    ## uber_time_reading = db.Column(db.String(20), nullable=False)
-    ## uber_time_writing = db.Column(db.String(20), nullable=False)
-    ## uber_annotation = db.Column(db.String(1000), nullable=True)
+    apple_time_reading = db.Column(db.Integer, nullable=True)
+    apple_time_writing = db.Column(db.Integer, nullable=True)
+    apple_annotation = db.Column(db.String(800), nullable=True)
+    apple_likert_summary_evaluation = db.Column(db.Integer, nullable=True)
+    apple_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
+    apple_likert_learning = db.Column(db.Integer, nullable=True)
+    # uber_newsfeed_order = db.Column(db.String(2), nullable=True)
+    # uber_promptId = db.Column(db.Integer, nullable=False)
+    uber_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
+    uber_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
+    uber_annotation_content_a1 = db.Column(db.String(500), nullable=True)
+    uber_annotation_content_a2 = db.Column(db.String(500), nullable=True)
+    uber_articleId = db.Column(db.Integer, nullable=False)
+    uber_time_reading = db.Column(db.Integer, nullable=True)
+    uber_time_writing = db.Column(db.Integer, nullable=True)
+    uber_annotation = db.Column(db.String(800), nullable=True)
+    uber_likert_summary_evaluation = db.Column(db.Integer, nullable=True)
+    uber_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
+    uber_likert_learning = db.Column(db.Integer, nullable=True)
+
 
 # Views
 
@@ -88,7 +104,6 @@ def submit():
     exp2 = Experiment.query.filter_by(newsfeed='3').all()
     print(exp2)
     return 'submitted'
-    # db.session.commit()
     # exp = Experiment.query.filter_by(exp=1, context=0).first()
     # if exp == None:
     #     exp=Experiment(exp=1, context=0, iterations=0)
@@ -120,101 +135,62 @@ def getHIT():
 
     # Get/reset params from URLs
     params = getParamsFromURL(request.args)
+    # ?&task=1&newsfeed_order=21&promptId=3&curr_cat=amazon&amazon_newsfeed_annotation_a1=3&amazon_newsfeed_annotation_a2=3&amazon_annotation_content_a1=aaaaaaaaaaaa&amazon_annotation_content_a2=&curr_article=1
+    # &task=2&newsfeed_order=21&promptId=3&curr_cat=amazon&curr_article=1&amazon_newsfeed_annotation_a1=3&amazon_newsfeed_annotation_a2=3&amazon_articleId=1&amazon_promptId=3&amazon_time_reading=&amazon_time_writing=&amazon_annotation=fdafdsa
 
-    # ALL PARAMS
-    ## 'assignmentId'
-    ## 'hitId'
-    ## 'workerId'
-    ## 'task'
-    # 'newsfeed'
-    # 'newsfeed_order'
-    # 'promptId'
-    # 'prompt'
-    # 'placeholder'
-    ## 'curr_cat'
-    # 'curr_article'
-    # 'curr_articleTitle'
-    # 'curr_articleByLine'
-    # 'curr_articleText'
-    # 'amazon_newsfeed_annotation_a1'
-    # 'amazon_newsfeed_annotation_a2'
-    # 'amazon_articleId'
-    # 'amazon_promptId'
-    # 'amazon_time_reading'
-    # 'amazon_time_writing'
-    # 'amazon_annotation'
-    # 'apple_newsfeed_annotation_a1'
-    # 'apple_newsfeed_annotation_a2'
-    # 'apple_articleId'
-    # 'apple_promptId'
-    # 'apple_time_reading'
-    # 'apple_time_writing'
-    # 'apple_annotation'
-    # 'uber_newsfeed_annotation_a1'
-    # 'uber_newsfeed_annotation_a2'
-    # 'uber_articleId'
-    # 'uber_promptId'
-    # 'uber_time_reading'
-    # 'uber_time_writing'
-    # 'uber_annotation'
+    
 
-    ## PASS IN:
-    # curr_cat
-    # curr_article
-
-    # print("task === "+str(params['task']))
-    # print("cat before === "+str(params['curr_cat']))
-    # print("cat after === "+str(params['curr_cat']))
-    # show newsfeed? varies per category
 
     ###########################################################
     # INITIALIZE BLANK STATE
     # task: 0 = newsfeed, 1 = reading/annotating, 2 = reviewing
+    print("LALALAL")
+    print(params['task'])
     params['task'] = 0 if params['task'] is None else params['task']
     params['curr_cat'] = 'amazon' if params['curr_cat'] is None else params['curr_cat']
 
 
-    ###########################################################
+    ####################################################################
     # FOR EACH ROUND
     # we're in the newsfeed view
     if params['task'] == 0:
-        params['newsfeed'] = showNewsfeed(params['curr_cat']) 
-# TESTING
-    params['newsfeed'] = True
+        params['newsfeed'] = showNewsfeed(params['curr_cat'])
 
     # what order will the newsfeed articles be shown? Set this once for the entire experiment.
     if params['newsfeed'] == True and params['newsfeed_order'] is None:
         params['newsfeed_order'] = getLeastFrequent('newsfeed_order', poss_assignments['newsfeed_order'],None)
 
 
-    ###########################################################
+    ####################################################################
     # The following parameters stay constant for all categories
-    ###########################################################
     # assign promptId, prompt, placeholder
     if params['promptId'] is None:
         params['promptId'] = getLeastFrequent('promptId',poss_assignments['promptId'],None)
 
-    ###########################################################
+
+    ###################################################################################
     # Task 0: Newsfeed
     if params['task'] == 0:
         if params['newsfeed'] == True:
             # Set annotations for each article; returns a dictionary
             summaries_dict = setNewsfeedContent(params)
             data = {'summaries':summaries_dict, 'curr_cat': params['curr_cat']}
-        else: 
+        # else: 
             # Set article content and prompt; returns a dictionary
             article_dict = setArticleContent(params)
             data = article_dict
             curr_articleId_param = params['curr_cat']+"_articleId"
             params[curr_articleId_param] = params['curr_article']
-            print("########################################################### task 0 no newsfeed")
-            print(params[curr_articleId_param])
             print(curr_articleId_param)
+            print(params[curr_articleId_param])
+        print("########################################################### DATA")
+        for d in data:
+            print(d+ " === " +data[d])
 
         # preparing to move on to next step
         if params['newsfeed'] == True:
             targetLink = getNextLink(targetLink,params)
-            print("########################################################### task 0 with newsfeed link prep")
+            print("########################################################### task 0 yes newsfeed")
             print(targetLink)
             return make_response(render_template('newsfeed.html', data=data, targetLink=targetLink))
         else:
@@ -225,7 +201,7 @@ def getHIT():
             return make_response(render_template('task.html', data=data, targetLink=targetLink))
 
 
-    ###########################################################
+    ###################################################################################
     # Task 1: Annotate article
     # curr_article should have been passed.
     if params['task'] == 1 and params['curr_article'] and params['curr_cat']:
@@ -238,53 +214,32 @@ def getHIT():
         targetLink = getNextLink(targetLink,params)
         return make_response(render_template('task.html', data=data, targetLink=targetLink))
 
-        # print("###########################################################")
-        # for p in params:
-        #     if params[p] != None:
-        #         print(p+' ==== '+str(params[p]))
-        # print("###########################################################")
-    
 
-    ###########################################################
+    ###################################################################################
     # Task 2: Review
-    # if params['task'] == 2:
-    #     params['task'] == 3
-    #     targetLink = getNextLink(targetLink,params)
-    #     return make_response(render_template('task.html', data=data, targetLink=targetLink))
+    if params['task'] == 2:
 
-    
+        print("###########################################################")
+        for p in params:
+            if params[p] != None:
+                print(p+' ==== '+str(params[p]))
+        print("###########################################################")
+        summaries_dict = setNewsfeedContent(params,params['curr_article'])
+        # amazon_newsfeed_annotation_a1=3&amazon_newsfeed_annotation_a2=3&amazon_articleId=1&amazon_promptId=3&amazon_time_reading=&amazon_time_writing=&amazon_annotation=fdafda
+        targetLink = getNextLink(targetLink,params)
+        data = {};
+        return make_response(render_template('review.html', data=data, targetLink=targetLink))
 
-    
-
-    ###########################################################
-    # Testing
-    ###########################################################
-    # assign empty params
-    for p in params:
-        if params[p]:
-            print(p+" ================================== "+str(params[p]))
-
+    # To change
     data = params
     data['amazon_host'] = amazon_host
 
-    
-
-    print("QUERY TO STRING==================")
-    paramsToURL = paramstoURL(params)
-    print("EXISTING URL PARAMS==================")
-    print(request.query_string.decode('utf-8'))
-    # targetLink += '?' + request.query_string.decode('utf-8')
     targetLink = getNextLink(targetLink,params)
     response = make_response(render_template('test.html', targetLink=targetLink))
-    # if data['newsfeed']==False or data['task']!=0:
-    #     targetLink += 'getTask?'+request.query_string.decode('utf-8')
-    #     response = make_response(render_template('task.html', data = data, targetLink=targetLink))
-    # targetLink += '?' + request.query_string.decode('utf-8')
-    # response = make_response(render_template('test.html', targetLink=targetLink))
     return response
 
 def getArticle(articleCategory, articleId):
-
+    # read single article
     f = open('static/articles/' + articleCategory + '/' + articleId + '.txt', 'r', encoding='utf-8')
     data = f.readlines()
     f.close()
@@ -343,7 +298,13 @@ def showNewsfeed(category):
     for option in [1,2]:
         temp_param = category+'_articleId'
         args = {temp_param: str(option)}
-        count = len(Experiment.query.filter_by(**args).all())
+        print("TEMP PARAM = "+ temp_param)
+        print("ARGS = "+ str(args))
+        count = Experiment.query.filter_by(**args).count()
+        
+        # count = exp.count()
+        print("count = "+ count)
+        
         # if total submissions < 1 per article return false
         if count < 1:
             return False
@@ -351,7 +312,8 @@ def showNewsfeed(category):
     # if max difference b/w articles > 5 return false
     return False if abs(counts[0]-counts[1])>5 else True
 
-def setNewsfeedContent(params):
+def setNewsfeedContent(params,specificArticle=None):
+    # Newsfeed summaries & corresponding annotations (assigning)
     annotation1 = params['curr_cat']+"_newsfeed_annotation_a1"
     annotation2 = params['curr_cat']+"_newsfeed_annotation_a2"
     for annotation in [annotation1, annotation2]:
@@ -363,7 +325,7 @@ def setNewsfeedContent(params):
         params[annotation_rand] = str(annotation_content.__dict__[annotation_field]) if annotation_content else ""
         params[annotation] = annotationId
 
-    # Get newsfeed summaries content
+    # Get newsfeed summaries content (populating)
     summaries_dict = {}
     for articleId in [params['newsfeed_order'][0],params['newsfeed_order'][1]]:
         annotation_rand = params['curr_cat']+"_annotation_content_a"+articleId
@@ -377,6 +339,7 @@ def setNewsfeedContent(params):
     return summaries_dict
 
 def setArticleContent(params):
+    # Assigning and populating a single article based on random assignment or user's pick
     curr_topic = params['curr_cat']+"_articleId" # e.g. 'amazon_articleId'
     article_dict = {}
     if params['curr_article'] is None:
@@ -406,17 +369,12 @@ def getParamsFromURL(request):
     for p in param_names:
         key = p
         val = request.get(p) if request.get(p) else None
-
         # special cases
         numeric_vals = ['task','promptId','amazon_articleId','amazon_promptId','apple_articleId','apple_promptId','uber_articleId','uber_promptId']
-        # if key == 'newsfeed_order' and val: 
-        #     array = val.split(",")
-        #     params[key] = array
         if key in numeric_vals and val: 
             params[key] = int(val)
         elif key == 'newsfeed' and val: 
             params[key] = True if val=="true" or val=="True" else False
-        # default: string
         else:
             params[key] = val
     return params
@@ -440,3 +398,8 @@ def getNextLink(targetLink,params):
     # print("NEW PARAMS TO URL = "+paramsForURL)
     targetLink += 'getTask?'+ paramsForURL
     return targetLink
+
+def saveURL(params_to_save):
+    pass
+    # ?&task=1&newsfeed_order=21&promptId=3&curr_cat=amazon&amazon_newsfeed_annotation_a1=3&amazon_newsfeed_annotation_a2=3&amazon_annotation_content_a1=aaaaaaaaaaaa&amazon_annotation_content_a2=&curr_article=1
+    # &task=2&newsfeed_order=21&promptId=3&curr_cat=amazon&curr_article=1&amazon_newsfeed_annotation_a1=3&amazon_newsfeed_annotation_a2=3&amazon_articleId=1&amazon_promptId=3&amazon_time_reading=&amazon_time_writing=&amazon_annotation=fdafdsa

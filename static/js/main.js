@@ -29,60 +29,53 @@ function addHidden(form, name, value) {
     form.appendChild(input);
 }
 
-function createDynamicURL() {
-	var URL;
-	// console.log(form)
-	var article_selected = parent.firstChild;
-	var params = {}
-	params['task'] = '';
-	params['newsfeed'] = '';
-	params['newsfeed_order'] = '';
-	params['promptId'] = '';
-	params['prompt'] = '';
-	params['placeholder'] = '';
-	params['curr_cat'] = '';
-	params['curr_article'] = '';
-	params['curr_articleTitle'] = '';
-	params['curr_articleByLine'] = '';
-	params['curr_articleText'] = '';
-	params['assignmentId'] = '';
-	params['hitId'] = '';
-	params['workerId'] = '';
-	params['amazon_newsfeed_order'] = '';
-	params['amazon_newsfeed_annotation_a1'] = '';
-	params['amazon_newsfeed_annotation_a2'] = '';
-	params['amazon_articleId'] = '';
-	params['amazon_promptId'] = '';
-	params['amazon_time_reading'] = '';
-	params['amazon_time_writing'] = '';
-	params['amazon_annotation'] = '';
-	for (p in params){
-		if (p != ''){
-			console.log(p);
-		}
-	}
+function goToPage(link) {
+	window.location = link;
 }
 
 function redirectURL() {
-	console.log(this);
-	console.log(this.value);
-	// if (event.target.parentElement!="summaries" && event.target.parentElement!="container"){
-	// 	window.location= createDynamicURL(event.target.parentElement);
-	// }
-	// 
+	var id = this.id;
+	this.setAttribute("href",this.href+"&curr_article="+this.id);
+	alert(this.href);
+	goToPage(this.href);
 }
 
-function submitTask() {
+function clickSubmit() {
 	currentTime = new Date().getTime();
 	writingTime += currentTime - currentTimerStart;
 	var form = document.getElementById('mturkForm');
 	addHidden(form, 'readingTime', readingTime.toString());
 	addHidden(form, 'writingTime', writingTime.toString());
-	form.submit();
+	var elements = form.elements;
+
+	// alert("WHAT IS GOING ON");
+
+	var targetLink = elements['targetLink'].value;
+	var category = elements['curr_cat'].value;
+    var promptId = elements['promptId'].value;
+    var time_reading = elements['readingTime'].value;
+    var time_writing = elements['writingTime'].value;
+    var annotation = elements['annotation'].value;
+	
+	targetLink += "&"+category+"_promptId="+promptId;
+	targetLink += "&"+category+"_time_reading="+time_reading;
+	targetLink += "&"+category+"_time_writing="+time_writing;
+	targetLink += "&"+category+"_annotation="+annotation;
+
+	// alert(targetLink);
+	if (category != "uber"){
+		goToPage(targetLink);
+		return false;
+	} else {
+		form.submit();
+	}
 }
 
 var currentTimerStart = new Date().getTime();
 var writingTime = 0;
 var readingTime = 0;
-document.getElementById("1").addEventListener ("click", redirectURL, false);
-document.getElementById("2").addEventListener ("click", redirectURL, false);
+
+window.onload=function(){
+    document.getElementById("1").addEventListener ("click", redirectURL, false);
+	document.getElementById("2").addEventListener ("click", redirectURL, false);
+}

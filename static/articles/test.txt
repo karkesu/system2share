@@ -1,9 +1,111 @@
-Article title
+#Checked
+## amazon_annotation_content_a1
+## amazon_annotation_content_a2
+## amazon_articleId
+## amazon_time_reading
+## amazon_time_writing
+## amazon_annotation
 
-Subtitle/author
+# ALL PARAMS
+# 'assignmentId'
+# 'hitId'
+# 'workerId'
+# 'task'
+# 'newsfeed'
+# 'newsfeed_order'
+# 'promptId'
+# 'prompt'
+# 'placeholder'
+# 'curr_cat'
+# 'curr_article'
+# 'curr_articleTitle'
+# 'curr_articleByLine'
+# 'curr_articleText'
+# 'amazon_newsfeed_annotation_a1'
+# 'amazon_newsfeed_annotation_a2'
+# 'amazon_annotation_content_a1'
+# 'amazon_annotation_content_a2'
+# 'amazon_articleId'
+# 'amazon_promptId'
+# 'amazon_time_reading'
+# 'amazon_time_writing'
+# 'amazon_annotation'
+# 'amazon_likert_summary_evaluation'
+# 'amazon_likert_prior_knowledge'
+# 'amazon_likert_learning'
+# 'apple_newsfeed_annotation_a1'
+# 'apple_newsfeed_annotation_a2'
+# 'apple_annotation_content_a1'
+# 'apple_annotation_content_a2'
+# 'apple_articleId'
+# 'apple_promptId'
+# 'apple_time_reading'
+# 'apple_time_writing'
+# 'apple_annotation'
+# 'apple_likert_summary_evaluation'
+# 'apple_likert_prior_knowledge'
+# 'apple_likert_learning'
+# 'uber_newsfeed_annotation_a1'
+# 'uber_newsfeed_annotation_a2'
+# 'uber_annotation_content_a1'
+# 'uber_annotation_content_a2'
+# 'uber_articleId'
+# 'uber_promptId'
+# 'uber_time_reading'
+# 'uber_time_writing'
+# 'uber_annotation'
+# 'uber_likert_summary_evaluation'
+# 'uber_likert_prior_knowledge'
+# 'uber_likert_learning'
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sem eros, consectetur a elementum at, dictum non enim. Proin lectus nibh, mollis sit amet tincidunt ut, vestibulum eget dui. Morbi eget nunc gravida tellus auctor facilisis eget ut ante. Phasellus posuere nisl ornare, mattis tellus ac, bibendum lorem. Aliquam at lobortis eros. Quisque placerat dolor arcu, et rutrum nulla iaculis vitae. In cursus erat ut mauris tristique ullamcorper. Fusce sollicitudin nisl vel dolor mollis tempor. Donec fringilla, nisl a porta cursus, ex eros tincidunt enim, et pretium dolor est a tellus. Nunc vel tristique nisl, ut sodales ipsum. Pellentesque pellentesque, nibh at tincidunt mattis, est diam mollis augue, at aliquam magna nunc non justo. Fusce sed lectus a justo condimentum suscipit. Mauris aliquet nisl vitae eros dictum, accumsan commodo orci rhoncus.
 
-Proin pharetra tristique diam, ut ullamcorper purus. Mauris imperdiet diam diam, vitae maximus elit pulvinar quis. Suspendisse porttitor massa quis sapien pulvinar volutpat. In congue consequat metus eu lacinia. Praesent consequat porttitor suscipit. Maecenas dignissim velit quis justo tincidunt accumsan. Sed eu hendrerit est. Donec bibendum, dolor vel efficitur commodo, libero justo tincidunt diam, quis fringilla sapien nisi ut elit. Aliquam eget convallis nunc. Nullam varius ultrices tellus, et pretium nibh euismod in.
 
-Proin pharetra tristique diam, ut ullamcorper purus. Mauris imperdiet diam diam, vitae maximus elit pulvinar quis. Suspendisse porttitor massa quis sapien pulvinar volutpat. In congue consequat metus eu lacinia. Praesent consequat porttitor suscipit. Maecenas dignissim velit quis justo tincidunt accumsan. Sed eu hendrerit est. Donec bibendum, dolor vel efficitur commodo, libero justo tincidunt diam, quis fringilla sapien nisi ut elit. Aliquam eget convallis nunc. Nullam varius ultrices tellus, et pretium nibh euismod in.
+class Experiment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    newsfeed = db.Column(db.Boolean, nullable=False)
+    newsfeed_order = db.Column(db.String(2), nullable=True)
+    promptId = db.Column(db.Integer, nullable=False)
+    assignmentId = db.Column(db.String(50), nullable=False)
+    hitId = db.Column(db.String(50), nullable=False)
+    workerId = db.Column(db.String(50), nullable=False)
+    # amazon_newsfeed_order = db.Column(db.String(2), nullable=True)
+    # amazon_promptId = db.Column(db.Integer, nullable=False)
+    amazon_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
+    amazon_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
+    amazon_annotation_content_a1 = db.Column(db.String(500), nullable=True)
+    amazon_annotation_content_a2 = db.Column(db.String(500), nullable=True)
+    amazon_articleId = db.Column(db.Integer, nullable=False)
+    amazon_time_reading = db.Column(db.Integer, nullable=True)
+    amazon_time_writing = db.Column(db.Integer, nullable=True)
+    amazon_annotation = db.Column(db.String(800), nullable=True)
+    amazon_likert_summary_evaluation = db.Column(db.Integer, nullable=True)
+    amazon_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
+    amazon_likert_learning = db.Column(db.Integer, nullable=True)
+    # apple_newsfeed_order = db.Column(db.String(2), nullable=True)
+    # apple_promptId = db.Column(db.Integer, nullable=False)
+    apple_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
+    apple_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
+    apple_annotation_content_a1 = db.Column(db.String(500), nullable=True)
+    apple_annotation_content_a2 = db.Column(db.String(500), nullable=True)
+    apple_articleId = db.Column(db.Integer, nullable=False)
+    apple_time_reading = db.Column(db.Integer, nullable=True)
+    apple_time_writing = db.Column(db.Integer, nullable=True)
+    apple_annotation = db.Column(db.String(800), nullable=True)
+    apple_likert_summary_evaluation = db.Column(db.Integer, nullable=True)
+    apple_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
+    apple_likert_learning = db.Column(db.Integer, nullable=True)
+    # uber_newsfeed_order = db.Column(db.String(2), nullable=True)
+    # uber_promptId = db.Column(db.Integer, nullable=False)
+    uber_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
+    uber_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
+    uber_annotation_content_a1 = db.Column(db.String(500), nullable=True)
+    uber_annotation_content_a2 = db.Column(db.String(500), nullable=True)
+    uber_articleId = db.Column(db.Integer, nullable=False)
+    uber_time_reading = db.Column(db.Integer, nullable=True)
+    uber_time_writing = db.Column(db.Integer, nullable=True)
+    uber_annotation = db.Column(db.String(800), nullable=True)
+    uber_likert_summary_evaluation = db.Column(db.Integer, nullable=True)
+    uber_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
+    uber_likert_learning = db.Column(db.Integer, nullable=True)
+
+param_names = ['assignmentId','hitId','workerId','task','newsfeed','newsfeed_order','promptId','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText','amazon_newsfeed_annotation_a1','amazon_newsfeed_annotation_a2','amazon_annotation_content_a1','amazon_annotation_content_a2','amazon_articleId','amazon_promptId','amazon_time_reading','amazon_time_writing','amazon_annotation','amazon_likert_summary_evaluation','amazon_likert_prior_knowledge','amazon_likert_learning','apple_newsfeed_annotation_a1','apple_newsfeed_annotation_a2','apple_annotation_content_a1','apple_annotation_content_a2','apple_articleId','apple_promptId','apple_time_reading','apple_time_writing','apple_annotation','apple_likert_summary_evaluation','apple_likert_prior_knowledge','apple_likert_learning','uber_newsfeed_annotation_a1','uber_newsfeed_annotation_a2','uber_annotation_content_a1','uber_annotation_content_a2','uber_articleId','uber_promptId','uber_time_reading','uber_time_writing','uber_annotation','uber_likert_summary_evaluation','uber_likert_prior_knowledge','uber_likert_learning']
