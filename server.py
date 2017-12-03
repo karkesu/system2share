@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, url_for, make_response
 from flask_sqlalchemy import SQLAlchemy
 from config import *
-import sys, os, random
+import sys, os, random, json
 
 # Config
 
-env = os.environ['APP_ENV']
+env = 'dev' #os.environ['APP_ENV']
 app = Flask(__name__)
 
 if env == 'dev':
@@ -21,9 +21,9 @@ db = SQLAlchemy(app)
 
 class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    exp = db.Column(db.Integer, nullable=False)
-    context = db.Column(db.Integer, nullable=False)
-    iterations = db.Column(db.Integer, nullable=False)
+    exp = db.Column(db.Integer, nullable=False) # 1 or 2 for annotating/viewing
+    context = db.Column(db.Integer, nullable=False) # article/promptID
+    iterations = db.Column(db.Integer, nullable=False) # 
 
 # Views
 
@@ -44,27 +44,26 @@ def getHIT(articleID, articleCategory):
     if request.args.get('assignmentId') == 'ASSIGNMENT_ID_NOT_AVAILABLE':
         return make_response(render_template('consent.html'))
 
+    print("REQUEST ARGS")
+    print(request.args.get('articleID'))
+    # Get articles
     article = getArticle(articleCategory, articleID)
     articleTitle = article[0]
     articleByLine = article[1]
     articleText = article[2:]
 
-    prompts = [
-        {"prompt": "",
-            "placeholder": "Say something about this..."},
-        {"prompt": "Share a quote to give people more context.",
-            "placeholder": ""},
-        {"prompt": "Summarize the article.",
-            "placeholder": ""},
-        {"prompt": "How does this issue affect you or someone you know?",
-            "placeholder": "Sharing a personal story helps others understand the real impacts of this issue."},
-        {"prompt": "Argue for or against the main viewpoints of this article. Is there anything missing that you would like to learn more about?",
-            "placeholder": "Do you have any specific questions?"},
-        {"prompt": "What should we do about this issue? Who should care and why?",
-            "placeholder": ""}
-    ]
+    # Get annotations
 
+    # Get prompts
+    with open('static/articles/annotations.json') as json_file:
+        d = "["+ str(json_file.read())+"]"
+        json_data = json.loads(d)
+    prompts = json_data
     promptID = random.randint(0,5)
+
+    # articleIDs = [[2,3,1],[3,1,2],[1,3,2]]
+    # articleCats = ['tech-hq','sharing-econ','mooc']
+    # 
     data = {
         'amazon_host': amazon_host,
         'hitID': request.args.get('hitId'),
@@ -80,6 +79,8 @@ def getHIT(articleID, articleCategory):
         'promptID': promptID,
         'prompts': prompts
     }
+    for d in data:
+        print(type(d))
 
     response = make_response(render_template('task.html', data = data))
     return response
@@ -90,3 +91,13 @@ def getArticle(articleCategory, articleID):
     data = f.readlines()
     f.close()
     return data
+
+def load_json_multiple(segment):
+    chunk = ""
+    for segment in segments:
+        chunk += segment
+        try:
+            yield json.loads(chunk)
+            chunk = ""
+        except ValueError:
+            pass

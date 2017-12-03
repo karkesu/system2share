@@ -5,7 +5,7 @@ from boto.mturk.qualification import Qualifications, PercentAssignmentsApprovedR
 import sys
 import os
 
-IS_DEV_ENVIRONMENT = False
+IS_DEV_ENVIRONMENT = True
 AWS_ACCESS_KEY_ID = os.environ['ACCESS_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['SECRET_ACCESS_KEY']
 
