@@ -5,7 +5,7 @@ import sys, os, random, json
 
 # Config
 
-env = 'dev' #os.environ['APP_ENV']
+env = os.environ['APP_ENV']
 app = Flask(__name__)
 
 if env == 'dev':
