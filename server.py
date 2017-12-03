@@ -41,7 +41,7 @@ def welcome():
 @app.route('/test/<articleCategory>/<articleID>')
 def test(articleCategory, articleID):
     targetLink = request.url_root 
-    targetLink += 'getTask/' + articleCategory + articleID
+    targetLink += 'getTask/' + articleCategory + '/' + articleID
     targetLink += '?' + request.query_string.decode('utf-8')
     response = make_response(render_template('test.html', targetLink=targetLink))
     return response
