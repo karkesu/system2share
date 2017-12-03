@@ -18,7 +18,44 @@ else:
 
 db = SQLAlchemy(app)
 
-param_names = ['task','newsfeed','newsfeed_order','promptId','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText','assignmentId','hitId','workerId','amazon_newsfeed_order','amazon_newsfeed_annotation_a1','amazon_newsfeed_annotation_a2','amazon_articleId','amazon_promptId','amazon_time_reading','amazon_time_writing','amazon_annotation']
+param_names = ['task','newsfeed','newsfeed_order','promptId','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText','assignmentId','hitId','workerId','amazon_newsfeed_order','amazon_newsfeed_annotation_a1','amazon_newsfeed_annotation_a2','amazon_articleId','amazon_time_reading','amazon_time_writing','amazon_annotation','apple_newsfeed_annotation_a1','apple_newsfeed_annotation_a2','apple_articleId','apple_time_reading','apple_time_writing','apple_annotation','uber_newsfeed_annotation_a1','uber_newsfeed_annotation_a2','uber_articleId','uber_time_reading','uber_time_writing','uber_annotation']
+
+poss_assignments = {
+    'newsfeed_order': ['1,2','2,1'],
+    'promptId': ['0','1','2','3']
+}
+    # 'task'
+    # 'newsfeed'
+    # 'newsfeed_order'
+    # 'promptId'
+    # 'prompt'
+    # 'placeholder'
+    # 'curr_cat'
+    # 'curr_article'
+    # 'curr_articleTitle'
+    # 'curr_articleByLine'
+    # 'curr_articleText'
+    # 'assignmentId'
+    # 'hitId'
+    # 'workerId'
+    # 'amazon_newsfeed_annotation_a1'
+    # 'amazon_newsfeed_annotation_a2'
+    # 'amazon_articleId'
+    # 'amazon_time_reading'
+    # 'amazon_time_writing'
+    # 'amazon_annotation'
+    # 'apple_newsfeed_annotation_a1'
+    # 'apple_newsfeed_annotation_a2'
+    # 'apple_articleId'
+    # 'apple_time_reading'
+    # 'apple_time_writing'
+    # 'apple_annotation'
+    # 'uber_newsfeed_annotation_a1'
+    # 'uber_newsfeed_annotation_a2'
+    # 'uber_articleId'
+    # 'uber_time_reading'
+    # 'uber_time_writing'
+    # 'uber_annotation'
 
 
 # Database Models
@@ -26,7 +63,7 @@ param_names = ['task','newsfeed','newsfeed_order','promptId','prompt','placehold
 class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     newsfeed = db.Column(db.String(1), nullable=False)
-    newsfeed_order = db.Column(db.String(20), nullable=False)
+    newsfeed_order = db.Column(db.String(20), nullable=True)
     promptId = db.Column(db.String(1), nullable=False)
     # assignmentId = db.Column(db.String(50), nullable=False)
     # hitId = db.Column(db.String(50), nullable=False)
@@ -39,6 +76,7 @@ class Experiment(db.Model):
     # amazon_time_reading = db.Column(db.String(20), nullable=False)
     # amazon_time_writing = db.Column(db.String(20), nullable=False)
     # amazon_annotation = db.Column(db.String(1000), nullable=True)
+    # apple_newsfeed_order = db.Column(db.String(20), nullable=True)
     # apple_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
     # apple_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
     # apple_articleId = db.Column(db.String(1), nullable=False)
@@ -46,10 +84,11 @@ class Experiment(db.Model):
     # apple_time_reading = db.Column(db.String(20), nullable=False)
     # apple_time_writing = db.Column(db.String(20), nullable=False)
     # apple_annotation = db.Column(db.String(1000), nullable=True)
+    # uber_newsfeed_order = db.Column(db.String(20), nullable=True)
     # uber_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
     # uber_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
     # uber_articleId = db.Column(db.String(1), nullable=False)
-    # uber_promptId = db.Column(db.String(20), nullable=False)
+    # uber_promptId = db.Column(db.String(1), nullable=False)
     # uber_time_reading = db.Column(db.String(20), nullable=False)
     # uber_time_writing = db.Column(db.String(20), nullable=False)
     # uber_annotation = db.Column(db.String(1000), nullable=True)
@@ -65,11 +104,16 @@ def submit():
     # delete unnecessary params from larger list
     db_params = param_names
     for p in ['task','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText']:
-        db_params.remove(p)
+        if p in db_params:
+            db_params.remove(p)
     # assign values to Experiment params
     for p in db_params:
         setattr(exp, p, params[p])
         print(params[p])
+    # assign repetitive values
+    for company in ['amazon','apple','uber']:
+        setattr(exp,(company+'_newsfeed_order'),params['newsfeed_order'])
+        setattr(exp,(company+'_promptId'),params['promptId'])
     # db.session.add(exp)
     # db.session.commit()
     
@@ -97,16 +141,127 @@ def test():
 @app.route('/getTask/', methods=['GET','POST'])
 def getHIT():
 
+    # Before HIT is picked up, show consent form
     if request.args.get('assignmentId') == 'ASSIGNMENT_Id_NOT_AVAILABLE':
         return make_response(render_template('consent.html'))
 
+    # Get params from URLs
     params = getParams()
 
-    if params['newsfeed'] is None:
-        params['newsfeed'] = showNewsFeed()
+    # ALL PARAMS
+    # 'task'
+    # 'newsfeed'
+    # 'newsfeed_order'
+    # 'promptId'
+    # 'prompt'
+    # 'placeholder'
+    # 'curr_cat'
+    # 'curr_article'
+    # 'curr_articleTitle'
+    # 'curr_articleByLine'
+    # 'curr_articleText'
+    # 'assignmentId'
+    # 'hitId'
+    # 'workerId'
+    # 'amazon_newsfeed_annotation_a1'
+    # 'amazon_newsfeed_annotation_a2'
+    # 'amazon_articleId'
+    # 'amazon_time_reading'
+    # 'amazon_time_writing'
+    # 'amazon_annotation'
+    # 'apple_newsfeed_annotation_a1'
+    # 'apple_newsfeed_annotation_a2'
+    # 'apple_articleId'
+    # 'apple_time_reading'
+    # 'apple_time_writing'
+    # 'apple_annotation'
+    # 'uber_newsfeed_annotation_a1'
+    # 'uber_newsfeed_annotation_a2'
+    # 'uber_articleId'
+    # 'uber_time_reading'
+    # 'uber_time_writing'
+    # 'uber_annotation'
 
+    # STILL UNASSIGNED
+    ## 'assignmentId'
+    ## 'hitId'
+    ## 'workerId'
+    ## 'task'
+    # 'newsfeed'
+    ## 'newsfeed_order'
+    ## 'promptId'
+    ## 'prompt'
+    ## 'placeholder'
+    ## 'curr_cat'
+    ## 'curr_article'
+    ## 'curr_articleTitle'
+    ## 'curr_articleByLine'
+    ## 'curr_articleText'
+    # 'amazon_newsfeed_annotation_a1'
+    # 'amazon_newsfeed_annotation_a2'
+    # 'amazon_articleId'
+    # 'amazon_time_reading'
+    # 'amazon_time_writing'
+    # 'amazon_annotation'
+    # 'apple_newsfeed_annotation_a1'
+    # 'apple_newsfeed_annotation_a2'
+    # 'apple_articleId'
+    # 'apple_time_reading'
+    # 'apple_time_writing'
+    # 'apple_annotation'
+    # 'uber_newsfeed_annotation_a1'
+    # 'uber_newsfeed_annotation_a2'
+    # 'uber_articleId'
+    # 'uber_time_reading'
+    # 'uber_time_writing'
+    # 'uber_annotation'
+
+    ###########################################################
+    # The following parameters stay constant for all categories
+    ###########################################################
+    # show newsfeed?
+    if params['newsfeed'] is None:
+        # TO UPDATE
+        params['newsfeed'] = '1' #showNewsFeed()
+
+    # what order will the newsfeed articles be shown?
+    if params['newsfeed'] == '1' and params['newsfeed_order'] is None:
+        params['newsfeed_order'] = getLeastFrequent('newsfeed_order', poss_assignments['newsfeed_order'],groupBy=None)
+
+    # assign promptId, prompt, placeholder
     if params['promptId'] is None:
-        params['promptId'] = getPromptId()
+        params['promptId'] = getLeastFrequent('promptId',poss_assignments['promptId'],groupBy=None)
+        with open('static/articles/annotations.json') as json_file:
+            d = "["+ str(json_file.read())+"]"
+            prompts = json.loads(d)
+            prompt = prompts[int(params['promptId'])]
+            params['prompt'] = prompt['prompt']
+            params['placeholder'] = prompt['placeholder']
+
+    ###########################################################
+    # Dynamic variables! Updated throughout experiment
+    ###########################################################
+    # task: 0 = newsfeed, 1 = reading/annotating, 2 = reviewing
+    params['task'] = getNextTask(params['task'])
+
+    # current category 
+    'curr_cat'
+    # 'curr_article'
+    'curr_article'
+    # 'curr_articleTitle'
+    'curr_articleTitle'
+    # 'curr_articleByLine'
+    'curr_articleByLine'
+    # 'curr_articleText'
+    'curr_articleText'
+    # assign empty params
+    for p in ['']:
+        pass
+
+
+    # Get prompts
+    
+    
 
     # Get newsfeed
     if params['newsfeed']=='1' and params['task']=='0': 
@@ -130,17 +285,7 @@ def getHIT():
         params['curr_articleByLine'] = article[1]
         params['curr_articleText'] = article[2:]
 
-    # Get prompts
-    with open('static/articles/annotations.json') as json_file:
-        d = "["+ str(json_file.read())+"]"
-        prompts = json.loads(d)
-    # prompts = json_data
-    print("PROMPTID_-----------------")
-    print(params['promptId'])
-
-    prompt = prompts[int(params['promptId'])]
-    params['prompt'] = prompt['prompt']
-    params['placeholder'] = prompt['placeholder']
+    
 
     #experiment.query.getall
     # do not show newsfeed if difference between #annotations/articles > 5
@@ -168,9 +313,29 @@ def getArticle(articleCategory, articleId):
     f.close()
     return data
 
-def showNewsFeed():
+def getLeastFrequent(param,options,groupBy):
+    leastFrequent = options[0]
+    leastFrequentCount = 0
+    for option in options:
+        args = {param:option}
+        count = len(Experiment.query.filter_by(**args).all())
+        print(param+" = "+option+" === "+str(count))
+        if count <= leastFrequentCount:
+            leastFrequent = option
+            leastFrequentCount = count
+    print("LEAST FREQUENT ="+leastFrequent)
+    return leastFrequent
+
+def getNextTask(task):
+    next_task = 1 if task == None else Integer(task) + 1
+    print("NEXT TASK!!!!!")
+    print(next_task)
+    return str(next_task)
+
+def showNewsFeed(category):
     # if total submissions < 1 per article return false
     # if max difference b/w articles > 5 return false
+    Experiment.query.filter_by(curr_cat='3').all()
     return str(0)
 
 def getPromptId():
@@ -181,11 +346,8 @@ def getParams():
     for p in param_names:
         key = p
         val = request.args.get(p) if request.args.get(p) else None
-<<<<<<< HEAD
-        if key == 'newsfeed_order': #special cases for arrays
-=======
+
         if key == 'newsfeed_order' and val is not None: #special cases for arrays
->>>>>>> 7e23adc7251cf1a3a9c64f9d15053da17e3142f8
             array = val.split(",")
             params[key] = array
         else:
