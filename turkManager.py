@@ -31,7 +31,7 @@ mtc = MTurkConnection(
 
 def createHIT(articleCategory, articleId):
 
-    url = 'https://www.zeerak.net/279akz/getTask/'
+    url = 'https://www.zeerak.net/279akz/test/'
     url += articleCategory
     url += '/'
     url += articleId

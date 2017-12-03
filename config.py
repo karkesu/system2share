@@ -3,8 +3,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 class Production(Config):
-	# TO CHANGE
-	SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+	SQLALCHEMY_DATABASE_URI = 'postgres://postgres:k96sftvy@localhost/279akz'
 
 class Dev(Config):
     DEBUG = True

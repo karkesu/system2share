@@ -64,9 +64,12 @@ function createDynamicURL() {
 }
 
 function redirectURL() {
-	console.log(this.firstChild.value);
 	console.log(this);
-	// window.location= createDynamicURL();
+	console.log(this.value);
+	// if (event.target.parentElement!="summaries" && event.target.parentElement!="container"){
+	// 	window.location= createDynamicURL(event.target.parentElement);
+	// }
+	// 
 }
 
 function submitTask() {
@@ -81,4 +84,5 @@ function submitTask() {
 var currentTimerStart = new Date().getTime();
 var writingTime = 0;
 var readingTime = 0;
-document.getElementById ("article_summary").addEventListener ("click", redirectURL, false);
+document.getElementById("1").addEventListener ("click", redirectURL, false);
+document.getElementById("2").addEventListener ("click", redirectURL, false);
