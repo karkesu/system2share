@@ -3,7 +3,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 class Production(Config):
-	SQLALCHEMY_DATABASE_URI = 'postgres://postgres:k96sftvy/279akz'
+	SQLALCHEMY_DATABASE_URI = 'postgres://postgres:k96sftvy@localhost/279akz'
 
 class Dev(Config):
     DEBUG = True
