@@ -1,0 +1,12 @@
+{"prompt": "",
+    "placeholder": "Say something about this..."},
+{"prompt": "Share a quote to give people more context.",
+    "placeholder": ""},
+{"prompt": "Summarize the article.",
+    "placeholder": ""},
+{"prompt": "How does this issue affect you or someone you know?",
+    "placeholder": "Sharing a personal story helps others understand the real impacts of this issue."},
+{"prompt": "Argue for or against the main viewpoints of this article. Is there anything missing that you would like to learn more about?",
+    "placeholder": "Do you have any specific questions?"},
+{"prompt": "What should we do about this issue? Who should care and why?",
+    "placeholder": ""}

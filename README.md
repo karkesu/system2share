@@ -28,7 +28,7 @@ Similarly to delete the database you would run:
 Then set up variables that tell our app whether it's in a dev environment, tells Flask to automatically reload on a change, and also where our app is. Then tell flask to run:
 
 	export APP_ENV=dev
-	export FLASK_DEBUG-1
+	export FLASK_DEBUG=1
 	export FLASK_APP=server.py
 	flask run
 
