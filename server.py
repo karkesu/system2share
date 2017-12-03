@@ -54,10 +54,8 @@ class Experiment(db.Model):
     # uber_time_writing = db.Column(db.String(20), nullable=False)
     # uber_annotation = db.Column(db.String(1000), nullable=True)
 
-
 # Views
 
-# this route is a way to test the database. Just reloading should increment this
 @app.route('/submit')
 def submit():
     # create test entry
@@ -76,7 +74,6 @@ def submit():
     # db.session.commit()
     
     print(exp)
-
     exp2 = Experiment.query.filter_by(newsfeed='3').all()
     print(exp2)
     return 'submitted'
@@ -99,14 +96,18 @@ def test():
 
 @app.route('/getTask/', methods=['GET','POST'])
 def getHIT():
+
     if request.args.get('assignmentId') == 'ASSIGNMENT_Id_NOT_AVAILABLE':
         return make_response(render_template('consent.html'))
 
     params = getParams()
 
-    # for p in params:
-    #     print(str(p)+" ===================== "+params[p])
-    
+    if params['newsfeed'] is None:
+        params['newsfeed'] = showNewsFeed()
+
+    if params['promptId'] is None:
+        params['promptId'] = getPromptId()
+
     # Get newsfeed
     if params['newsfeed']=='1' and params['task']=='0': 
         cat = params['curr_cat'] if params['curr_cat'] else ''
@@ -136,6 +137,7 @@ def getHIT():
     # prompts = json_data
     print("PROMPTID_-----------------")
     print(params['promptId'])
+
     prompt = prompts[int(params['promptId'])]
     params['prompt'] = prompt['prompt']
     params['placeholder'] = prompt['placeholder']
@@ -166,12 +168,24 @@ def getArticle(articleCategory, articleId):
     f.close()
     return data
 
+def showNewsFeed():
+    # if total submissions < 1 per article return false
+    # if max difference b/w articles > 5 return false
+    return str(0)
+
+def getPromptId():
+    return str(0)
+
 def getParams():
     params = {}
     for p in param_names:
         key = p
         val = request.args.get(p) if request.args.get(p) else None
+<<<<<<< HEAD
         if key == 'newsfeed_order': #special cases for arrays
+=======
+        if key == 'newsfeed_order' and val is not None: #special cases for arrays
+>>>>>>> 7e23adc7251cf1a3a9c64f9d15053da17e3142f8
             array = val.split(",")
             params[key] = array
         else:
