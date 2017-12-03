@@ -61,15 +61,12 @@ param_names = ['task','newsfeed','newsfeed_order','promptId','prompt','placehold
 
 class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # exp = db.Column(db.Integer, nullable=False)
-    # context = db.Column(db.Integer, nullable=False)
-    # iterations = db.Column(db.Integer, nullable=False)
-    newsfeed = db.Column(db.String(1), nullable=False)
-    newsfeed_order = db.Column(db.String(20), nullable=False)
-    promptId = db.Column(db.String(1), nullable=False)
     assignmentId = db.Column(db.String(50), nullable=False)
     hitId = db.Column(db.String(50), nullable=False)
     workerId = db.Column(db.String(50), nullable=False)
+    newsfeed = db.Column(db.String(1), nullable=False)
+    newsfeed_order = db.Column(db.String(20), nullable=False)
+    promptId = db.Column(db.String(1), nullable=False)
     amazon_newsfeed_order = db.Column(db.String(20), nullable=True)
     amazon_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
     amazon_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
@@ -95,7 +92,6 @@ class Experiment(db.Model):
 
 # Views
 
-# this route is a way to test the database. Just reloading should increment this
 @app.route('/submit')
 def submit():
     params = getParams()
@@ -105,14 +101,6 @@ def submit():
     db.session.add(exp)
     print("Exp ==========================")
     print(exp)
-    # db.session.commit()
-    # exp = Experiment.query.filter_by(exp=1, context=0).first()
-    # if exp == None:
-    #     exp=Experiment(exp=1, context=0, iterations=0)
-    #     db.session.add(exp)
-    # exp.iterations = exp.iterations + 1
-    # db.session.commit()
-    # return str(exp.iterations)
 
 @app.route('/test/')
 def test():
@@ -122,16 +110,20 @@ def test():
     response = make_response(render_template('test.html', targetLink=targetLink))
     return response
 
-@app.route('/getTask/', methods=['GET','POST']) #@app.route('/getTask/<articleCategory>/<articleId>', methods=['GET','POST'])
+@app.route('/getTask/', methods=['GET','POST'])
 def getHIT():
+
     if request.args.get('assignmentId') == 'ASSIGNMENT_Id_NOT_AVAILABLE':
         return make_response(render_template('consent.html'))
 
     params = getParams()
 
-    # for p in params:
-    #     print(str(p)+" ===================== "+params[p])
-    
+    if params['newsfeed'] is None:
+        params['newsfeed'] = showNewsFeed()
+
+    if params['promptId'] is None:
+        params['promptId'] = getPromptId()
+
     # Get newsfeed
     if params['newsfeed']=='1' and params['task']=='0':
         cat = params['curr_cat'] if params['curr_cat'] else ''
@@ -161,6 +153,7 @@ def getHIT():
     # prompts = json_data
     print("PROMPTID_-----------------")
     print(params['promptId'])
+
     prompt = prompts[int(params['promptId'])]
     params['prompt'] = prompt['prompt']
     params['placeholder'] = prompt['placeholder']
@@ -185,12 +178,20 @@ def getArticle(articleCategory, articleId):
     f.close()
     return data
 
+def showNewsFeed():
+    # if total submissions < 1 per article return false
+    # if max difference b/w articles > 5 return false
+    return str(0)
+
+def getPromptId():
+    return str(0)
+
 def getParams():
     params = {}
     for p in param_names:
         key = p
-        val = request.args.get(p) if request.args.get(p) else ''
-        if key == 'newsfeed_order': #special cases for arrays
+        val = request.args.get(p) if request.args.get(p) else None
+        if key == 'newsfeed_order' and val is not None: #special cases for arrays
             array = val.split(",")
             params[key] = array
         else:
