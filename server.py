@@ -5,7 +5,8 @@ import sys, os, random, json
 
 # Config
 
-env = os.environ['APP_ENV']
+# env = os.environ['APP_ENV']
+env = 'dev'
 app = Flask(__name__)
 
 if env == 'dev':
@@ -18,93 +19,67 @@ else:
 db = SQLAlchemy(app)
 
 param_names = ['task','newsfeed','newsfeed_order','promptId','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText','assignmentId','hitId','workerId','amazon_newsfeed_order','amazon_newsfeed_annotation_a1','amazon_newsfeed_annotation_a2','amazon_articleId','amazon_promptId','amazon_time_reading','amazon_time_writing','amazon_annotation']
-    # SAME ACROSS ALL CATEGORIES/META params:
-    # newsfeed      : 2 variations: 0,1                 DISTRIBUTION = ???; dependent on distribution of articles annotated
-    # newsfeed_order: 2 variations: 1,2 or 2,1""        P(i) = 1/2; x3 vars, one for each cat
-    # promptId      : 4 variations: 0,1,2,3             P(i) = 1/4
-    # curr_cat      : 3 variations: amazon, apple, uber (always in same order)
-    # curr_article  : 2 variations: 1, 2
-    # assignmentId
-    # hitId
-    # workerId
-
-    # PER CATEGORY:
-    # amazon_newsfeed_order             : 1,2 or 2,1""  (same across all categories)
-    # amazon_newsfeed_annotation_a1     : 0,1,2,3,""    (rand; dependent on newsfeed annotation distribution)
-    # amazon_newsfeed_annotation_a2     : 0,1,2,3,""    (rand; dependent on newsfeed annotation distribution)
-    # amazon_articleId                  : 1,2           (automatically assigned if no newsfeed)
-    # amazon_promptId                   : 0,1,2,3       (same across all categories)
-    # amazon_time_reading               :
-    # amazon_time_writing               : 
-    # amazon_annotation                 :                
-
-    # apple_newsfeed_order             : 1,2 or 2,1""  (same across all categories)
-    # apple_newsfeed_annotation_a1     : 0,1,2,3,""    (rand; dependent on newsfeed annotation distribution)
-    # apple_newsfeed_annotation_a2     : 0,1,2,3,""    (rand; dependent on newsfeed annotation distribution)
-    # apple_articleId                  : 1,2           (automatically assigned if no newsfeed)
-    # apple_promptId                   : 0,1,2,3       (same across all categories)
-    # apple_time_reading               :
-    # apple_time_writing               : 
-    # apple_annotation                 :     
-
-    # uber_newsfeed_order             : 1,2 or 2,1""  (same across all categories)
-    # uber_newsfeed_annotation_a1     : 0,1,2,3,""    (rand; dependent on newsfeed annotation distribution)
-    # uber_newsfeed_annotation_a2     : 0,1,2,3,""    (rand; dependent on newsfeed annotation distribution)
-    # uber_articleId                  : 1,2           (automatically assigned if no newsfeed)
-    # uber_promptId                   : 0,1,2,3       (same across all categories)
-    # uber_time_reading               :
-    # uber_time_writing               : 
-    # uber_annotation                 :     
 
 
 # Database Models
 
 class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # exp = db.Column(db.Integer, nullable=False)
-    # context = db.Column(db.Integer, nullable=False)
-    # iterations = db.Column(db.Integer, nullable=False)
     newsfeed = db.Column(db.String(1), nullable=False)
     newsfeed_order = db.Column(db.String(20), nullable=False)
     promptId = db.Column(db.String(1), nullable=False)
-    assignmentId = db.Column(db.String(50), nullable=False)
-    hitId = db.Column(db.String(50), nullable=False)
-    workerId = db.Column(db.String(50), nullable=False)
-    amazon_newsfeed_order = db.Column(db.String(20), nullable=True)
-    amazon_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
-    amazon_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
-    amazon_articleId = db.Column(db.String(1), nullable=False)
-    amazon_promptId = db.Column(db.String(1), nullable=False)
-    amazon_time_reading = db.Column(db.String(20), nullable=False)
-    amazon_time_writing = db.Column(db.String(20), nullable=False)
-    amazon_annotation = db.Column(db.String(1000), nullable=True)
-    apple_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
-    apple_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
-    apple_articleId = db.Column(db.String(1), nullable=False)
-    apple_promptId = db.Column(db.String(1), nullable=False)
-    apple_time_reading = db.Column(db.String(20), nullable=False)
-    apple_time_writing = db.Column(db.String(20), nullable=False)
-    apple_annotation = db.Column(db.String(1000), nullable=True)
-    uber_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
-    uber_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
-    uber_articleId = db.Column(db.String(1), nullable=False)
-    uber_promptId = db.Column(db.String(20), nullable=False)
-    uber_time_reading = db.Column(db.String(20), nullable=False)
-    uber_time_writing = db.Column(db.String(20), nullable=False)
-    uber_annotation = db.Column(db.String(1000), nullable=True)
+    # assignmentId = db.Column(db.String(50), nullable=False)
+    # hitId = db.Column(db.String(50), nullable=False)
+    # workerId = db.Column(db.String(50), nullable=False)
+    # amazon_newsfeed_order = db.Column(db.String(20), nullable=True)
+    # amazon_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
+    # amazon_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
+    # amazon_articleId = db.Column(db.String(1), nullable=False)
+    # amazon_promptId = db.Column(db.String(1), nullable=False)
+    # amazon_time_reading = db.Column(db.String(20), nullable=False)
+    # amazon_time_writing = db.Column(db.String(20), nullable=False)
+    # amazon_annotation = db.Column(db.String(1000), nullable=True)
+    # apple_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
+    # apple_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
+    # apple_articleId = db.Column(db.String(1), nullable=False)
+    # apple_promptId = db.Column(db.String(1), nullable=False)
+    # apple_time_reading = db.Column(db.String(20), nullable=False)
+    # apple_time_writing = db.Column(db.String(20), nullable=False)
+    # apple_annotation = db.Column(db.String(1000), nullable=True)
+    # uber_newsfeed_annotation_a1annotation = db.Column(db.String(1), nullable=True)
+    # uber_newsfeed_annotation_a2annotation = db.Column(db.String(1), nullable=True)
+    # uber_articleId = db.Column(db.String(1), nullable=False)
+    # uber_promptId = db.Column(db.String(20), nullable=False)
+    # uber_time_reading = db.Column(db.String(20), nullable=False)
+    # uber_time_writing = db.Column(db.String(20), nullable=False)
+    # uber_annotation = db.Column(db.String(1000), nullable=True)
+
 
 # Views
 
 # this route is a way to test the database. Just reloading should increment this
 @app.route('/submit')
 def submit():
+    # create test entry
+    exp = Experiment()
+    # get dictionary of params and values from URL
     params = getParams()
-    print(params)
-    # test entry
-    exp = Experiment(newsfeed='1', newsfeed_order='1', promptId='1', assignmentId='1', hitId='1', workerId='1', amazon_articleId='1', amazon_promptId='1', amazon_time_reading='1', amazon_time_writing='1', apple_articleId='1', apple_promptId='1', apple_time_reading='1', apple_time_writing='1', uber_articleId='1', uber_promptId='1', uber_time_reading='1', uber_time_writing='1')
-    db.session.add(exp)
-    print("Exp ==========================")
+    # delete unnecessary params from larger list
+    db_params = param_names
+    for p in ['task','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText']:
+        db_params.remove(p)
+    # assign values to Experiment params
+    for p in db_params:
+        setattr(exp, p, params[p])
+        print(params[p])
+    # db.session.add(exp)
+    # db.session.commit()
+    
     print(exp)
+
+    exp2 = Experiment.query.filter_by(newsfeed='3').all()
+    print(exp2)
+    return 'submitted'
     # db.session.commit()
     # exp = Experiment.query.filter_by(exp=1, context=0).first()
     # if exp == None:
@@ -122,7 +97,7 @@ def test():
     response = make_response(render_template('test.html', targetLink=targetLink))
     return response
 
-@app.route('/getTask/', methods=['GET','POST']) #@app.route('/getTask/<articleCategory>/<articleId>', methods=['GET','POST'])
+@app.route('/getTask/', methods=['GET','POST'])
 def getHIT():
     if request.args.get('assignmentId') == 'ASSIGNMENT_Id_NOT_AVAILABLE':
         return make_response(render_template('consent.html'))
@@ -133,7 +108,7 @@ def getHIT():
     #     print(str(p)+" ===================== "+params[p])
     
     # Get newsfeed
-    if params['newsfeed']=='1' and params['task']=='0':
+    if params['newsfeed']=='1' and params['task']=='0': 
         cat = params['curr_cat'] if params['curr_cat'] else ''
         summaries_dict = {}
         for articleId in params['newsfeed_order']:
@@ -170,12 +145,18 @@ def getHIT():
 
     data = params
     data['amazon_host'] = amazon_host
-    for d in data:
-        print(str(d)+" ======= "+str(data[d]))
+    # for d in data:
+    #     print(str(d)+" ======= "+str(data[d]))
+
+    targetLink = request.url_root 
+    targetLink += 'getTask/' #+ articleCategory + '/' + articleID
+    
     if data['newsfeed']=='1' and data['task']=='0':
         response = make_response(render_template('newsfeed.html', data = data))
     else:
         response = make_response(render_template('task.html', data = data))
+    targetLink += '?' + request.query_string.decode('utf-8')
+    response = make_response(render_template('test.html', targetLink=targetLink))
     return response
 
 def getArticle(articleCategory, articleId):
@@ -189,7 +170,7 @@ def getParams():
     params = {}
     for p in param_names:
         key = p
-        val = request.args.get(p) if request.args.get(p) else ''
+        val = request.args.get(p) if request.args.get(p) else None
         if key == 'newsfeed_order': #special cases for arrays
             array = val.split(",")
             params[key] = array
