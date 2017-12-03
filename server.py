@@ -38,6 +38,12 @@ def welcome():
     db.session.commit()
     return str(exp.iterations)
 
+@app.route('/test/')
+def test():
+    targetLink = '/getTask/tech-hq/1?' + request.query_string.decode('utf-8')
+    response = make_response(render_template('test.html', targetLink=targetLink))
+    return response
+
 @app.route('/getTask/<articleCategory>/<articleID>', methods=['GET','POST'])
 def getHIT(articleID, articleCategory):
 
