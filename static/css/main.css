@@ -42,11 +42,26 @@ div:last-child {
 	max-width: 600px;
 }
 
+/* newsfeed display */
+#article_summary {
+	text-decoration: none;
+	max-width: 400px;
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	margin: 20px;
+
+}
+#article_summary:hover {
+	cursor: pointer;
+}
+#article_id {
+	display: none;
+}
+
 /* article display */
 
 #article {
 	font-family: Georgia, serif;
-	max-width: 600px;
 }
 
 #post-article-toolbar {

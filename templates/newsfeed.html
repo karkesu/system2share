@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div id="container">
+  <p class="instructions">Read the article you find more interesting.</p>
+  {% for summary in data.summaries %}
+    <div id="article_summary" value="{{ summary }}">
+    	<div id="article_id">{{ summary }}</div>
+		<h2>{{ data.summaries[summary]['title'] }}</h2>
+		<p>{{ data.summaries[summary]['byLine'] }}</p>
+		<p>{{ data.summaries[summary]['preview'] }}</p>
+		<p class="annotation">{{ data.summaries[summary]['annotation'] }}</p>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

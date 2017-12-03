@@ -6,7 +6,7 @@ import sys
 import os
 
 IS_DEV_ENVIRONMENT = True
-AWS_ACCESS_KEY_ID = os.environ['ACCESS_KEY']
+AWS_ACCESS_KEY_Id = os.environ['ACCESS_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['SECRET_ACCESS_KEY']
 
 environments = {
@@ -25,16 +25,16 @@ environments = {
 mturk_environment = environments['sandbox'] if IS_DEV_ENVIRONMENT else environments['live']
 
 mtc = MTurkConnection(
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_access_key_Id=AWS_ACCESS_KEY_Id,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     host=mturk_environment['endpoint'])
 
-def createHIT(articleCategory, articleID):
+def createHIT(articleCategory, articleId):
 
     url = 'https://www.zeerak.net/279akz/getTask/'
     url += articleCategory
     url += '/'
-    url += articleID
+    url += articleId
     external_question = ExternalQuestion(url, 800)
 
     qualifications = Qualifications()
@@ -55,14 +55,14 @@ def createHIT(articleCategory, articleID):
         )
 
     # The response included several fields that will be helpful later
-    hit_type_id = response[0].HITTypeId
-    hit_id = response[0].HITId
+    hit_type_Id = response[0].HITTypeId
+    hit_Id = response[0].HITId
     available_balance = mtc.get_account_balance()
 
     print("-------------------------------------------------------")
     print("Your HIT has been created. You can see it at this link:")
-    print(">>>>>> https://workersandbox.mturk.com/mturk/preview?groupId={}".format(hit_type_id))
-    print("Your HIT ID is: {}".format(hit_id))
+    print(">>>>>> https://workersandbox.mturk.com/mturk/preview?groupId={}".format(hit_type_Id))
+    print("Your HIT Id is: {}".format(hit_Id))
     print("And see results here:")
     print(">>>>>> {}".format(mturk_environment['manage']))
     print("Your account balance is {}".format(available_balance))
@@ -75,36 +75,36 @@ def createManyHITs():
     for i in range(1,4):
         createHIT('tech-hq', str(i))
 
-def getAllHITIDs():
-    ids = []
+def getAllHITIds():
+    Ids = []
     for hit in list(mtc.get_all_hits()):
-        ids.append(hit.HITId)
-    return ids
+        Ids.append(hit.HITId)
+    return Ids
 
 def deleteAllHITs():
-    for hit in getAllHITIDs():
+    for hit in getAllHITIds():
         mtc.dispose_hit(hit)
 
 def expireAllHITs():
-    for hit in getAllHITIDs():
+    for hit in getAllHITIds():
         mtc.expire_hit(hit)
 
-def getAssignmentsForHIT(hitID):
+def getAssignmentsForHIT(hitId):
     assignments = []
     page = 1
-    while len(mtc.get_assignments(hitID, page_number=str(page))) > 0:
-        assignments.extend(mtc.get_assignments(hitID, page_number=str(page)))
+    while len(mtc.get_assignments(hitId, page_number=str(page))) > 0:
+        assignments.extend(mtc.get_assignments(hitId, page_number=str(page)))
         page += 1
     return assignments
 
 def getAllAssignments():
     responses = []
-    for hit in getAllHITIDs():
+    for hit in getAllHITIds():
         responses.append(getAssignmentsForHIT(hit))
     return responses
 
-def approveAssignment(assignmentID):
-    mtc.approve_assignment(assignmentID)
+def approveAssignment(assignmentId):
+    mtc.approve_assignment(assignmentId)
 
 def approveAllAssignments():
     for hit in getAllAssignments():
