@@ -68,8 +68,13 @@ class Experiment(db.Model):
     uber_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
     uber_likert_learning = db.Column(db.Integer, nullable=True)
 
-# Submit Views
 
+# Test View
+@app.route('/')
+def test():
+    return '279akz'
+
+# Submit Views
 @app.route('/submitNewsFeed/<articleId>', methods=['GET'])
 def submitNewsFeed(articleId):
     workerId = request.args.get('workerId')
@@ -140,6 +145,8 @@ def submitReview():
 
     advanceExperiment(exp)
     return redirect(url_for('getHIT', workerId=workerId))
+
+# Main HIT View
 
 @app.route('/getTask/', methods=['GET','POST'])
 def getHIT():
