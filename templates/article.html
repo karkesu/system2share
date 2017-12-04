@@ -3,7 +3,7 @@
 
 <div id="container">
   <div id="article">
-    <p class="instructions">Read the following article, then 'share' it</p>
+    <div class="instructions bg-gray">Read the following article, then 'share' it</div>
     <h2>{{ data.articleTitle }}</h2>
     <h3>{{ data.articleByLine }}</h3>
     {% for paragraph in data.articleText %}
@@ -14,11 +14,11 @@
     <button type="button" class="align-center" id="goToForm" onclick="showShareForm()">Share article</button>
   </div>
 </div>
-<div id="screen">
+<div id="screen" class="bg-gray">
   <div id="shareForm">
     <button id="goToArticle" onclick="hideShareForm()">← Back To Article</button>
-    <p class="instructions bg-pink">Act like you're about to share this article on social media.</p>
-    <p><b>{{ data.prompt }}</b></p> 
+    <p class="instructions bg-gray-dark">Act like you're about to share this article on social media.</p>
+    <p class="annotationPrompt" >{{ data.prompt }}</p> 
     <form 
       name="mturkForm" 
       id="mturkForm" 
@@ -27,7 +27,7 @@
       method="POST">
         <input type="hidden" id="workerId" value="{{ data.workerId }}" name="workerId"/>
         <textarea id="annotation" name="annotation" placeholder="{{ data.placeholder }}" rows="5"></textarea>
-        <button id="submitButton" value="Submit" onclick="submitArticle()">Submit</button>
+        <button id="submitButton" class="align-center" value="Submit" onclick="submitArticle()">Submit</button>
     </form>
   </div>
 </div>

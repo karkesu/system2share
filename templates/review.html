@@ -1,19 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div id="container screen">
-  <div class="wrapper">
-      {% for summary in data.summaries %}
-      <a href="" id="{{ summary }}" class="summary" value="{{ summary }}">
-      <h2>{{ data.summaries[summary]['title'] }}</h2>
-      <p>{{ data.summaries[summary]['byLine'] }}</p>
-      <p>{{ data.summaries[summary]['preview'] }}</p>
-      <p class="annotation">{{ data.summaries[summary]['annotation'] }}</p>
-      </a>
-    {% endfor %}
-  </div>
-  <div>
-      <div class="wrap">
+<div id="container" class="bg-gray">
+    <div class="align-center">
+
+      <div class="wrapper limit-width float">
+        <div class="instructions bg-gray-dark limit-width">What did you think of the summary, the article, and the topic?</div>
+        {% for summary in data.summaries %}
+          <div class="summary" id="{{ summary }}" value="{{ summary }}">
+              <p class="annotation">{{ data.summaries[summary]['annotation'] }}</p>
+              <h2 class="summaryTitle">{{ data.summaries[summary]['title'] }}</h2>
+              <p class="summaryExerpt">{{ data.summaries[summary]['preview'] }}</p>
+              <p class="summaryByline">{{ data.summaries[summary]['byLine'] }}</p>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="wrapper limit-width float">
         <form 
           action="{{ data.submitURL }}" 
           id="LikertForm"
@@ -21,43 +23,48 @@
           method="POST" 
           >
           <input type="hidden" id="workerId" value="{{ data.workerId }}" name="workerId"/>
-          <h2 class="title align-center">How well do you think this summary represented the article?</h2>
-          <ul class='likert'>
-            <li><input type="radio" name="summary_evaluation" value="1"><label>Nothing</label></li>
-            <li><input type="radio" name="summary_evaluation" value="2"></li>
-            <li><input type="radio" name="summary_evaluation" value="3"></li>
-            <li><input type="radio" name="summary_evaluation" value="4"><label>A bit</label></li>
-            <li><input type="radio" name="summary_evaluation" value="5"></li>
-            <li><input type="radio" name="summary_evaluation" value="6"></li>
-            <li><input type="radio" name="summary_evaluation" value="7"><label>A lot</label></li>
-          </ul>
-          <h2 class="title align-center">How much did you already know about this topic?</h2>
-          <ul class='likert'>
-            <li><input type="radio" name="prior_knowledge" value="1"><label>Nothing</label></li>
-            <li><input type="radio" name="prior_knowledge" value="2"></li>
-            <li><input type="radio" name="prior_knowledge" value="3"></li>
-            <li><input type="radio" name="prior_knowledge" value="4"><label>A bit</label></li>
-            <li><input type="radio" name="prior_knowledge" value="5"></li>
-            <li><input type="radio" name="prior_knowledge" value="6"></li>
-            <li><input type="radio" name="prior_knowledge" value="7"><label>A lot</label></li>
-          </ul>
-          <h2 class="title align-center">How much did you learn from this article?</h2>
-          <ul class='likert'>
-            <li><input type="radio" name="learning" value="1"><label>Nothing</label></li>
-            <li><input type="radio" name="learning" value="2"></li>
-            <li><input type="radio" name="learning" value="3"></li>
-            <li><input type="radio" name="learning" value="4"><label>A bit</label></li>
-            <li><input type="radio" name="learning" value="5"></li>
-            <li><input type="radio" name="learning" value="6"></li>
-            <li><input type="radio" name="learning" value="7"><label>A lot</label></li>
-          </ul>
+          <div class='likertCard'>
+            <h2 class="likertTitle">How well do you think this summary represented the article?</h2>
+            <ul class='likert'>
+              <li><input type="radio" name="summary_evaluation" value="1"><label>Nothing</label></li>
+              <li><input type="radio" name="summary_evaluation" value="2"></li>
+              <li><input type="radio" name="summary_evaluation" value="3"></li>
+              <li><input type="radio" name="summary_evaluation" value="4"><label>A bit</label></li>
+              <li><input type="radio" name="summary_evaluation" value="5"></li>
+              <li><input type="radio" name="summary_evaluation" value="6"></li>
+              <li><input type="radio" name="summary_evaluation" value="7"><label>A lot</label></li>
+            </ul>
+          </div>
+          <div class='likertCard'>
+            <h2 class="likertTitle">How much did you already know about this topic?</h2>
+            <ul class='likert'>
+              <li><input type="radio" name="prior_knowledge" value="1"><label>Nothing</label></li>
+              <li><input type="radio" name="prior_knowledge" value="2"></li>
+              <li><input type="radio" name="prior_knowledge" value="3"></li>
+              <li><input type="radio" name="prior_knowledge" value="4"><label>A bit</label></li>
+              <li><input type="radio" name="prior_knowledge" value="5"></li>
+              <li><input type="radio" name="prior_knowledge" value="6"></li>
+              <li><input type="radio" name="prior_knowledge" value="7"><label>A lot</label></li>
+            </ul>
+          </div>
+          <div class='likertCard'>
+            <h2 class="likertTitle">How much did you learn from this article?</h2>
+            <ul class='likert'>
+              <li><input type="radio" name="learning" value="1"><label>Nothing</label></li>
+              <li><input type="radio" name="learning" value="2"></li>
+              <li><input type="radio" name="learning" value="3"></li>
+              <li><input type="radio" name="learning" value="4"><label>A bit</label></li>
+              <li><input type="radio" name="learning" value="5"></li>
+              <li><input type="radio" name="learning" value="6"></li>
+              <li><input type="radio" name="learning" value="7"><label>A lot</label></li>
+            </ul>
+          </div>
           <div id="post-article-toolbar">
             <button id="submitButton" value="Submit" onclick="submitReview()">Submit</button>
           </div>
         </form>
       </div>
-    
-  </div>
+    </div>
 </div>
 
 {% endblock %}
