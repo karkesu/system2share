@@ -355,7 +355,7 @@ def renderArticleStep(exp, category):
     data['articleByLine'] = article[1]
     data['articleText'] = article[2:]
     data['workerId'] = request.args.get('workerId')
-    data['submitURL'] = request.url_root[:-1] + url_for('submitArticle')
+    data['submitURL'] = request.url_root + 'submitArticle'
     with open('static/articles/annotations.json') as json_file:
         d = "["+ str(json_file.read())+"]"
         prompts = json.loads(d)
@@ -368,7 +368,7 @@ def renderArticleStep(exp, category):
 def renderReviewStep(exp, category):
     data = {}
     data['workerId'] = request.args.get('workerId')
-    data['submitURL'] = request.url_root[:-1] + url_for('submitReview')
+    data['submitURL'] = request.url_root + 'submitReview'
     if exp.showNewsFeed:
         summaries = {}
         for articleId in poss_assignments['articleId']:
