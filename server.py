@@ -277,12 +277,16 @@ def getRandomAnnotation(category, promptId, articleId):
     all_annotations = Experiment.query.filter_by(**args).all()
     if len(all_annotations)>0:
         selected_annotation = all_annotations[0]
-        return eval('selected_annotation.' + cat_annotation)
+        content = eval('selected_annotation.' + cat_annotation)
+        if content:
+            return content
+        else:
+            return ''
     else:
         print("category =  "+str(category))
         print("promptId =  "+str(promptId))
         print("articleId =  "+str(articleId))
-        return None
+        return ""
     
     print(" cat_annotation ==================="+str(cat_annotation))
     print(" all_annotations ==================="+str(all_annotations))
@@ -293,8 +297,8 @@ def setNewsfeedContent(exp, category, newsFeedOrder):
     # Get newsfeed summaries content
     summaries_dict = {}
     for articleId in [exp.newsFeedOrder[0],exp.newsFeedOrder[1]]:
-        annotation_num = category +"_annotation_content_a"+articleId
-        annotationId = getLeastFrequent(annotation_num,poss_assignments['promptId'],{'newsFeedOrder':exp.newsFeedOrder})
+        annotation_col = category +"_annotation_content_a"+articleId
+        annotationId = getLeastFrequent(annotation_col,poss_assignments['promptId'],{'newsFeedOrder':exp.newsFeedOrder})
         annotation_content = getRandomAnnotation(category,annotationId, articleId)
         article = getArticle(category , articleId)
         summaries_dict[articleId] = {}
@@ -303,7 +307,9 @@ def setNewsfeedContent(exp, category, newsFeedOrder):
         summaries_dict[articleId]['byLine'] = article[1]
         summaries_dict[articleId]['preview'] = article[2:3][0][:150]+"..."
         summaries_dict[articleId]['annotation'] = annotation_content
-        print(" annotation_num ==================="+str(annotation_num))
+        setattr(exp,annotation_col,annotation_content)
+        db.session.commit()
+        print(" annotation_col ==================="+str(annotation_col))
         print(" annotationId ==================="+str(annotationId))
         print(" annotation_content ==================="+str(annotation_content))
 
