@@ -164,13 +164,18 @@ def getHIT():
     
     # If worker is seen for the first time, set up experiment
     if exp is None:
+        promptId = getLeastFrequent('promptId', poss_assignments['promptId'])
+        newsFeedOrder = getLeastFrequent(
+            'newsFeedOrder', 
+            poss_assignments['newsFeedOrder'],
+            additional_info={'promptId': promptId})
         exp = Experiment(
             workerId=workerId, 
             assignmentId=assignmentId,
             step=0,
             showNewsFeed=showNewsFeed(),
-            promptId = getLeastFrequent('promptId', poss_assignments['promptId']),
-            newsFeedOrder = getLeastFrequent('newsFeedOrder', poss_assignments['newsFeedOrder'])
+            promptId = promptId,
+            newsFeedOrder = newsFeedOrder
             )
         db.session.add(exp)
         db.session.commit()
@@ -197,7 +202,7 @@ def getHIT():
     # Amazon Article
     if exp.step == 2:
         if exp.amazon_articleId == None:
-            exp.amazon_articleId = getArticleId(category)
+            exp.amazon_articleId = getArticleId(exp, category)
             db.session.commit()
         return renderArticleStep(exp, category, exp.amazon_articleId)
    
@@ -215,7 +220,7 @@ def getHIT():
     # Apple Article
     if exp.step == 5:
         if exp.apple_articleId == None:
-            exp.apple_articleId = getArticleId(category)
+            exp.apple_articleId = getArticleId(exp, category)
             db.session.commit()
         return renderArticleStep(exp, category, exp.apple_articleId)
     
@@ -233,7 +238,7 @@ def getHIT():
     # Uber Article
     if exp.step == 8:
         if exp.uber_articleId == None:
-            exp.uber_articleId = getArticleId(category)
+            exp.uber_articleId = getArticleId(exp, category)
             db.session.commit()
         return renderArticleStep(exp, category, exp.uber_articleId)
     
@@ -339,9 +344,13 @@ def renderNewsFeedStep(exp, category):
     data['summaries'] = summaries
     return make_response(render_template('newsfeed.html', data=data))
 
-def getArticleId(category):
+def getArticleId(exp, category):
     expVar = category + '_articleId'
-    return getLeastFrequent(expVar, poss_assignments['articleId'])
+    return getLeastFrequent(
+        expVar,
+        poss_assignments['articleId'],
+        additional_info={'promptId': exp.promptId}
+        )
 
 def getArticle(articleCategory, articleId):
     f = open('static/articles/' + articleCategory + '/' + articleId + '.txt', 'r', encoding='utf-8')
