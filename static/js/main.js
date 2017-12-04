@@ -62,13 +62,37 @@ function clickSubmit() {
 	targetLink += "&"+category+"_time_writing="+time_writing;
 	targetLink += "&"+category+"_annotation="+annotation;
 
+	goToPage(targetLink);
+	return false;
+}
+
+function clickSubmitReview() {
+	var elements = document.getElementById('LikertForm').elements;
+	var targetLink = elements['targetLink'].value;
+	var curr_cat = elements['curr_cat'].value;
+	var summary_evaluation = elements['summary_evaluation'].value;
+	var prior_knowledge = elements['prior_knowledge'].value;
+	var learning = elements['learning'].value;
+
+	targetLink += "&"+curr_cat+"_likert_="+summary_evaluation;
+	targetLink += "&"+curr_cat+"_likert_="+prior_knowledge;
+	targetLink += "&"+curr_cat+"_likert_="+learning;
+	alert(targetLink);
+	console.log(targetLink);
 	// alert(targetLink);
-	if (category != "uber"){
+	if (curr_cat != "uber"){
+		curr_cat = getNextCat(curr_cat);
+		targetLink += "&curr_cat="+curr_cat;
 		goToPage(targetLink);
-		return false;
 	} else {
+		// submit to our server
 		form.submit();
 	}
+}
+
+function getNextCat(curr_cat) {
+	var next = {'amazon':'apple','apple':'uber','uber':'amazon'}
+    return next[cat]
 }
 
 var currentTimerStart = new Date().getTime();
@@ -76,6 +100,10 @@ var writingTime = 0;
 var readingTime = 0;
 
 window.onload=function(){
-    document.getElementById("1").addEventListener ("click", redirectURL, false);
-	document.getElementById("2").addEventListener ("click", redirectURL, false);
+	var one = document.getElementById("1")
+	var two = document.getElementById("2")
+	if (one != null && two != null) {
+		document.getElementById("1").addEventListener ("click", redirectURL, false);
+		document.getElementById("2").addEventListener ("click", redirectURL, false);
+	}
 }

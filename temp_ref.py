@@ -150,20 +150,19 @@ def getHIT():
     params['curr_cat'] = 'amazon' if params['curr_cat'] is None else params['curr_cat']
 
 
-    ####################################################################
+    ###############################################################################################
     # FOR EACH ROUND
     # we're in the newsfeed view
     if params['task'] == 0:
         params['newsfeed'] = showNewsfeed(params['curr_cat'])
 
+
+    ###############################################################################################
+    # The following parameters stay constant for all categories
     # what order will the newsfeed articles be shown? Set this once for the entire experiment.
     if params['newsfeed'] == True and params['newsfeed_order'] is None:
         params['newsfeed_order'] = getLeastFrequent('newsfeed_order', poss_assignments['newsfeed_order'],None)
-
-
-    ####################################################################
-    # The following parameters stay constant for all categories
-    # assign promptId, prompt, placeholder
+    # what prompt will the user see for the annotation?
     if params['promptId'] is None:
         params['promptId'] = getLeastFrequent('promptId',poss_assignments['promptId'],None)
 

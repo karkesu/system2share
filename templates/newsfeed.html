@@ -2,7 +2,7 @@
 {% block body %}
 
 <div id="container">
-	<div class="wrapper">
+	<div class="newsfeed wrapper">
 		<p class="instructions">Read the article you find more interesting.</p>
 	  	{% for summary in data.summaries %}
 	    <a href={{ targetLink }} id={{ summary }} class="summary" value="{{ summary }}">

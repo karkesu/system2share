@@ -47,8 +47,8 @@ div:last-child {
 	text-decoration: none;
 	max-width: 400px;
 	margin: 0 auto;
-	border: 1px solid #ccc;
-	margin: 20px;
+	border-bottom: 1px solid #ccc;
+	margin: 30px;
 
 }
 .summary:hover {
@@ -161,6 +161,10 @@ h3 {
 }
 textarea#annotation {
 	width: 97%; /*to investigate*/
+}
+.newsfeed {
+	width: 50%;
+	margin: 0 auto;
 }
 form .likert {
 	list-style:none;
