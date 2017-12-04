@@ -15,7 +15,7 @@
   <div>
       <div class="wrap">
         <form 
-          action="/submitReview" 
+          action="{{ data.submitURL }}" 
           id="LikertForm"
           onsubmit="event.preventDefault(); submitReview();"
           method="POST" 

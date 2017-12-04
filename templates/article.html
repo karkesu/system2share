@@ -22,7 +22,7 @@
     <form 
       name="mturkForm" 
       id="mturkForm" 
-      action="/submitArticle" 
+      action={{ data.submitURL }} 
       onsubmit="event.preventDefault(); submitArticle();" 
       method="POST">
         <input type="hidden" id="workerId" value="{{ data.workerId }}" name="workerId"/>
