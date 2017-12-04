@@ -4,10 +4,6 @@ from config import *
 from urllib.parse import urlencode
 import sys, os, random, json
 
-# TODO: make sure annotations show in the news feed, and that they are stored in the database
-# make sure the right articles are shown
-# and that the right articleIDs are stored in the database, basically a sanity check on the data
-
 # Config
 env = os.environ['APP_ENV']
 app = Flask(__name__)
@@ -371,7 +367,6 @@ def renderArticleStep(exp, category, articleId):
 
     return make_response(render_template('article.html', data=data))
 
-# TODO: I think you mean to show only one summary in here and I'm showing both? Please edit if need be
 def renderReviewStep(exp, category):
     data = {}
     data['workerId'] = request.args.get('workerId')
