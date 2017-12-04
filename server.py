@@ -33,6 +33,7 @@ class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     assignmentId = db.Column(db.String(50), nullable=False)
     workerId = db.Column(db.String(50), nullable=False)
+    screenWidth = db.Column(db.Integer, nullable=True)
     step = db.Column(db.Integer, nullable=False)
     showNewsFeed = db.Column(db.Boolean, nullable=False)
     newsFeedOrder = db.Column(db.String(2), nullable=True)
@@ -96,6 +97,7 @@ def submitNewsFeed(articleId):
 def submitArticle():
     workerId = request.form.get('workerId')
     exp = Experiment.query.filter_by(workerId=workerId).first()
+    exp.screenWidth = request.form.get('screenWidth')
 
     annotation = request.form.get('annotation')
     readingTime = request.form.get('readingTime')
