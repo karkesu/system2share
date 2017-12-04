@@ -4,8 +4,11 @@ from config import *
 from urllib.parse import urlencode
 import sys, os, random, json
 
-# Config
+# TODO: make sure annotations show in the news feed, and that they are stored in the database
+# make sure the right articles are shown
+# and that the right articleIDs are stored in the database, basically a sanity check on the data
 
+# Config
 env = os.environ['APP_ENV']
 app = Flask(__name__)
 
@@ -273,6 +276,7 @@ def getRandomAnnotation(param,value,resultField):
         rand = random.randint(0,len(all_annotations) - 1)
         return all_annotations[rand] #[resultField]
 
+# TODO: this needs to change to actually get annotaions, it's not getting anything at the moment
 # This is probably a bit opaque..Basically generating and populating summaries & annotations from other users
 def setNewsfeedContent(exp, category, newsFeedOrder):
     annotation1 = category +"_newsfeed_annotation_a1"
