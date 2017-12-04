@@ -369,6 +369,7 @@ def renderArticleStep(exp, category):
 
     return make_response(render_template('article.html', data=data))
 
+# TODO: I think you mean to show only one summary in here and I'm showing both? Please edit if need be
 def renderReviewStep(exp, category):
     data = {}
     data['workerId'] = request.args.get('workerId')
