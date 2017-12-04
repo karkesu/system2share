@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div id="container">
+  <div id="article">
+    <p class="instructions">Read the following article, then 'share' it</p>
+    <h2>{{ data.articleTitle }}</h2>
+    <h3>{{ data.articleByLine }}</h3>
+    {% for paragraph in data.articleText %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
+  </div>
+  <div id="post-article-toolbar">
+    <button type="button" class="align-center" id="goToForm" onclick="showShareForm()">Share article</button>
+  </div>
+</div>
+<div id="screen">
+  <div id="shareForm">
+    <button id="goToArticle" onclick="hideShareForm()">← Back To Article</button>
+    <p class="instructions bg-pink">Act like you're about to share this article on social media.</p>
+    <p><b>{{ data.prompt }}</b></p> 
+    <form 
+      name="mturkForm" 
+      id="mturkForm" 
+      action="/submitArticle" 
+      onsubmit="event.preventDefault(); submitArticle();" 
+      method="POST">
+        <input type="hidden" id="workerId" value="{{ data.workerId }}" name="workerId"/>
+        <textarea id="annotation" name="annotation" placeholder="{{ data.placeholder }}" rows="5"></textarea>
+        <button id="submitButton" value="Submit" onclick="submitArticle()">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
