@@ -5,7 +5,7 @@
 	<div class="newsfeed wrapper">
 		<p class="instructions">Read the article you find more interesting.</p>
 	  	{% for summary in data.summaries %}
-	    <a href={{ targetLink }} id={{ summary }} class="summary" value="{{ summary }}">
+	    <a href={{ data.summaries[summary]['submitLink'] }} id={{ summary }} class="summary" value="{{ summary }}">
 			<h2>{{ data.summaries[summary]['title'] }}</h2>
 			<p>{{ data.summaries[summary]['byLine'] }}</p>
 			<p>{{ data.summaries[summary]['preview'] }}</p>

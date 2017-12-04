@@ -4,7 +4,7 @@
 <div id="container screen">
   <div class="wrapper">
       {% for summary in data.summaries %}
-      <a href="{{ targetLink }}" id="{{ summary }}" class="summary" value="{{ summary }}">
+      <a href="" id="{{ summary }}" class="summary" value="{{ summary }}">
       <h2>{{ data.summaries[summary]['title'] }}</h2>
       <p>{{ data.summaries[summary]['byLine'] }}</p>
       <p>{{ data.summaries[summary]['preview'] }}</p>
@@ -14,9 +14,13 @@
   </div>
   <div>
       <div class="wrap">
-        <form action="" id="LikertForm">
-          <input type="hidden" name="targetLink" value="{{ targetLink }}" />
-          <input type="hidden" name="curr_cat" value="{{ data.curr_cat }}" />
+        <form 
+          action="/submitReview" 
+          id="LikertForm"
+          onsubmit="event.preventDefault(); submitReview();"
+          method="POST" 
+          >
+          <input type="hidden" id="workerId" value="{{ data.workerId }}" name="workerId"/>
           <h2 class="title align-center">How well do you think this summary represented the article?</h2>
           <ul class='likert'>
             <li><input type="radio" name="summary_evaluation" value="1"><label>Nothing</label></li>
@@ -48,7 +52,7 @@
             <li><input type="radio" name="learning" value="7"><label>A lot</label></li>
           </ul>
           <div id="post-article-toolbar">
-            <button id="submitButton" value="Submit" onclick="clickSubmitReview()">Submit</button>
+            <button id="submitButton" value="Submit" onclick="submitReview()">Submit</button>
           </div>
         </form>
       </div>

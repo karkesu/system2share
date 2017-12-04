@@ -1,5 +1,5 @@
 from flask_script import Manager, prompt_bool, Server
-from server import app, db
+from server import app, db, Experiment
 
 manager = Manager(app)
 
@@ -11,6 +11,11 @@ def initDB():
 def dropDB():
 	if prompt_bool('Are you sure you want to lose all your SQL data?'):
 		db.drop_all()
+
+@manager.command
+def test():
+	result = Experiment.query.filter_by(promptId=2).count()
+	print(result)
 
 @manager.command
 def hello():
