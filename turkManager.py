@@ -31,13 +31,12 @@ mtc = MTurkConnection(
 
 def createHIT():
 
+    # TODO: fix height here
     url = 'https://www.zeerak.net/279akz/getTask/'
-    external_question = ExternalQuestion(url, 800)
+    external_question = ExternalQuestion(url, 1024)
 
     qualifications = Qualifications()
     qualifications.add(LocaleRequirement("EqualTo","US"))
-    # qualifications.add(PercentAssignmentsApprovedRequirement(comparator="GreaterThan", integer_value="80"))
-    # qualifications.add(NumberHitsApprovedRequirement(comparator="GreaterThan", integer_value="50"))
 
     response = mtc.create_hit(
         title='Read a short article and learn something new!',
@@ -47,7 +46,7 @@ def createHIT():
         question=external_question,
         reward=0.10,
         max_assignments=20,
-        # qualifications=qualifications,
+        qualifications=qualifications,
         # response_groups='', # batches??
         )
 
@@ -66,11 +65,6 @@ def createHIT():
     print("-------------------------------------------------------")
 
     return
-
-# createHIT('tech-hq', '1')
-def createManyHITs():
-    for i in range(1,4):
-        createHIT('tech-hq', str(i))
 
 def getAllHITIds():
     Ids = []
@@ -107,55 +101,3 @@ def approveAllAssignments():
     for hit in getAllAssignments():
         for assignment in hit:
             approveAssignment(assignment.AssignmentId)
-
-def allAssignmentsToTSV():
-    result = ''
-
-    result += 'HITId' + '\t'
-    result += 'AssignmentId' + '\t'
-    result += 'WorkerId' + '\t'
-    result += 'AcceptTime' + '\t'
-    result += 'SubmitTime' + '\t'
-    result += 'articleCategory' + '\t'
-    result += 'articleId' + '\t'
-    result += 'promptId' + '\t'
-    result += 'annotation' + '\t'
-    result += 'readingTime' + '\t'
-    result += 'writingTime' + '\t'
-    result += 'totalTime' + '\t'
-    result += 'annotationLength' + '\t'
-
-    result = result[:-1]
-    result += '\n'
-
-    for hit in getAllAssignments():
-        for assignment in hit:
-
-            result += assignment.HITId + '\t'
-            result += assignment.AssignmentId + '\t'
-            result += assignment.WorkerId + '\t'
-            result += assignment.AcceptTime + '\t'
-            result += assignment.SubmitTime + '\t'
-
-            articleCategory = assignment.answers[0][1].fields[0]
-            articleId = assignment.answers[0][2].fields[0]
-            promptId = assignment.answers[0][3].fields[0]
-            annotation = assignment.answers[0][4].fields[0]
-            readingTime = assignment.answers[0][5].fields[0]
-            writingTime = assignment.answers[0][6].fields[0]
-            totalTime = str(int(readingTime) + int(writingTime))
-            annotationLength = str(len(annotation))
-
-            result += articleCategory + '\t'
-            result += articleId + '\t'
-            result += promptId + '\t'
-            result += annotation + '\t'
-            result += readingTime + '\t'
-            result += writingTime + '\t'
-            result += totalTime + '\t'
-            result += annotationLength + '\t'
-
-            result = result[:-1]
-            result += '\n'
-
-    return result

@@ -35,6 +35,7 @@ function submitArticle() {
 	var form = document.getElementById('mturkForm');
 	addHidden(form, 'readingTime', readingTime.toString());
 	addHidden(form, 'writingTime', writingTime.toString());
+	addHidden(form, 'screenWidth', window.screen.width)
 	form.submit();
 }
 

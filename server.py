@@ -4,10 +4,6 @@ from config import *
 from urllib.parse import urlencode
 import sys, os, random, json
 
-# TODO: make sure annotations show in the news feed, and that they are stored in the database
-# make sure the right articles are shown
-# and that the right articleIDs are stored in the database, basically a sanity check on the data
-
 # Config
 env = os.environ['APP_ENV']
 app = Flask(__name__)
@@ -33,6 +29,7 @@ class Experiment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     assignmentId = db.Column(db.String(50), nullable=False)
     workerId = db.Column(db.String(50), nullable=False)
+    screenWidth = db.Column(db.Integer, nullable=True)
     step = db.Column(db.Integer, nullable=False)
     showNewsFeed = db.Column(db.Boolean, nullable=False)
     newsFeedOrder = db.Column(db.String(2), nullable=True)
@@ -96,6 +93,7 @@ def submitNewsFeed(articleId):
 def submitArticle():
     workerId = request.form.get('workerId')
     exp = Experiment.query.filter_by(workerId=workerId).first()
+    exp.screenWidth = request.form.get('screenWidth')
 
     annotation = request.form.get('annotation')
     readingTime = request.form.get('readingTime')
@@ -166,13 +164,18 @@ def getHIT():
     
     # If worker is seen for the first time, set up experiment
     if exp is None:
+        promptId = getLeastFrequent('promptId', poss_assignments['promptId'])
+        newsFeedOrder = getLeastFrequent(
+            'newsFeedOrder', 
+            poss_assignments['newsFeedOrder'],
+            additional_info={'promptId': promptId})
         exp = Experiment(
             workerId=workerId, 
             assignmentId=assignmentId,
             step=0,
             showNewsFeed=showNewsFeed(),
-            promptId = getLeastFrequent('promptId', poss_assignments['promptId']),
-            newsFeedOrder = getLeastFrequent('newsFeedOrder', poss_assignments['newsFeedOrder'])
+            promptId = promptId,
+            newsFeedOrder = newsFeedOrder
             )
         db.session.add(exp)
         db.session.commit()
@@ -199,7 +202,7 @@ def getHIT():
     # Amazon Article
     if exp.step == 2:
         if exp.amazon_articleId == None:
-            exp.amazon_articleId = getArticleId(category)
+            exp.amazon_articleId = getArticleId(exp, category)
             db.session.commit()
         return renderArticleStep(exp, category, exp.amazon_articleId)
    
@@ -217,7 +220,7 @@ def getHIT():
     # Apple Article
     if exp.step == 5:
         if exp.apple_articleId == None:
-            exp.apple_articleId = getArticleId(category)
+            exp.apple_articleId = getArticleId(exp, category)
             db.session.commit()
         return renderArticleStep(exp, category, exp.apple_articleId)
     
@@ -235,7 +238,7 @@ def getHIT():
     # Uber Article
     if exp.step == 8:
         if exp.uber_articleId == None:
-            exp.uber_articleId = getArticleId(category)
+            exp.uber_articleId = getArticleId(exp, category)
             db.session.commit()
         return renderArticleStep(exp, category, exp.uber_articleId)
     
@@ -338,9 +341,13 @@ def renderNewsFeedStep(exp, category):
     data['summaries'] = summaries
     return make_response(render_template('newsfeed.html', data=data))
 
-def getArticleId(category):
+def getArticleId(exp, category):
     expVar = category + '_articleId'
-    return getLeastFrequent(expVar, poss_assignments['articleId'])
+    return getLeastFrequent(
+        expVar,
+        poss_assignments['articleId'],
+        additional_info={'promptId': exp.promptId}
+        )
 
 def getArticle(articleCategory, articleId):
     f = open('static/articles/' + articleCategory + '/' + articleId + '.txt', 'r', encoding='utf-8')
@@ -366,7 +373,6 @@ def renderArticleStep(exp, category, articleId):
 
     return make_response(render_template('article.html', data=data))
 
-# TODO: I think you mean to show only one summary in here and I'm showing both? Please edit if need be
 def renderReviewStep(exp, category):
     data = {}
     data['workerId'] = request.args.get('workerId')
