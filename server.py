@@ -182,7 +182,7 @@ def getHIT():
     category = ''
     if exp.step < 4:
         category = 'amazon'
-    elif exp.step < 8:
+    elif exp.step < 7:
         category = 'apple'
     else:
         category = 'uber'
@@ -201,7 +201,7 @@ def getHIT():
         if exp.amazon_articleId == None:
             exp.amazon_articleId = getArticleId(category)
             db.session.commit()
-        return renderArticleStep(exp, category)
+        return renderArticleStep(exp, category, exp.amazon_articleId)
    
     # Amazon Review
     if exp.step == 3:
@@ -219,7 +219,7 @@ def getHIT():
         if exp.apple_articleId == None:
             exp.apple_articleId = getArticleId(category)
             db.session.commit()
-        return renderArticleStep(exp, category)
+        return renderArticleStep(exp, category, exp.apple_articleId)
     
     # Apple Review
     if exp.step == 6:
@@ -237,7 +237,7 @@ def getHIT():
         if exp.uber_articleId == None:
             exp.uber_articleId = getArticleId(category)
             db.session.commit()
-        return renderArticleStep(exp, category)
+        return renderArticleStep(exp, category, exp.uber_articleId)
     
     # Uber Review
     if exp.step == 9:
@@ -351,8 +351,8 @@ def getArticle(articleCategory, articleId):
     f.close()
     return data
 
-def renderArticleStep(exp, category):
-    articleId = getArticleId(category)
+def renderArticleStep(exp, category, articleId):
+    articleId = str(articleId)
     article = getArticle(category, articleId)
     data = {}
     data['articleTitle'] = article[0]
@@ -376,14 +376,20 @@ def renderReviewStep(exp, category):
     data['submitURL'] = request.url_root + 'submitReview'
     if exp.showNewsFeed:
         summaries = {}
-        for articleId in poss_assignments['articleId']:
-            summary = {}
-            article = getArticle(category , articleId)
-            summary['title'] = article[0]
-            summary['byLine'] = article[1]
-            summary['preview'] = article[2:3][0][:150]+"..."
-            summary['annotation'] = eval('exp.' + category + '_annotation_content_a' + articleId)
-            summaries[articleId] = summary
+        if exp.step == 3:
+            articleId = exp.amazon_articleId
+        elif exp.step == 6:
+            articleId = exp.apple_articleId
+        else:
+            articleId = exp.uber_articleId
+        articleId = str(articleId)
+        summary = {}
+        article = getArticle(category, articleId)
+        summary['title'] = article[0]
+        summary['byLine'] = article[1]
+        summary['preview'] = article[2:3][0][:150]+"..."
+        summary['annotation'] = eval('exp.' + category + '_annotation_content_a' + articleId)
+        summaries[articleId] = summary
         data['summaries'] = summaries
     return make_response(render_template('review.html', data=data))
 
