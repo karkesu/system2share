@@ -6,7 +6,7 @@ import sys
 import os
 
 IS_DEV_ENVIRONMENT = True
-AWS_ACCESS_KEY_Id = os.environ['ACCESS_KEY']
+AWS_ACCESS_KEY_ID = os.environ['ACCESS_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['SECRET_ACCESS_KEY']
 
 environments = {
@@ -25,16 +25,13 @@ environments = {
 mturk_environment = environments['sandbox'] if IS_DEV_ENVIRONMENT else environments['live']
 
 mtc = MTurkConnection(
-    aws_access_key_Id=AWS_ACCESS_KEY_Id,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     host=mturk_environment['endpoint'])
 
-def createHIT(articleCategory, articleId):
+def createHIT():
 
-    url = 'https://www.zeerak.net/279akz/test/'
-    url += articleCategory
-    url += '/'
-    url += articleId
+    url = 'https://www.zeerak.net/279akz/getTask/'
     external_question = ExternalQuestion(url, 800)
 
     qualifications = Qualifications()

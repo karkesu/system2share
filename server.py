@@ -244,7 +244,7 @@ def getHIT():
     if exp.step >= 10:
         data = urlencode(exp.__dict__)
         print(exp.__dict__)
-        return redirect(amazon_host + data, code=307)
+        return redirect(amazon_host + '?' + data, code=307)
 
     # It should never get here
     return 'You have completed the task'
