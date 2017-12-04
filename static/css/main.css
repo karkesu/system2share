@@ -3,7 +3,7 @@ body {
 	padding: 0;
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: left;
-	height
+	padding-bottom: 60px;
 }
 
 div {
@@ -278,4 +278,11 @@ ul.likert{
 	float: left;
 	position: inherit;
 	margin: 0 auto;
+}
+
+@media  (max-width: 900px) {
+    .float {
+		float: none;
+		margin: 0 auto;
+	}
 }
