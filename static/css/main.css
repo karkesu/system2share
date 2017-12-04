@@ -3,6 +3,7 @@ body {
 	padding: 0;
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: left;
+	height
 }
 
 div {
@@ -11,10 +12,10 @@ div {
 	padding-left: 40px;
 	padding-right: 40px;
 }
-
+/*
 div:last-child {
 	padding-bottom: 40px;
-}
+}*/
 
 #container, #screen {
 	width: 100%;
@@ -26,6 +27,7 @@ div:last-child {
 #container {
 	overflow: scroll;
 	display: block;
+	padding-bottom: 60px;
 }
 
 #screen {
@@ -33,7 +35,6 @@ div:last-child {
 	display: none;
 	top: 0px;
 	left: 0px;
-	background-color: #ffdfce;
 	z-index: 2;
 }
 
@@ -42,28 +43,89 @@ div:last-child {
 	max-width: 600px;
 }
 
+.bg-gray {
+	background-color: #efeeee;
+	height: 100%;
+}
+.bg-gray-dark {
+	background-color: #dfdddd;
+	height: 100%;
+}
+.instructions {
+	/*position: fixed;*/
+	/*width: 100%;*/;
+	height: 25px;
+	color: #888;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 15px;
+	margin-bottom: 2em;
+	text-align: center;
+}
+.bg-pink {
+	background-color: #ffc6a8;
+}
 /* newsfeed display */
-.summary {
+.summary, .likertCard {
 	text-decoration: none;
-	max-width: 400px;
+	max-width: 600px;
 	margin: 0 auto;
-	border-bottom: 1px solid #ccc;
-	margin: 30px;
-
+	border: 1px solid #ddd;
+	padding: 0px;
+	margin-bottom: 20px;
+	background-color: white;
 }
 .summary:hover {
 	cursor: pointer;
+}
+.summary>a {
+	text-decoration: none;
+	width: 100%;
+}
+.annotation, .likertTitle {
+	border-bottom: 1px solid #eee;
+	padding: 15px 30px;
+	background-color: #F7FAFA;
+	top: 0;
+	margin: 0;
+	margin-bottom: 20px;
+}
+.likertTitle {
+	background-color: #FAE7DF;
+}
+.annotation.0 {
+	display:hidden;
+}
+.summaryTitle, .summaryExerpt, .summaryByline {
+	margin: 5px 30px;
+}
+.summaryTitle {
+	font-family: Georgia, serif;
+	font-size: 15px;
+}
+
+.summaryExerpt {
+	font-size: 13px;
+}
+.summaryByline {
+	font-size: 12px;
+	color: #999;
+	text-transform: uppercase;
+	margin-top: 15px;
+	margin-bottom: 25px;
 }
 
 /* article display */
 
 #article {
 	font-family: Georgia, serif;
+	max-width: 600px;
+	margin: 0 auto;
 }
 
 #post-article-toolbar {
 	margin: auto 20px;
 	text-align: center;
+	margin-bottom: 100px;
 }
 
 /* basic form elements */
@@ -146,21 +208,19 @@ h3 {
 	font-size: 16px;
 	line-height: 20px;
 	color: #666;
-	font-weight: 400;
+	font-weight: 600;
+}
+.annotationPrompt {
+	font-family: Georgia, serif;
+	font-weight: 600;
+	margin-bottom: 20px;
 }
 
-.instructions {
-	color: #888;
-	padding: 10px;
-	margin-bottom: 2em;
-	background-color: #eee;
-	text-align: center;
-}
-.bg-pink {
-	background-color: #ffc6a8;
-}
+
 textarea#annotation {
 	width: 97%; /*to investigate*/
+	margin-top: 15px;
+	margin-bottom: 30px;
 }
 .newsfeed {
 	width: 50%;
@@ -168,12 +228,8 @@ textarea#annotation {
 }
 form .likert {
 	list-style:none;
-	width:100%;
 	margin:0 auto;
-	margin-bottom: 30px;
-	padding:0 0 20px;
 	display:block;
-
 }
 
 form .likert li {
@@ -189,14 +245,37 @@ form .likert li input[type=radio] {
 	left:50%;
 	margin-left:-6px;
 }
-/*#submitButton {
+ul.likert{
+	padding-left: 0;
+	padding: 0px 20px 30px 20px;
+}
+/*.likertCard {
+	background-color: white;
+	max-width: 500px;
+	margin: 0 auto;
+	border: 1px solid #eee;
+	padding: 30px;
+	margin: 20px;
+}*/
+#submitButton {
 	display: block;
 	max-width: 600px;
 	margin: auto;
 	max-height: 48px;
-}*/
+}
 
 .align-center {
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	margin: auto;
+}
+.limit-width {
+	max-width: 600px;
+	min-width: 300px;
+}
+.float {
+	float: left;
+	position: inherit;
 	margin: 0 auto;
-	text-align: center;
 }
