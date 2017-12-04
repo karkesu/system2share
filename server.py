@@ -376,14 +376,20 @@ def renderReviewStep(exp, category):
     data['submitURL'] = request.url_root + 'submitReview'
     if exp.showNewsFeed:
         summaries = {}
-        for articleId in poss_assignments['articleId']:
-            summary = {}
-            article = getArticle(category , articleId)
-            summary['title'] = article[0]
-            summary['byLine'] = article[1]
-            summary['preview'] = article[2:3][0][:150]+"..."
-            summary['annotation'] = eval('exp.' + category + '_annotation_content_a' + articleId)
-            summaries[articleId] = summary
+        if exp.step == 3:
+            articleId = exp.amazon_articleId
+        elif exp.step == 6:
+            articleId = exp.apple_articleId
+        else:
+            articleId = exp.uber_articleId
+        articleId = str(articleId)
+        summary = {}
+        article = getArticle(category, articleId)
+        summary['title'] = article[0]
+        summary['byLine'] = article[1]
+        summary['preview'] = article[2:3][0][:150]+"..."
+        summary['annotation'] = eval('exp.' + category + '_annotation_content_a' + articleId)
+        summaries[articleId] = summary
         data['summaries'] = summaries
     return make_response(render_template('review.html', data=data))
 
