@@ -90,6 +90,7 @@ function clickSubmitReview() {
 	}
 }
 
+// Only call this at step 2 (about to move on to a new category)
 function getNextCat(curr_cat) {
 	var next = {'amazon':'apple','apple':'uber','uber':'amazon'}
     return next[cat]
@@ -99,6 +100,7 @@ var currentTimerStart = new Date().getTime();
 var writingTime = 0;
 var readingTime = 0;
 
+// Hackily watching for newsfeed articles. 
 window.onload=function(){
 	var one = document.getElementById("1")
 	var two = document.getElementById("2")

@@ -1,3 +1,5 @@
+#Ignore all this/.. 
+
 from flask import Flask, render_template, request, url_for, make_response
 from flask_sqlalchemy import SQLAlchemy
 from config import *
@@ -18,7 +20,7 @@ else:
 
 db = SQLAlchemy(app)
 
-params_to_save = ""
+params_to_save = ['newsfeed','newsfeed_order','promptId','assignmentId','hitId','workerId','amazon_newsfeed_order','amazon_promptId','amazon_newsfeed_annotation_a1','amazon_newsfeed_annotation_a2','amazon_annotation_content_a1','amazon_annotation_content_a2','amazon_articleId','amazon_time_reading','amazon_time_writing','amazon_annotation','amazon_likert_summary_evaluation','amazon_likert_prior_knowledge','amazon_likert_learning','apple_newsfeed_order','apple_promptId','apple_newsfeed_annotation_a1','apple_newsfeed_annotation_a2','apple_annotation_content_a1','apple_annotation_content_a2','apple_articleId','apple_time_reading','apple_time_writing','apple_annotation','apple_likert_summary_evaluation','apple_likert_prior_knowledge','apple_likert_learning','uber_newsfeed_order','uber_promptId','uber_newsfeed_annotation_a1','uber_newsfeed_annotation_a2','uber_annotation_content_a1','uber_annotation_content_a2','uber_articleId','uber_time_reading','uber_time_writing','uber_annotation','uber_likert_summary_evaluation','uber_likert_prior_knowledge','uber_likert_learning']
 param_names = ['assignmentId','hitId','workerId','task','newsfeed','newsfeed_order','promptId','prompt','placeholder','curr_cat','curr_article','curr_articleTitle','curr_articleByLine','curr_articleText','amazon_newsfeed_annotation_a1','amazon_newsfeed_annotation_a2','amazon_annotation_content_a1','amazon_annotation_content_a2','amazon_articleId','amazon_promptId','amazon_time_reading','amazon_time_writing','amazon_annotation','amazon_likert_summary_evaluation','amazon_likert_prior_knowledge','amazon_likert_learning','apple_newsfeed_annotation_a1','apple_newsfeed_annotation_a2','apple_annotation_content_a1','apple_annotation_content_a2','apple_articleId','apple_promptId','apple_time_reading','apple_time_writing','apple_annotation','apple_likert_summary_evaluation','apple_likert_prior_knowledge','apple_likert_learning','uber_newsfeed_annotation_a1','uber_newsfeed_annotation_a2','uber_annotation_content_a1','uber_annotation_content_a2','uber_articleId','uber_promptId','uber_time_reading','uber_time_writing','uber_annotation','uber_likert_summary_evaluation','uber_likert_prior_knowledge','uber_likert_learning']
 redundant_params = ['prompt','placeholder','newsfeed','curr_articleTitle','curr_articleByLine','curr_articleText']
 poss_assignments = {
@@ -40,8 +42,8 @@ class Experiment(db.Model):
     assignmentId = db.Column(db.String(50), nullable=False)
     hitId = db.Column(db.String(50), nullable=False)
     workerId = db.Column(db.String(50), nullable=False)
-    # amazon_newsfeed_order = db.Column(db.String(2), nullable=True)
-    # amazon_promptId = db.Column(db.Integer, nullable=False)
+    amazon_newsfeed_order = db.Column(db.String(2), nullable=True)
+    amazon_promptId = db.Column(db.Integer, nullable=False)
     amazon_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
     amazon_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
     amazon_annotation_content_a1 = db.Column(db.String(500), nullable=True)
@@ -53,8 +55,8 @@ class Experiment(db.Model):
     amazon_likert_summary_evaluation = db.Column(db.Integer, nullable=True)
     amazon_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
     amazon_likert_learning = db.Column(db.Integer, nullable=True)
-    # apple_newsfeed_order = db.Column(db.String(2), nullable=True)
-    # apple_promptId = db.Column(db.Integer, nullable=False)
+    apple_newsfeed_order = db.Column(db.String(2), nullable=True)
+    apple_promptId = db.Column(db.Integer, nullable=False)
     apple_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
     apple_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
     apple_annotation_content_a1 = db.Column(db.String(500), nullable=True)
@@ -66,8 +68,8 @@ class Experiment(db.Model):
     apple_likert_summary_evaluation = db.Column(db.Integer, nullable=True)
     apple_likert_prior_knowledge = db.Column(db.Integer, nullable=True)
     apple_likert_learning = db.Column(db.Integer, nullable=True)
-    # uber_newsfeed_order = db.Column(db.String(2), nullable=True)
-    # uber_promptId = db.Column(db.Integer, nullable=False)
+    uber_newsfeed_order = db.Column(db.String(2), nullable=True)
+    uber_promptId = db.Column(db.Integer, nullable=False)
     uber_newsfeed_annotation_a1 = db.Column(db.Integer, nullable=True)
     uber_newsfeed_annotation_a2 = db.Column(db.Integer, nullable=True)
     uber_annotation_content_a1 = db.Column(db.String(500), nullable=True)

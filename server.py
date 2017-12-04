@@ -392,6 +392,8 @@ def paramstoURL(params):
     print(string)
     return string
 
+
+
 def getNextLink(targetLink,params):
     params['task'] = getNextTask(params['task'])
     # params['curr_cat'] = getNextCategory(params['task'],params['curr_cat'])
@@ -399,6 +401,7 @@ def getNextLink(targetLink,params):
     targetLink += 'getTask?'+ paramsForURL
     return targetLink
 
+# Just a repeat print statment
 def checkParams(params):
     print("##################################### PARAMS ")
     for p in params:
@@ -406,6 +409,7 @@ def checkParams(params):
             print(p+' ==== '+str(params[p]))
     print("#####################################")
 
+#and condition=nals. 
 def checkPrereq(prereq,params):
     a_ok = True
     for p in prereq:
