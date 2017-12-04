@@ -46,9 +46,3 @@ function submitReview() {
 var currentTimerStart = new Date().getTime();
 var writingTime = 0;
 var readingTime = 0;
-
-// Hackily watching for newsfeed articles. 
-window.onload=function(){
-	var one = document.getElementById("1")
-	var two = document.getElementById("2")
-}
