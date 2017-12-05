@@ -72,7 +72,7 @@ class Experiment(db.Model):
 # Test View
 @app.route('/')
 def test():
-    return '279akz'
+    return '279akz-testing'
 
 # Submit Views
 @app.route('/submitNewsFeed/<articleId>', methods=['GET'])
@@ -259,6 +259,7 @@ def getLeastFrequent(param, options, additional_info=None):
     # e.g. param = 'promptId', options = ['0','1','2','3'],additional_info=None)
     # e.g. param = 'newsfeed_order', options = ['1,2','2,1'],additional_info=None)
     # e.g. param = 'amazon_articleId', options = ['0','1'],additional_info={'promptId':3})
+
     extraParameters = {}
     if additional_info:
         extraParameters = additional_info
@@ -327,8 +328,8 @@ def setNewsfeedContent(exp, category, newsFeedOrder):
 
 # TODO: this is just a bogus function need to fix
 def showNewsFeed():
-    submissions = Experiment.query.all()
-    
+
+    submissions = Experiment.query.filter_by(step=10).all()
     if len(submissions) < 5:
         return False
 
