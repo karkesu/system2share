@@ -337,14 +337,14 @@ def showNewsFeed():
         counts = []
         for option in [1,2]:
             for promptId in poss_assignments['promptId']:
-                args = {cat_articleId: option, 'promptId':promptId}
+                args = {cat_articleId: option, 'promptId':promptId, 'step':10}
                 count = Experiment.query.filter_by(**args).count()
                 # if total submissions < 1 for any given articleId, don't show newsfeed
                 if count < 1:
                     return False
                 counts.append(count)
         # if there's a large (>5) difference in number of submissions for two articleIds within the same category, don't show newsfeed
-        if max(counts) - min(counts)> 3:
+        if max(counts) - min(counts)> 5:
             return False
 
     return True # if everything passes
