@@ -249,7 +249,6 @@ def getHIT():
     # Complete Experiment
     if exp.step >= 10:
         data = urlencode(exp.__dict__)
-        print(exp.__dict__)
         return redirect(amazon_host + '?' + data, code=307)
 
     # It should never get here
@@ -273,74 +272,83 @@ def getLeastFrequent(param, options, additional_info=None):
             for a in extraParameters:
                 args[a] = extraParameters[a]
         counts[option] = Experiment.query.filter_by(**args).count()
+
     return min(counts, key=counts.get)
 
-def getRandomAnnotation(param,value,resultField):
+def getRandomAnnotation(category, promptId, articleId):
     # return actual annotation if there is one; otherwise ''
-    args = {param:value}
+    cat_annotation = category+"_annotation"
+    cat_articleId = category+"_articleId"
+    args = { cat_articleId: articleId, 'promptId': promptId, 'step':10}
     all_annotations = Experiment.query.filter_by(**args).all()
-    if len(all_annotations) == 0:
-        return None
+    if len(all_annotations) > 0:
+        nonNullAnnotations = []
+        for a in all_annotations:
+            annotation = eval('a.' + cat_annotation)
+            if annotation:
+                nonNullAnnotations.append(annotation)
+        if len(nonNullAnnotations) > 0:
+            content = random.choice(nonNullAnnotations)
+            return content
+        else:
+            return ""
     else:
-        rand = random.randint(0,len(all_annotations) - 1)
-        return all_annotations[rand] #[resultField]
+        return ""
+    
 
 # TODO: this needs to change to actually get annotaions, it's not getting anything at the moment
 # This is probably a bit opaque..Basically generating and populating summaries & annotations from other users
 def setNewsfeedContent(exp, category, newsFeedOrder):
-    annotation1 = category +"_newsfeed_annotation_a1"
-    annotation2 = category +"_newsfeed_annotation_a2"
-    for annotation in [annotation1, annotation2]:
-        num = annotation[-1]
-        annotationId = getLeastFrequent(annotation,poss_assignments['promptId'],{'newsFeedOrder':exp.newsFeedOrder})
-        annotation_field = category +"_annotation"
-        annotation_rand = category +"_annotation_content_a" + num
-        annotation_content = getRandomAnnotation(annotation,annotationId,annotation_field)
-        annotation_string = str(annotation_content.__dict__[annotation_field]) if annotation_content else ""
-
     # Get newsfeed summaries content
     summaries_dict = {}
     for articleId in [exp.newsFeedOrder[0],exp.newsFeedOrder[1]]:
-        annotation_rand = category +"_annotation_content_a"+articleId
+        annotation_col = category + "_annotation_content_a" + articleId
+        annotationId = getLeastFrequent(
+            category + "_newsfeed_annotation_a" + articleId,
+            poss_assignments['promptId'],
+            {
+             'newsFeedOrder': exp.newsFeedOrder,
+             'showNewsFeed': True
+            })
+        annotation_content = getRandomAnnotation(category,annotationId, articleId)
         article = getArticle(category , articleId)
         summaries_dict[articleId] = {}
         summaries_dict[articleId]['submitLink'] = request.url_root[:-1] + '/submitNewsFeed/' + articleId + '?workerId=' + exp.workerId
         summaries_dict[articleId]['title'] = article[0]
         summaries_dict[articleId]['byLine'] = article[1]
         summaries_dict[articleId]['preview'] = article[2:3][0][:150]+"..."
-        summaries_dict[articleId]['annotation'] = annotation_string
-
-    print(annotation_string)
+        summaries_dict[articleId]['annotation'] = annotation_content
+        
+        setattr(exp, category+"_newsfeed_annotation_a" + articleId, annotationId)
+        setattr(exp, annotation_col, annotation_content)
+        db.session.commit()
 
     return summaries_dict
 
 # TODO: this is just a bogus function need to fix
 def showNewsFeed():
-
-    # zeerak's bogus code
     submissions = Experiment.query.all()
-    if len(submissions) < 2:
-        return False
-    else:
-        return True
-
-    category = ''
     
-    # karen's code
-    # if total submissions < 1 per article return false
-    # if max difference b/w articles > 5 return false
-    counts = []
-    for option in [1,2]:
-        temp_param = category+'_articleId'
-        args = {temp_param: str(option)}
-        count = len(Experiment.query.filter_by(**args).all())
-        # if total submissions < 1 per article return false
-        if count < 1:
-            return False
-        counts.append(count)
+    if len(submissions) < 5:
+        return False
 
-    # if max difference b/w articles > 5 return false
-    return False if abs(counts[0]-counts[1])>5 else True
+    for cat in ['amazon','apple','uber']:
+        cat_articleId = cat+'_articleId'
+        counts = []
+        for option in [1,2]:
+            for promptId in poss_assignments['promptId']:
+                args = {cat_articleId: option, 'promptId':promptId}
+                count = Experiment.query.filter_by(**args).count()
+                # if total submissions < 1 for any given articleId, don't show newsfeed
+                if count < 1:
+                    return False
+                counts.append(count)
+        # if there's a large (>5) difference in number of submissions for two articleIds within the same category, don't show newsfeed
+        if max(counts) - min(counts)> 3:
+            return False
+
+    return True # if everything passes
+
 
 def renderNewsFeedStep(exp, category):
     summaries = setNewsfeedContent(exp, category, exp.newsFeedOrder)

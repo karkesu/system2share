@@ -3,11 +3,16 @@
 
 <div id="container" class="bg-gray">
 	<div class="newsfeed wrapper">
-		<div class="instructions bg-gray-dark">Read the article you find more interesting.</div>
+		<div class="instructions bg-gray-dark">Read the article you find more interesting. </br>
+		Someone else's thoughts on the article are also shown where available.</div>
 	  	{% for summary in data.summaries %}
 	  	<div class="summary">
 		    <a href={{ data.summaries[summary]['submitLink'] }} id={{ summary }} value="{{ summary }}">
-				<div class="annotation {{ data.annotation_num }}">"{{ data.summaries[summary]['annotation'] }}"</div>
+				<div class="annotation {{ data.annotation_num }}">
+					{% if data.summaries[summary]['annotation'] %}
+						"{{ data.summaries[summary]['annotation'] }}"
+					{% endif %}
+				</div>
 				<h2 class="summaryTitle">{{ data.summaries[summary]['title'] }}</h2>
 				<p class="summaryExerpt">{{ data.summaries[summary]['preview'] }}</p>
 				<p class="summaryByline">{{ data.summaries[summary]['byLine'] }}</p>
