@@ -3,7 +3,7 @@
 
 <div id="container" class="bg-gray">
     <div class="align-center">
-
+      {% if data.showSummary %}
       <div class="wrapper limit-width float">
         <div class="instructions bg-gray-dark limit-width">What did you think of the summary, the article, and the topic?</div>
         {% for summary in data.summaries %}
@@ -15,6 +15,7 @@
           </div>
         {% endfor %}
       </div>
+      {% endif %}
       <div class="wrapper limit-width float">
         <form 
           action="{{ data.submitURL }}" 

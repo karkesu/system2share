@@ -7,7 +7,7 @@
 	  	{% for summary in data.summaries %}
 	  	<div class="summary">
 		    <a href={{ data.summaries[summary]['submitLink'] }} id={{ summary }} value="{{ summary }}">
-				<div class="annotation {{ data.annotation_num }}">{{ data.summaries[summary]['annotation'] }}</div>
+				<div class="annotation {{ data.annotation_num }}">"{{ data.summaries[summary]['annotation'] }}"</div>
 				<h2 class="summaryTitle">{{ data.summaries[summary]['title'] }}</h2>
 				<p class="summaryExerpt">{{ data.summaries[summary]['preview'] }}</p>
 				<p class="summaryByline">{{ data.summaries[summary]['byLine'] }}</p>

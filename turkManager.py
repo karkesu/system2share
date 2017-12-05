@@ -5,7 +5,7 @@ from boto.mturk.qualification import Qualifications, PercentAssignmentsApprovedR
 import sys
 import os
 
-IS_DEV_ENVIRONMENT = True
+IS_DEV_ENVIRONMENT = False
 AWS_ACCESS_KEY_ID = os.environ['ACCESS_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['SECRET_ACCESS_KEY']
 
@@ -33,7 +33,7 @@ def createHIT():
 
     # TODO: fix height here
     url = 'https://www.zeerak.net/279akz/getTask/'
-    external_question = ExternalQuestion(url, 1024)
+    external_question = ExternalQuestion(url, 1200)
 
     qualifications = Qualifications()
     qualifications.add(LocaleRequirement("EqualTo","US"))
@@ -42,10 +42,10 @@ def createHIT():
         title='Read a short article and learn something new!',
         keywords='read, react, share, news',
         description='How would you share this on social media? Just one task!',
-        duration=1200,
+        duration=1800,
         question=external_question,
-        reward=0.10,
-        max_assignments=20,
+        reward=0.30,
+        max_assignments=5,
         qualifications=qualifications,
         # response_groups='', # batches??
         )

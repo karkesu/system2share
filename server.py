@@ -168,7 +168,7 @@ def getHIT():
         newsFeedOrder = getLeastFrequent(
             'newsFeedOrder', 
             poss_assignments['newsFeedOrder'],
-            additional_info={'promptId': promptId})
+            additional_info={'promptId': promptId, 'showNewsFeed':True})
         exp = Experiment(
             workerId=workerId, 
             assignmentId=assignmentId,
@@ -260,12 +260,18 @@ def getLeastFrequent(param, options, additional_info=None):
     # e.g. param = 'promptId', options = ['0','1','2','3'],additional_info=None)
     # e.g. param = 'newsfeed_order', options = ['1,2','2,1'],additional_info=None)
     # e.g. param = 'amazon_articleId', options = ['0','1'],additional_info={'promptId':3})
+    extraParameters = {}
+    if additional_info:
+        extraParameters = additional_info
+
+    # only look at comleted experiments
+    extraParameters['step'] = 10
     counts = {}
     for option in options:
         args = {param:option}
-        if additional_info:
-            for a in additional_info:
-                args[a] = additional_info[a]
+        if extraParameters:
+            for a in extraParameters:
+                args[a] = extraParameters[a]
         counts[option] = Experiment.query.filter_by(**args).count()
     return min(counts, key=counts.get)
 
@@ -290,8 +296,6 @@ def setNewsfeedContent(exp, category, newsFeedOrder):
         annotation_field = category +"_annotation"
         annotation_rand = category +"_annotation_content_a" + num
         annotation_content = getRandomAnnotation(annotation,annotationId,annotation_field)
-        # params[annotation_rand] = str(annotation_content.__dict__[annotation_field]) if annotation_content else ""
-        # params[annotation] = annotationId
         annotation_string = str(annotation_content.__dict__[annotation_field]) if annotation_content else ""
 
     # Get newsfeed summaries content
@@ -380,7 +384,9 @@ def renderReviewStep(exp, category):
     data = {}
     data['workerId'] = request.args.get('workerId')
     data['submitURL'] = request.url_root + 'submitReview'
+    data['showSummary'] = False
     if exp.showNewsFeed:
+        data['showSummary'] = True
         summaries = {}
         if exp.step == 3:
             articleId = exp.amazon_articleId
