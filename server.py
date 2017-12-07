@@ -72,7 +72,7 @@ class Experiment(db.Model):
 # Test View
 @app.route('/')
 def test():
-    return '279akz-testing'
+    return '279akz-testing-zeerak-dec-7'
 
 # Submit Views
 @app.route('/submitNewsFeed/<articleId>', methods=['GET'])
