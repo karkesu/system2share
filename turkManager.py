@@ -45,7 +45,7 @@ def createHIT():
         duration=1800,
         question=external_question,
         reward=0.30,
-        max_assignments=100,
+        max_assignments=145,
         qualifications=qualifications,
         # response_groups='', # batches??
         )

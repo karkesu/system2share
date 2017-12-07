@@ -24,6 +24,7 @@
           method="POST" 
           >
           <input type="hidden" id="workerId" value="{{ data.workerId }}" name="workerId"/>
+          {% if data.showSummary %}
           <div class='likertCard'>
             <h2 class="likertTitle">How well do you think this summary represented the article?</h2>
             <ul class='likert'>
@@ -36,6 +37,7 @@
               <li><input type="radio" name="summary_evaluation" value="7"><label>A lot</label></li>
             </ul>
           </div>
+          {% endif %}
           <div class='likertCard'>
             <h2 class="likertTitle">How much did you already know about this topic?</h2>
             <ul class='likert'>
