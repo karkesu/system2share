@@ -273,7 +273,6 @@ def getLeastFrequent(param, options, additional_info=None):
             for a in extraParameters:
                 args[a] = extraParameters[a]
         counts[option] = Experiment.query.filter_by(**args).count()
-
     return min(counts, key=counts.get)
 
 def getRandomAnnotation(category, promptId, articleId):
@@ -302,15 +301,34 @@ def getRandomAnnotation(category, promptId, articleId):
 def setNewsfeedContent(exp, category, newsFeedOrder):
     # Get newsfeed summaries content
     summaries_dict = {}
-    for articleId in [exp.newsFeedOrder[0],exp.newsFeedOrder[1]]:
-        annotation_col = category + "_annotation_content_a" + articleId
-        annotationId = getLeastFrequent(
-            category + "_newsfeed_annotation_a" + articleId,
+    annotation_col_1 = category + "_newsfeed_annotation_a1"
+    annotation_col_2 = category + "_newsfeed_annotation_a2"
+    annotationId_1 = getLeastFrequent(
+            annotation_col_1,
             poss_assignments['promptId'],
             {
              'newsFeedOrder': exp.newsFeedOrder,
              'showNewsFeed': True
             })
+    setattr(exp, annotation_col_1, annotationId_1)
+    db.session.commit()
+    extra_args = {
+             'newsFeedOrder': exp.newsFeedOrder,
+             'showNewsFeed': True
+            }
+    extra_args[annotation_col_1] = annotationId_1
+    annotationId_2 = getLeastFrequent(
+            annotation_col_2,
+            poss_assignments['promptId'],
+            extra_args)
+    setattr(exp, annotation_col_2, annotationId_2)
+    db.session.commit()
+    for articleId in [exp.newsFeedOrder[0],exp.newsFeedOrder[1]]:
+        annotation_col = category + "_annotation_content_a" + articleId
+        if articleId == 1:
+            annotationId = annotationId_1
+        else:
+            annotationId = annotationId_2
         annotation_content = getRandomAnnotation(category,annotationId, articleId)
         article = getArticle(category , articleId)
         summaries_dict[articleId] = {}
@@ -319,8 +337,6 @@ def setNewsfeedContent(exp, category, newsFeedOrder):
         summaries_dict[articleId]['byLine'] = article[1]
         summaries_dict[articleId]['preview'] = article[2:3][0][:150]+"..."
         summaries_dict[articleId]['annotation'] = annotation_content
-        
-        setattr(exp, category+"_newsfeed_annotation_a" + articleId, annotationId)
         setattr(exp, annotation_col, annotation_content)
         db.session.commit()
 
